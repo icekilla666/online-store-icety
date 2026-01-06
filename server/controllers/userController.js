@@ -42,7 +42,8 @@ class UserController {
   }
 
   async check(req, res, next) {
-    res.json({message: "Authorized"});
+    const jwtToken = generateJwt(req.user.id, req.user.email, req.user.role);
+    res.json({jwtToken});
   }
 }
 

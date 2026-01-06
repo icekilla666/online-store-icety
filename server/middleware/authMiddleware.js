@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
   try {
     const token = req.headers.authorization.split(" ")[1]; // Извлекаем токен из заголовка Authorization. Обычно токен передается в формате "Bearer <token>", поэтому мы разделяем строку по пробелу и берем вторую часть. На выходе получается сам токен без Bearer.
     if (!token) {
-      res.status(401).json({ message: "User is not authorized!" });
+     return res.status(401).json({ message: "User is not authorized!" });
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY); // Проверяем токен с помощью секретного ключа, который хранится в env. Если токен валиден, функция вернет расшифрованные данные (payload), которые мы сохраняем в переменную decoded.
     req.user = decoded;
