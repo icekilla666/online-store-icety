@@ -1,6 +1,7 @@
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
 import Basket from "./pages/Basket";
+import DashboardPage from "./pages/Dashboard";
 import DevicePage from "./pages/DevicePage";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -8,6 +9,7 @@ import Shop from "./pages/Shop";
 import {
   ADMIN_ROUTE,
   BASKET_ROUTE,
+  DASHBOARD_ROUTE,
   DEVICE_ROUTE,
   HOME_ROUTE,
   LOGIN_ROUTE,
@@ -24,6 +26,10 @@ export const authRoutes = [
   {
     path: BASKET_ROUTE,
     element: <Basket />,
+  },
+  {
+    path: DASHBOARD_ROUTE,
+    element: <DashboardPage />,
   },
 ];
 export const publicRoutes = [

@@ -6,7 +6,8 @@
   --color-primary: #f3f3f3;
   --color-secondary: #393e46;
   --color-button: #3f7f9f;
-  --color-card: #ffffff;
+  --color-wrapper: #ffffff;
+  --color-border: rgb(0 0 0 / 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,7 +15,8 @@
     --color-primary: #222222;
     --color-secondary: #dddddd;
     --color-button: #3f7f9f;
-    --color-card: #1a1a1a;
+    --color-wrapper: #1a1a1a;
+    --color-border: rgb(255 255 255 / 0.1);
   }
 }
 
@@ -22,12 +24,16 @@
   --color-primary: #222222;
   --color-secondary: #dddddd;
   --color-button: #3f7f9f;
-  --color-card: #1a1a1a;
+  --color-wrapper: #1a1a1a;
+  --color-border: rgb(255 255 255 / 0.1);
 }
 
 body {
   background-color: var(--color-primary);
   color: var(--color-secondary);
+}
+button:focus {
+  outline: none;
 }
 
 h1 {
