@@ -1,8 +1,8 @@
 import { Button } from "@headlessui/react";
 import { useStore } from "../utils/context";
-import FadeContent from "@/components/FadeContent";
+import FadeContent from "../components/ui/FadeContent";
 import { NavLink, useLocation } from "react-router-dom";
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "@/utils/constants";
+import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/constants";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 
 const Auth = () => {
