@@ -57,14 +57,14 @@ const Auth = () => {
         {isLogin ? (
           <p className="mb-7">
             Don't have an account?{" "}
-            <NavLink className="text-button" to={REGISTRATION_ROUTE}>
+            <NavLink className="text-custom" to={REGISTRATION_ROUTE}>
               Sign up
             </NavLink>
           </p>
         ) : (
           <p className="mb-7">
             Do you have account?{" "}
-            <NavLink className="text-button" to={LOGIN_ROUTE}>
+            <NavLink className="text-custom" to={LOGIN_ROUTE}>
               Log in
             </NavLink>
           </p>
@@ -133,7 +133,7 @@ const Auth = () => {
 
           <Button
             type="submit"
-            className="bg-button text-secondary rounded-md p-2 w-full"
+            className="bg-custom text-secondary rounded-md p-2 w-full"
             // onClick={() => user.setIsAuth(true)}
           >
             {isLogin ? "Log in" : "Sign up"}

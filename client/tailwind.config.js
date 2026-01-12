@@ -7,7 +7,7 @@ export default {
       colors: {
         primary: "var(--color-primary)",
         secondary: "var(--color-secondary)",
-        button: "var(--color-button)",
+        custom: "var(--color-custom)",
         wrapper: "var(--color-wrapper)",
         border: "var(--color-border)",
       },

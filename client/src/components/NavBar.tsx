@@ -41,13 +41,12 @@ const NavBar = observer(() => {
         className="mx-auto flex max-w-screen-2xl items-center justify-between p-6 lg:px-8 w-full"
       >
         <div className="flex lg:flex-1">
-          <NavLink to={HOME_ROUTE} className="-m-1.5 p-1.5 bg-button rounded-sm">
+          <NavLink
+            to={HOME_ROUTE}
+            className="-m-1.5 p-1.5 bg-button rounded-sm"
+          >
             <span className="sr-only">Your Company</span>
-            <img
-              alt=""
-              src="/logo.svg"
-              className="h-8 w-auto"
-            />
+            <img alt="" src="/logo.svg" className="h-8 w-auto" />
           </NavLink>
         </div>
         <div className="flex lg:hidden">
@@ -61,7 +60,14 @@ const NavBar = observer(() => {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <NavLink to={SHOP_ROUTE} className="text-sm/6 font-semibold ">
+          <NavLink
+            to={SHOP_ROUTE}
+            className={({ isActive }) =>
+              isActive
+                ? "text-sm/6 font-semibold text-custom"
+                : "text-sm/6 font-semibold"
+            }
+          >
             Catalog
           </NavLink>
 
@@ -91,7 +97,14 @@ const NavBar = observer(() => {
                       />
                     </div>
                     <div className="flex-auto">
-                      <NavLink to={item.href} className="block font-semibold ">
+                      <NavLink
+                        to={item.href}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "text-sm/6 font-semibold text-custom"
+                            : "text-sm/6 font-semibold"
+                        }
+                      >
                         {item.name}
                         <span className="absolute inset-0" />
                       </NavLink>
@@ -136,11 +149,7 @@ const NavBar = observer(() => {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5 bg-button rounded-sm">
               <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="/logo.svg"
-                className="h-8 w-auto"
-              />
+              <img alt="" src="/logo.svg" className="h-8 w-auto" />
             </a>
             <button
               type="button"
