@@ -1,9 +1,9 @@
-import { Button } from "@headlessui/react";
 import { useStore } from "../utils/context";
 import FadeContent from "../components/ui/FadeContent";
 import { NavLink, useLocation } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/constants";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import MyButton from "../components/Button";
 
 const Auth = () => {
   const { user } = useStore();
@@ -16,7 +16,7 @@ const Auth = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
   const location = useLocation();
   const isLogin = location.pathname === LOGIN_ROUTE;
-  console.log(isError);
+  // console.log(isError);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -43,11 +43,11 @@ const Auth = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
-    console.log(isError);
+    // console.log(isError);
     if (isError) {
       return;
     }
-    console.log(formData);
+    // console.log(formData);
   };
 
   return (
@@ -131,13 +131,7 @@ const Auth = () => {
             </>
           )}
 
-          <Button
-            type="submit"
-            className="bg-custom text-secondary rounded-md p-2 w-full"
-            // onClick={() => user.setIsAuth(true)}
-          >
-            {isLogin ? "Log in" : "Sign up"}
-          </Button>
+          <MyButton type="submit">{isLogin ? "Log in" : "Sign up"}</MyButton>
         </form>
       </section>
     </FadeContent>

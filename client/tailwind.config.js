@@ -10,8 +10,9 @@ export default {
         custom: "var(--color-custom)",
         wrapper: "var(--color-wrapper)",
         border: "var(--color-border)",
+        def: "var(--color-def)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };

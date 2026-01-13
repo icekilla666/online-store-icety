@@ -1,7 +1,9 @@
+import SideBar from "@/components/SideBar";
+
 const Shop = () => {
   return ( 
     <section className="container">
-      <h1>Shop</h1>
+      <SideBar />
     </section>
    );
 }

@@ -10,6 +10,7 @@
   --color-custom: #8b5cf6;
   --color-wrapper: #ffffff;
   --color-border: rgb(0 0 0 / 0.1);
+  --color-def: #000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,6 +20,7 @@
     --color-custom: #8b5cf6;
     --color-wrapper: #1a1a1a;
     --color-border: rgb(255 255 255 / 0.1);
+    --color-def: #fff;
   }
 }
 
@@ -28,11 +30,13 @@
   --color-custom: #8b5cf6;
   --color-wrapper: #1a1a1a;
   --color-border: rgb(255 255 255 / 0.1);
+  --color-def: #fff;
 }
 
 body {
   background-color: var(--color-primary);
   color: var(--color-secondary);
+  font-family: "Poppins", sans-serif;
 }
 button:focus {
   outline: none;
@@ -48,6 +52,36 @@ p {
   font-size: 16px;
 }
 
+@layer utilities {
+  .custom-scrollbar {
+    scrollbar-color: var(--color-custom) transparent;
+    scrollbar-arrow-color: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-custom);
+    opacity: 0.3;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    opacity: 0.5;
+    background-color: var(--color-custom);
+  }
+
+  /* .custom-scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  } */
+}
+
 @layer components {
   .container {
     @apply mx-auto w-full max-w-screen-2xl px-6;
@@ -58,5 +92,13 @@ p {
   }
   .input {
     @apply mt-1 p-3 text-black/60 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-custom focus:ring-custom block w-full rounded-md sm:text-sm focus:ring-1;
+  }
+  @media screen and (max-width: 1920px) {
+    ul {
+      @apply list-none h-60 custom-scrollbar overflow-hidden hover:overflow-auto rounded-lg;
+    }
+  }
+  ul {
+    @apply list-none rounded-lg;
   }
 }
