@@ -3,7 +3,7 @@ import FadeContent from "../components/ui/FadeContent";
 import { NavLink, useLocation } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/constants";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
-import MyButton from "../components/Button";
+import MyButton from "../components/ui/Button";
 
 const Auth = () => {
   const { user } = useStore();
