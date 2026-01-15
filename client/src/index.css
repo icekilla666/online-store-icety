@@ -38,7 +38,7 @@ body {
   color: var(--color-secondary);
   font-family: "Poppins", sans-serif;
 }
-button:focus {
+button:focus, select:focus {
   outline: none;
 }
 
