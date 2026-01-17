@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 const SideBar = observer(() => {
   const { device } = useStore();
   return (
-    <div className="h-full bg-wrapper w-full max-w-[370px] rounded-[30px] pt-12 pb-8 pl-8">
+    <div className="sticky top-8 h-full bg-wrapper w-full max-w-[370px] rounded-[30px] pt-12 pb-8 pl-8">
       <h2 className="uppercase text-secondary font-light opacity-70 tracking-widest pb-7">
         types
       </h2>

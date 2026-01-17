@@ -47,7 +47,7 @@ export default class DeviceStore {
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
       rating: 5,
-      img: "/public/test.jpg",
+      img: "/public/test.png",
     },
     {
       id: 2,
@@ -55,7 +55,7 @@ export default class DeviceStore {
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
       rating: 5,
-      img: "/public/test.jpg",
+      img: "/public/test.png",
     },
     {
       id: 3,
@@ -63,7 +63,7 @@ export default class DeviceStore {
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
       rating: 5,
-      img: "/public/test.jpg",
+      img: "/public/test.png",
     },
     {
       id: 4,
@@ -71,12 +71,13 @@ export default class DeviceStore {
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
       rating: 5,
-      img: "/public/test.jpg",
+      img: "/public/test.png",
     },
   ];
 
   private _selectedType: ITypes | null = null;
   private _selectedBrand: IBrand | null = null;
+  private _selectedDevice: IDevice | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -97,6 +98,9 @@ export default class DeviceStore {
   setSelectedBrand(brand: IBrand): void {
     this._selectedBrand = brand;
   }
+  setSelectedDevice(device: IDevice): void {
+    this._selectedDevice = device;
+  }
 
   get types(): ITypes[] {
     return this._types;
@@ -112,6 +116,9 @@ export default class DeviceStore {
   }
   get selectedBrand() {
     return this._selectedBrand;
+  }
+  get selectedDevice() {
+    return this._selectedDevice;
   }
 }
 

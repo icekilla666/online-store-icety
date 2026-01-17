@@ -41,6 +41,9 @@ body {
 button:focus, select:focus {
   outline: none;
 }
+button:hover {
+  transition: all .3s;
+}
 
 h1 {
   font-size: 55px;
