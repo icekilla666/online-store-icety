@@ -1,5 +1,5 @@
-import DeviceList from "@/components/DeviceList";
-import SideBar from "@/components/SideBar";
+import DeviceList from "@/components/devices/DeviceList";
+import SideBar from "@/components/devices/SideBar";
 
 const Shop = () => {
   return (

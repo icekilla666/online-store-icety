@@ -47,23 +47,23 @@ export default class DeviceStore {
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
       rating: 5,
-      img: "/public/test.png",
+      img: "/test.png",
     },
     {
       id: 2,
       name: "Realme 10 Pro",
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
-      rating: 5,
-      img: "/public/test.png",
+      rating: 4.83,
+      img: "/fen.png",
     },
     {
       id: 3,
       name: "Realme 10 Pro",
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
-      rating: 5,
-      img: "/public/test.png",
+      rating: 4.2,
+      img: "/hdsb.png",
     },
     {
       id: 4,
@@ -71,7 +71,7 @@ export default class DeviceStore {
       shortDesc: "Desctiption of Realme 10 Pro",
       price: 20000,
       rating: 5,
-      img: "/public/test.png",
+      img: "/test.png",
     },
   ];
 
