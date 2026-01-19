@@ -34,7 +34,7 @@ const DeviceCardGrid = ({
         </div>
 
         <div className="flex gap-3">
-          <span className="text-[30px]">{price}$</span>
+          <span className="text-[30px]">${new Intl.NumberFormat('en-EN').format(price)}</span>
           <MyButton className="bg-transparent border-2 rounded-lg border-custom p-2 uppercase w-full hover:bg-custom">
             buy
           </MyButton>
