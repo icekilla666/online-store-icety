@@ -67,7 +67,7 @@ const DevicePage = () => {
           Specifications
         </h3>
       </div>
-      <div className="grid grid-cols-2 gap-32">
+      <div className="grid grid-cols-2 gap-32 mb-16">
         {device.images.length > 1 ? (
           <div className="flex items-start justify-end">
             <SwiperSlider
@@ -122,7 +122,7 @@ const DevicePage = () => {
           <div>
             <h1 className="mb-6 и">Specifications</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {deviceInfo.map((info) => (
                 <div
                   key={info.id}

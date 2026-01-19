@@ -31,12 +31,12 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
         >
           {allImages.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="relative h-[400px] md:h-[500px]">
+              <div className="relative h-[400px] md:h-[600px]">
                 <div className="absolute inset-0 flex items-center justify-center p-8">
                   <img
                     src={image}
                     alt={`${productName} - изображение ${index + 1}`}
-                    className="p-9 bg-wrapper rounded-2xl border-2 border-custom object-contain max-h-full"
+                    className="p-9 bg-wrapper rounded-2xl border-2 border-custom object-contain h-full"
                   />
                 </div>
               </div>
