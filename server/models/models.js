@@ -22,7 +22,8 @@ const Device = sequelize.define("device", {
   shortDesc: { type: DataTypes.STRING, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   rating: { type: DataTypes.INTEGER, defaultValue: 0 },
-  img: { type: DataTypes.STRING, allowNull: false },
+  img: { type: DataTypes.STRING, allowNull: false }, // Основное изображение
+  images: { type: DataTypes.JSON, defaultValue: [] },
 });
 
 const Type = sequelize.define("type", {

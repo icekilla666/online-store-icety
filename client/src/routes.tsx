@@ -18,11 +18,12 @@ import {
   SHOP_ROUTE,
 } from "./utils/constants";
 
+export const adminRoute = {
+  path: ADMIN_ROUTE,
+  element: <Admin />,
+};
+
 export const authRoutes = [
-  {
-    path: ADMIN_ROUTE,
-    element: <Admin />,
-  },
   {
     path: BASKET_ROUTE,
     element: <Basket />,

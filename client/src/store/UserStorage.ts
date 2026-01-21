@@ -9,6 +9,7 @@ export interface IUser {
 
 export default class UserStore {
   private _isAuth: boolean = false;
+  private _isAdmin: boolean = false;
   private _user: IUser | null = null;
 
   constructor() {
@@ -19,12 +20,20 @@ export default class UserStore {
     this._isAuth = bool;
   }
 
+  setIsAdmin(admin: boolean): void {
+    this._isAdmin = admin;
+  }
+
   setUser(user: IUser | null): void {
     this._user = user;
   }
 
   get isAuth(): boolean {
     return this._isAuth;
+  }
+
+  get isAdmin(): boolean {
+    return this._isAdmin;
   }
 
   get user(): IUser | null {

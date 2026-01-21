@@ -1,5 +1,5 @@
 import MyButton from "@/components/ui/Button";
-import type { DeviceCardProps } from "@/utils/types";
+import type { DeviceCardProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 
 const DeviceCardList = ({
@@ -9,7 +9,7 @@ const DeviceCardList = ({
   shortDesc,
   rating,
   price,
-  onClick
+  onClick,
 }: DeviceCardProps) => {
   return (
     <article
@@ -33,7 +33,9 @@ const DeviceCardList = ({
         </div>
 
         <div className="flex flex-col gap-2">
-          <span className="text-[30px]">${new Intl.NumberFormat('en-EN').format(price)}</span>
+          <span className="text-[30px]">
+            ${new Intl.NumberFormat("en-EN").format(price)}
+          </span>
           <MyButton className="bg-transparent border-2 rounded-lg border-custom p-2 uppercase hover:bg-custom">
             buy
           </MyButton>

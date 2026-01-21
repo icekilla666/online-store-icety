@@ -1,12 +1,21 @@
 import { useStore } from "../utils/context";
 import FadeContent from "../components/ui/FadeContent";
-import { NavLink, useLocation } from "react-router-dom";
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/constants";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  ADMIN_ROUTE,
+  DASHBOARD_ROUTE,
+  LOGIN_ROUTE,
+  REGISTRATION_ROUTE,
+} from "../utils/constants";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import MyButton from "../components/ui/Button";
 
+const admin = import.meta.env.VITE_ADMIN_EMAIL;
+const passwordAdmin = import.meta.env.VITE_ADMIN_PASSWORD;
+
 const Auth = () => {
   const { user } = useStore();
+  const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -43,11 +52,20 @@ const Auth = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
-    // console.log(isError);
     if (isError) {
       return;
     }
-    // console.log(formData);
+    const isAdmin =
+      formData.email == admin && formData.password == passwordAdmin;
+
+    user.setIsAuth(true);
+    user.setIsAdmin(isAdmin);
+
+    if (isAdmin) {
+      navigate(ADMIN_ROUTE);
+    } else {
+      navigate(DASHBOARD_ROUTE);
+    }
   };
 
   return (

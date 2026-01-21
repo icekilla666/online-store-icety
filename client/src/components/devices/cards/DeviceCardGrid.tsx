@@ -1,5 +1,5 @@
 import MyButton from "@/components/ui/Button";
-import type { DeviceCardProps } from "@/utils/types";
+import type { DeviceCardProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 
 const DeviceCardGrid = ({
@@ -9,7 +9,7 @@ const DeviceCardGrid = ({
   shortDesc,
   rating,
   price,
-  onClick
+  onClick,
 }: DeviceCardProps) => {
   return (
     <article
@@ -34,7 +34,9 @@ const DeviceCardGrid = ({
         </div>
 
         <div className="flex gap-3">
-          <span className="text-[30px]">${new Intl.NumberFormat('en-EN').format(price)}</span>
+          <span className="text-[30px]">
+            ${new Intl.NumberFormat("en-EN").format(price)}
+          </span>
           <MyButton className="bg-transparent border-2 rounded-lg border-custom p-2 uppercase w-full hover:bg-custom">
             buy
           </MyButton>

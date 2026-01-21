@@ -1,38 +1,46 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { authRoutes, publicRoutes } from "../routes";
+import { adminRoute, authRoutes, publicRoutes } from "../routes";
 import { LOGIN_ROUTE } from "../utils/constants";
 import { useStore } from "../utils/context";
 import NotFound from "../pages/NotFound";
 
-const ProtectedRoute = ({ children }: any) => {
+const AuthRoute = ({ children }: any) => {
   const { user } = useStore();
-  if (!user.isAuth) {
-    return <Navigate to={LOGIN_ROUTE} replace />;
-  }
-
-  return children;
+  return user.isAuth ? children : <Navigate to={LOGIN_ROUTE} replace />;
 };
 
-const AppRouter = () => {
-  const { user, device } = useStore();
+const AdminRoute = ({ children }: any) => {
+  const { user } = useStore();
+  return user.isAdmin ? children : <Navigate to={LOGIN_ROUTE} replace />;
+};
 
-  console.log(user);
-  console.log(device);
+
+const AppRouter = () => {
   return (
     <Routes>
       {publicRoutes.map(({ path, element }) => (
         <Route key={path} path={path} element={element} />
       ))}
 
-      <Route>
-        {authRoutes.map(({ path, element }) => (
-          <Route
-            key={path}
-            path={path}
-            element={<ProtectedRoute>{element}</ProtectedRoute>}
-          />
-        ))}
-      </Route>
+      {authRoutes.map(({ path, element }) => (
+        <Route
+          key={path}
+          path={path}
+          element={
+            <AuthRoute>{element}</AuthRoute>
+          }
+        />
+      ))}
+
+      <Route
+        path={adminRoute.path}
+        element={
+          <AdminRoute>
+            {adminRoute.element}
+          </AdminRoute>
+        }
+      />
+      <Route></Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>

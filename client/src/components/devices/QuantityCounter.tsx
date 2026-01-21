@@ -1,4 +1,4 @@
-import type { QuantityCounterProps } from "@/utils/types";
+import type { QuantityCounterProps } from "@/types/types";
 import type React from "react";
 import { useState } from "react";
 
