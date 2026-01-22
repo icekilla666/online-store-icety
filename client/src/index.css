@@ -38,11 +38,12 @@ body {
   color: var(--color-secondary);
   font-family: "Poppins", sans-serif;
 }
-button:focus, select:focus {
+button:focus,
+select:focus {
   outline: none;
 }
 button:hover {
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 h1 {
@@ -58,34 +59,15 @@ p {
   font-size: 16px;
 }
 
-@layer utilities {
-  .custom-scrollbar {
-    scrollbar-color: var(--color-custom) transparent;
-    scrollbar-arrow-color: transparent;
-  }
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
 
-  .custom-scrollbar::-webkit-scrollbar-button {
-    display: none;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--color-custom);
-    opacity: 0.3;
-    border-radius: 20px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-    transition: opacity 0.2s ease, background-color 0.2s ease;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    opacity: 0.5;
-    background-color: var(--color-custom);
-  }
-
-  /* .custom-scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  } */
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-custom);
+  border-radius: 3px;
 }
 
 @layer components {
@@ -101,7 +83,7 @@ p {
   }
   @media screen and (max-width: 1920px) {
     ul {
-      @apply list-none h-60 custom-scrollbar overflow-hidden hover:overflow-auto rounded-lg;
+      @apply list-none h-60 overflow-hidden hover:overflow-auto rounded-lg;
     }
   }
   ul {
