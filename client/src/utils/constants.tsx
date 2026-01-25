@@ -17,7 +17,6 @@ import {
   HeartIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
-import { Info } from "lucide-react";
 
 export const ADMIN_ROUTE = "/admin";
 export const SHOP_ROUTE = "/shop";
@@ -171,16 +170,16 @@ export const DASHBOARD_TABS: TabArrayProps[] = [
   {
     value: "profile",
     name: "Profile Information",
-    img: <InformationCircleIcon />,
+    img: <InformationCircleIcon width={34} height={34}/>,
   },
   {
     value: "wishlist",
     name: "Favourite Products",
-    img: <HeartIcon />,
+    img: <HeartIcon width={34} height={34}/>,
   },
   {
     value: "settings",
     name: "Account Settings",
-    img: <Cog6ToothIcon />,
+    img: <Cog6ToothIcon width={34} height={34}/>,
   },
 ];

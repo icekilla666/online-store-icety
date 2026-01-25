@@ -5,9 +5,13 @@ const NeedHelp = () => {
       <p className="text-sm text-[var(--color-secondary)] mb-4">
         Our support team is here to assist you with any questions
       </p>
-      <button className="w-full px-4 py-2.5 bg-[var(--color-custom)] text-white font-medium rounded-lg hover:opacity-90 transition-opacity">
+      <a
+        className="block cursor-pointer text-center w-full px-4 py-2.5 bg-[var(--color-custom)] text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+        target="_blank"
+        href="https://t.me/rpek17"
+      >
         Contact Support
-      </button>
+      </a>
     </div>
   );
 };

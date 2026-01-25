@@ -5,7 +5,7 @@ const Tabs = ({ ...props }: TabProps) => {
     <button
       key={tab.value}
       value={tab.value}
-      className={`${props.className} ${props.isActive === tab.value ? "border-b-2 border-custom transition-all" : "border-b-2 border-transparent"}`}
+      className={`${props.className} ${props.isActive === tab.value ? "active" : ""}`}
       onClick={() => props.onChange(tab.value)}
     >
       {tab.img}

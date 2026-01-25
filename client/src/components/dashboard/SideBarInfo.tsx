@@ -1,11 +1,17 @@
 import type { SideBarInfoProps } from "@/types/types";
 import NeedHelp from "./NeedHelp";
 import Tabs from "../ui/Tabs";
-import { DASHBOARD_TABS } from "@/utils/constants";
-import { useState } from "react";
 
-const SideBarInfo = ({ name, lastname, email, phone, onChange }: SideBarInfoProps) => {
-
+const SideBarInfo = ({
+  name,
+  lastname,
+  email,
+  phone,
+  onChange,
+  className,
+  isActive,
+  tabs
+}: SideBarInfoProps) => {
   return (
     <div className="lg:col-span-1">
       <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6 sticky top-6">
@@ -40,44 +46,13 @@ const SideBarInfo = ({ name, lastname, email, phone, onChange }: SideBarInfoProp
           </div>
         </div>
 
-        <div className="space-y-2 mb-6">
-          <Tabs tabs={DASHBOARD_TABS} onChange={(value) => onChange(value)} />
+        <div className={className}>
+          <Tabs
+            tabs={tabs}
+            isActive={isActive}
+            onChange={(value) => onChange(value)}
+          />
         </div>
-        {/* Табы навигации */}
-        {/* <div className="space-y-2 mb-6">
-          <button
-            onClick={() => setActiveTab("profile")}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeTab === "profile"
-                ? "bg-[var(--color-custom)] text-white"
-                : "text-[var(--color-secondary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-def)]"
-            }`}
-          >
-            👤 Profile Information
-          </button>
-          <button
-            onClick={() => setActiveTab("favorites")}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeTab === "favorites"
-                ? "bg-[var(--color-custom)] text-white"
-                : "text-[var(--color-secondary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-def)]"
-            }`}
-          >
-            ❤️ Favorite Products
-          </button>
-          <button
-            onClick={() => setActiveTab("settings")}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeTab === "settings"
-                ? "bg-[var(--color-custom)] text-white"
-                : "text-[var(--color-secondary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-def)]"
-            }`}
-          >
-            ⚙️ Account Settings
-          </button>
-        </div> */}
-
-        {/* Need Help плашка */}
         <NeedHelp />
       </div>
     </div>

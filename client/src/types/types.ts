@@ -80,9 +80,7 @@ export interface TabProps {
   className?: string;
   onChange: (value: string) => void;
 }
-export interface SideBarInfoProps extends IUser {
-  onChange: (value: string) => void;
-}
+export interface SideBarInfoProps extends IUser, TabProps {}
 export interface SettingsProps extends IUser {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSave: () => void;
@@ -90,6 +88,7 @@ export interface SettingsProps extends IUser {
 }
 export interface FavouriteProductsProps {
   devices: IDevice[];
+  onClick?: () => void;
 }
 
 export interface ProfileInfoProps extends IUser, FavouriteProductsProps {

@@ -19,12 +19,11 @@ const DevicePage = () => {
           tabs={DEVICE_PAGE_TABS}
           isActive={tab}
           onChange={handleTabs}
-          className={`cursor-pointer`}
+          className={`cursor-pointer device-tabs`}
         />
       </div>
 
       <div className="grid grid-cols-2 gap-32 mb-16">
-        
         {device.images.length > 1 ? (
           <div className="flex items-start justify-end">
             <SwiperSlider

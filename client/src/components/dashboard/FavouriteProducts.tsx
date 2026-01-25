@@ -1,6 +1,9 @@
 import type { FavouriteProductsProps } from "@/types/types";
+import { DEVICE_ROUTE } from "@/utils/constants";
+import { useNavigate } from "react-router-dom";
 
-const FavouriteProducts = ({ devices }: FavouriteProductsProps) => {
+const FavouriteProducts = ({ devices, onClick }: FavouriteProductsProps) => {
+  const navigate = useNavigate();
   return (
     <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6">
       <div className="flex justify-between items-center mb-6">
@@ -17,14 +20,15 @@ const FavouriteProducts = ({ devices }: FavouriteProductsProps) => {
         </span>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="wishlist">
         {devices.map((product) => (
-          <div
+          <article
+            onClick={() => navigate(DEVICE_ROUTE + "/" + product.id)}
             key={product.id}
-            className="border border-[var(--color-border)] rounded-xl p-4 hover:border-[var(--color-custom)] transition-colors group"
+            className="flex justify-between border border-[var(--color-border)] cursor-pointer rounded-xl px-4 py-6 hover:border-[var(--color-custom)] transition-colors group"
           >
-            <div className="flex items-start mb-4">
-              <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)] flex items-center justify-center text-2xl mr-4">
+            <div className="flex items-center">
+              <div className="w-16 rounded-lg flex items-center justify-center text-2xl mr-4">
                 <img src={product.img} alt={product.name} />
               </div>
               <div>
@@ -34,19 +38,18 @@ const FavouriteProducts = ({ devices }: FavouriteProductsProps) => {
                 <span className="text-xs px-2 py-1 bg-[var(--color-primary)] text-[var(--color-secondary)] rounded-full mt-1">
                   {product.rating}
                 </span>
-                <p>{product.shortDesc}</p>
-                <span>{product.price}</span>
+                <p className="mt-2">{product.shortDesc}</p>
               </div>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col justify-between items-center">
               <span className="text-xl font-bold text-[var(--color-def)]">
                 {product.price}
               </span>
               <button className="text-sm text-[var(--color-custom)] hover:underline font-medium">
-                Add to Cart
+                Deleate
               </button>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </div>

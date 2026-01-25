@@ -2,16 +2,15 @@ import FavouriteProducts from "@/components/dashboard/FavouriteProducts";
 import ProfileInfo from "@/components/dashboard/ProfileInfo";
 import Settings from "@/components/dashboard/Settings";
 import SideBarInfo from "@/components/dashboard/SideBarInfo";
-import MyButton from "@/components/ui/Button";
 import Head from "@/components/ui/Head";
-import { LOGIN_ROUTE } from "@/utils/constants";
+import { DEVICE_ROUTE, LOGIN_ROUTE } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DASHBOARD_TABS } from "@/utils/constants";
 
 const DashboardPage = observer(() => {
-  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   const [tab, setTab] = useState("profile");
   const [userData, setUserData] = useState({
@@ -20,6 +19,7 @@ const DashboardPage = observer(() => {
     email: "alex.johnson@example.com",
     phoneNumber: "+1 (555) 987-6543",
   });
+  const [editData, setEditData] = useState(userData);
   const { device, user } = useStore();
 
   const handleTabs = (value: string) => {
@@ -27,15 +27,15 @@ const DashboardPage = observer(() => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData((prev) => ({
+    const { value, name } = e.target;
+    setEditData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
   const handleSave = () => {
-    setIsEditing(false);
+    setUserData(editData);
   };
 
   const handleLogout = () => {
@@ -53,34 +53,42 @@ const DashboardPage = observer(() => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Левая колонка - Профиль */}
+        {/* Левая колонка */}
         <SideBarInfo
+          tabs={DASHBOARD_TABS}
           name={userData.name}
           lastname={userData.lastName}
           phone={userData.phoneNumber}
           email={userData.email}
+          isActive={tab}
+          className="dashboard-tabs"
           onChange={handleTabs}
         />
 
         {/* Правая колонка - Контент табов */}
         <div className="lg:col-span-3">
           {/* Таб: Избранные товары */}
-          {tab === "wishlist" && <FavouriteProducts devices={device.devices} />}
+          {tab === "wishlist" && (
+            <FavouriteProducts
+              devices={device.devices}
+            />
+          )}
 
           {/* Таб: Настройки */}
+
           {tab === "settings" && (
             <Settings
-              name={userData.name}
-              lastname={userData.lastName}
-              phone={userData.phoneNumber}
-              email={userData.email}
+              name={editData.name}
+              lastname={editData.lastName}
+              phone={editData.phoneNumber}
+              email={editData.email}
               onChange={handleInputChange}
               onLogout={handleLogout}
               onSave={handleSave}
             />
           )}
 
-          {/* Таб: Профиль (по умолчанию) */}
+          {/* Таб: Профиль */}
           {tab === "profile" && (
             <ProfileInfo
               name={userData.name}

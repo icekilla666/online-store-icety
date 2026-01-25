@@ -57,6 +57,30 @@ export default class DeviceStore {
       rating: 5,
       img: "/test.png",
     },
+    {
+      id: 5,
+      name: "Realme 10 Pro",
+      shortDesc: "Desctiption of Realme 10 Pro",
+      price: 20000,
+      rating: 5,
+      img: "/test.png",
+    },
+    {
+      id: 6,
+      name: "Realme 10 Pro",
+      shortDesc: "Desctiption of Realme 10 Pro",
+      price: 20000,
+      rating: 5,
+      img: "/test.png",
+    },
+    {
+      id: 7,
+      name: "Realme 10 Pro",
+      shortDesc: "Desctiption of Realme 10 Pro",
+      price: 20000,
+      rating: 5,
+      img: "/test.png",
+    },
   ];
 
   private _selectedType: ITypes | null = null;
