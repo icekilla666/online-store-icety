@@ -9,6 +9,7 @@ import {
 } from "../utils/constants";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import MyButton from "../components/ui/Button";
+import AnimatedContent from "@/components/ui/AnimatedContent";
 
 const admin = import.meta.env.VITE_ADMIN_EMAIL;
 const passwordAdmin = import.meta.env.VITE_ADMIN_PASSWORD;
@@ -69,7 +70,7 @@ const Auth = () => {
   };
 
   return (
-    <FadeContent>
+    <AnimatedContent>
       <section className="container flex-center-col h-[calc(100svh-80px)]">
         <h1>{isLogin ? "Authorization" : "Registration"}</h1>
         {isLogin ? (
@@ -152,7 +153,7 @@ const Auth = () => {
           <MyButton type="submit">{isLogin ? "Log in" : "Sign up"}</MyButton>
         </form>
       </section>
-    </FadeContent>
+    </AnimatedContent>
   );
 };
 
