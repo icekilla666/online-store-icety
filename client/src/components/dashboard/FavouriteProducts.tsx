@@ -2,7 +2,7 @@ import type { FavouriteProductsProps } from "@/types/types";
 import { DEVICE_ROUTE } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
 
-const FavouriteProducts = ({ devices, onClick }: FavouriteProductsProps) => {
+const FavouriteProducts = ({ devices }: FavouriteProductsProps) => {
   const navigate = useNavigate();
   return (
     <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6">
