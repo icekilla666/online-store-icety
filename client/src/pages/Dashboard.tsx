@@ -3,7 +3,7 @@ import ProfileInfo from "@/components/dashboard/ProfileInfo";
 import Settings from "@/components/dashboard/Settings";
 import SideBarInfo from "@/components/dashboard/SideBarInfo";
 import Head from "@/components/ui/Head";
-import { DEVICE_ROUTE, LOGIN_ROUTE } from "@/utils/constants";
+import { LOGIN_ROUTE } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
