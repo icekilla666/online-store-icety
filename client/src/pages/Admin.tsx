@@ -1,8 +1,12 @@
 import Preloader from "@/components/adminPanel/Preloader";
+import Stats from "@/components/adminPanel/Stats";
 import AnimatedContent from "@/components/ui/AnimatedContent";
+import { useStore } from "@/utils/context";
 import { useEffect, useState } from "react";
 
 const Admin = () => {
+  const { device } = useStore();
+
   const [load, setLoad] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,108 +30,14 @@ const Admin = () => {
                   Manage your store inventory
                 </p>
               </div>
-
-              <div className="flex items-center space-x-4 mt-4 md:mt-0">
-                <div className="px-4 py-2 bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-lg">
-                  <span className="text-sm text-[var(--color-secondary)]">
-                    Last updated:
-                  </span>
-                  <span className="ml-2 text-sm font-medium text-[var(--color-def)]">
-                    Today, 14:30
-                  </span>
-                </div>
-                <button className="px-4 py-2 bg-[var(--color-custom)] text-white font-medium rounded-lg hover:opacity-90 transition-opacity">
-                  Export Data
-                </button>
-              </div>
             </div>
 
             {/* Карточки статистики */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6 hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-sm font-medium text-[var(--color-secondary)] mb-2">
-                      Total Devices
-                    </h3>
-                    <p className="text-3xl font-bold text-[var(--color-def)]">
-                      42
-                    </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                    <span className="text-2xl text-[var(--color-custom)]">
-                      📱
-                    </span>
-                  </div>
-                </div>
-                <p className="text-xs text-[var(--color-secondary)] mt-4">
-                  +3 this week
-                </p>
-              </div>
-
-              <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6 hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-sm font-medium text-[var(--color-secondary)] mb-2">
-                      Total Types
-                    </h3>
-                    <p className="text-3xl font-bold text-[var(--color-def)]">
-                      8
-                    </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                    <span className="text-2xl text-[var(--color-custom)]">
-                      🏷️
-                    </span>
-                  </div>
-                </div>
-                <p className="text-xs text-[var(--color-secondary)] mt-4">
-                  +1 this month
-                </p>
-              </div>
-
-              <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6 hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-sm font-medium text-[var(--color-secondary)] mb-2">
-                      Total Brands
-                    </h3>
-                    <p className="text-3xl font-bold text-[var(--color-def)]">
-                      12
-                    </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center">
-                    <span className="text-2xl text-[var(--color-custom)]">
-                      🏢
-                    </span>
-                  </div>
-                </div>
-                <p className="text-xs text-[var(--color-secondary)] mt-4">
-                  Active: 10
-                </p>
-              </div>
-
-              <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6 hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-sm font-medium text-[var(--color-secondary)] mb-2">
-                      Total Value
-                    </h3>
-                    <p className="text-3xl font-bold text-[var(--color-def)]">
-                      $54,890
-                    </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center">
-                    <span className="text-2xl text-[var(--color-custom)]">
-                      💰
-                    </span>
-                  </div>
-                </div>
-                <p className="text-xs text-[var(--color-secondary)] mt-4">
-                  Avg: $1,307 per device
-                </p>
-              </div>
-            </div>
+            <Stats
+              devices={device.devices}
+              types={device.types}
+              brands={device.brands}
+            />
 
             {/* Табы и контент */}
             <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl overflow-hidden mb-8">
