@@ -68,7 +68,7 @@ const Stats = ({
               Total Value
             </h3>
             <p className="text-3xl font-bold text-[var(--color-def)]">
-              {sum.toFixed(2)}
+              ${sum.toFixed(2)}
             </p>
           </div>
           <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">

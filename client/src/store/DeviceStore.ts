@@ -28,10 +28,13 @@ export default class DeviceStore {
     {
       id: 1,
       name: "Realme 10 Pro",
-      shortDesc: "Desctiption of Realme 10 Pro",
+      shortDesc:
+        "Desctiption of Realme 10 Pro Desctiption of Realme 10 Pro Desctiption of Realme 10 Pro Desctiption of Realme 10 Pro Desctiption of Realme 10 Pro",
       price: 20000,
       rating: 5,
       img: "/test.png",
+      typeId: 10,
+      brandId: 3,
     },
     {
       id: 2,
@@ -40,6 +43,8 @@ export default class DeviceStore {
       price: 20000,
       rating: 4.83,
       img: "/fen.png",
+      typeId: 7,
+      brandId: 2,
     },
     {
       id: 3,
@@ -48,6 +53,8 @@ export default class DeviceStore {
       price: 20000,
       rating: 4.2,
       img: "/hdsb.png",
+      typeId: 6,
+      brandId: 4,
     },
     {
       id: 4,
@@ -56,6 +63,8 @@ export default class DeviceStore {
       price: 20000,
       rating: 5,
       img: "/test.png",
+      typeId: 10,
+      brandId: 10,
     },
     {
       id: 5,
@@ -64,6 +73,8 @@ export default class DeviceStore {
       price: 20000,
       rating: 5,
       img: "/test.png",
+      typeId: 4,
+      brandId: 4,
     },
     {
       id: 6,
@@ -72,6 +83,8 @@ export default class DeviceStore {
       price: 20000,
       rating: 5,
       img: "/test.png",
+      typeId: 8,
+      brandId: 7,
     },
     {
       id: 7,
@@ -80,6 +93,8 @@ export default class DeviceStore {
       price: 20000,
       rating: 5,
       img: "/test.png",
+      typeId: 3,
+      brandId: 9,
     },
   ];
 

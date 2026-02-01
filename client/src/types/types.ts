@@ -24,6 +24,8 @@ export interface IDevice {
   price: number;
   rating: number;
   img: string;
+  typeId?: number;
+  brandId?: number;
 }
 
 export interface HeadProps {
@@ -93,4 +95,11 @@ export interface FavouriteProductsProps {
 
 export interface ProfileInfoProps extends IUser, FavouriteProductsProps {
   onClick: () => void;
+}
+
+export interface HeadTableProps {
+  title: string;
+  description: string;
+  placeholder: string;
+  textBtn: string;
 }
