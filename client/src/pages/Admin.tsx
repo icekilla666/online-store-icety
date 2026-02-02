@@ -1,6 +1,8 @@
 import Preloader from "@/components/adminPanel/Preloader";
 import Stats from "@/components/adminPanel/Stats";
-import TableDevice from "@/components/adminPanel/tableDevice";
+import TableBrand from "@/components/adminPanel/TableBrand";
+import TableDevice from "@/components/adminPanel/TableDevice";
+import TableType from "@/components/adminPanel/TableType";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import Tabs from "@/components/ui/Tabs";
 import { ADMIN_TABS } from "@/utils/constants";
@@ -62,6 +64,8 @@ const Admin = () => {
                   brands={device.brands}
                 />
               )}
+              {tab === "type" && <TableType types={device.types} />}
+              {tab === "brand" && <TableBrand brands={device.brands} />}
 
               {/* Пагинация */}
               <div className="p-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row justify-between items-center gap-4">

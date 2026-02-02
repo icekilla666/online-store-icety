@@ -1,6 +1,6 @@
 import type { IBrand, IDevice, ITypes } from "@/types/types";
 import HeadTable from "./HeadTable";
-import { StarIcon } from "@heroicons/react/20/solid";
+import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const TableDevice = ({
   devices,
@@ -11,10 +11,6 @@ const TableDevice = ({
   brands: IBrand[];
   types: ITypes[];
 }) => {
-  const test = () => {
-
-  }
-  test()
   const getBrandNameById = (
     brands: IBrand[],
     brandId: number | undefined,
@@ -59,7 +55,7 @@ const TableDevice = ({
                 Rating
               </th>
               <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
-                Description
+                Info
               </th>
               <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
                 Actions
@@ -118,8 +114,8 @@ const TableDevice = ({
                       {device.rating.toFixed(1)}
                     </span>
                     <div className="flex text-yellow-400 cursor-default">
-                        {"★".repeat(Math.floor(device.rating))}
-                        {"☆".repeat(5 - Math.floor(device.rating))}
+                      {"★".repeat(Math.floor(device.rating))}
+                      {"☆".repeat(5 - Math.floor(device.rating))}
                     </div>
                   </div>
                 </td>
@@ -131,22 +127,22 @@ const TableDevice = ({
                 <td className="p-4">
                   <div className="flex items-center gap-2">
                     <button
-                      className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
+                      className="p-2 hover:bg-blue-500/10 rounded-lg transition-colors"
                       title="Edit"
                     >
-                      ✏️
+                      <PencilIcon width={25} height={25} />
                     </button>
                     <button
-                      className="p-2 text-green-500 hover:bg-green-500/10 rounded-lg transition-colors"
+                      className="p-2 hover:bg-green-500/10 rounded-lg transition-colors"
                       title="View"
                     >
-                      👁️
+                      <EyeIcon width={25} height={25} />
                     </button>
                     <button
-                      className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                      className="p-2 hover:bg-red-500/10 rounded-lg transition-colors"
                       title="Delete"
                     >
-                      🗑️
+                      <TrashIcon width={25} height={25} />
                     </button>
                   </div>
                 </td>
