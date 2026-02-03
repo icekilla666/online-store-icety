@@ -50,7 +50,7 @@ const DevicePage = () => {
             price={device.price}
           />
         ) : (
-          <Specifications deviceArray={deviceInfo} />
+          <Specifications deviceInfo={deviceInfo} />
         )}
       </div>
     </section>

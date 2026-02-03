@@ -59,7 +59,7 @@ export interface DeviceInfoArray {
   description: string;
 }
 export interface SpecificationsProps {
-  deviceArray: DeviceInfoArray[];
+  deviceInfo: DeviceInfoArray[];
 }
 
 export interface QuantityCounterProps {

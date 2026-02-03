@@ -5,7 +5,7 @@ import TableDevice from "@/components/adminPanel/TableDevice";
 import TableType from "@/components/adminPanel/TableType";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import Tabs from "@/components/ui/Tabs";
-import { ADMIN_TABS } from "@/utils/constants";
+import { ADMIN_TABS, deviceInfo } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { useEffect, useState } from "react";
 
@@ -62,6 +62,7 @@ const Admin = () => {
                   devices={device.devices}
                   types={device.types}
                   brands={device.brands}
+                  info={deviceInfo}
                 />
               )}
               {tab === "type" && <TableType types={device.types} />}
@@ -72,11 +73,11 @@ const Admin = () => {
                 <div className="text-sm text-[var(--color-secondary)]">
                   Showing{" "}
                   <span className="font-medium text-[var(--color-def)]">
-                    1-4
+                    1-10
                   </span>{" "}
                   of{" "}
                   <span className="font-medium text-[var(--color-def)]">
-                    42
+                    {device.devices.length}
                   </span>{" "}
                   devices
                 </div>
