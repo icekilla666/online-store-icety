@@ -1,8 +1,13 @@
 import type { ITypes } from "@/types/types";
 import HeadTable from "./HeadTable";
-import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 const TableType = ({ types }: { types: ITypes[] }) => {
+  const [typeData, setTypeData] = useState<ITypes[]>(types);
+  const deleateType = (id: number) => {
+    setTypeData((prev) => prev.filter((type) => type.id !== id));
+  };
   return (
     <>
       <HeadTable
@@ -10,6 +15,7 @@ const TableType = ({ types }: { types: ITypes[] }) => {
         description="Manage all products in your store"
         placeholder="Search types..."
         textBtn="+ Add Type"
+        array={types}
       />
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -23,16 +29,11 @@ const TableType = ({ types }: { types: ITypes[] }) => {
               <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
                 Name
               </th>
-              <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
-              </th>
-              <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
-              </th>
-              <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
-              </th>
-              <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
-              </th>
-              <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
-              </th>
+              <th className="text-left p-4 text-[var(--color-secondary)] font-medium"></th>
+              <th className="text-left p-4 text-[var(--color-secondary)] font-medium"></th>
+              <th className="text-left p-4 text-[var(--color-secondary)] font-medium"></th>
+              <th className="text-left p-4 text-[var(--color-secondary)] font-medium"></th>
+              <th className="text-left p-4 text-[var(--color-secondary)] font-medium"></th>
               <th className="text-center p-4 text-[var(--color-secondary)] font-medium">
                 Actions
               </th>
@@ -40,7 +41,7 @@ const TableType = ({ types }: { types: ITypes[] }) => {
           </thead>
           <tbody>
             {/* Row 1 */}
-            {types.map((type) => (
+            {typeData.map((type) => (
               <tr
                 key={type.id}
                 className="border-b border-[var(--color-border)]"
@@ -72,14 +73,9 @@ const TableType = ({ types }: { types: ITypes[] }) => {
                       <PencilIcon width={25} height={25} />
                     </button>
                     <button
-                      className="p-2 hover:bg-green-500/10 rounded-lg transition-colors"
-                      title="View"
-                    >
-                      <EyeIcon width={25} height={25} />
-                    </button>
-                    <button
                       className="p-2 hover:bg-red-500/10 rounded-lg transition-colors"
                       title="Delete"
+                      onClick={() => deleateType(type.id)}
                     >
                       <TrashIcon width={25} height={25} />
                     </button>

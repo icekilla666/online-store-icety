@@ -2,6 +2,7 @@ import type { DeviceInfoArray, IBrand, IDevice, ITypes } from "@/types/types";
 import HeadTable from "./HeadTable";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
+import { DEVICE_ROUTE } from "@/utils/constants";
 
 const TableDevice = ({
   devices,
@@ -15,9 +16,12 @@ const TableDevice = ({
   info: DeviceInfoArray[];
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
-
+  const [deviceData, setDeviceData] = useState<IDevice[]>(devices);
   const toggleRow = (id: number) => {
     setExpandedRowId(expandedRowId === id ? null : id);
+  };
+  const deleateDevice = (id: number) => {
+    setDeviceData((prev) => prev.filter((device) => device.id !== id));
   };
   const getBrandNameById = (
     brands: IBrand[],
@@ -38,6 +42,7 @@ const TableDevice = ({
         description="Manage all products in your store"
         placeholder="Search devices..."
         textBtn="+ Add Device"
+        array={deviceData}
       />
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -72,7 +77,7 @@ const TableDevice = ({
             </tr>
           </thead>
           <tbody>
-            {devices.map((device) => (
+            {deviceData.map((device) => (
               <Fragment key={device.id}>
                 <tr
                   className={`border-b border-[var(--color-border)] ${
@@ -154,6 +159,13 @@ const TableDevice = ({
                       <button
                         className="p-2 hover:bg-green-500/10 rounded-lg transition-colors"
                         title="View"
+                        onClick={() =>
+                          window.open(
+                            DEVICE_ROUTE + "/" + device.id,
+                            "_blank",
+                            "noopener,noreferrer",
+                          )
+                        }
                       >
                         <EyeIcon width={25} height={25} />
                       </button>
@@ -161,7 +173,11 @@ const TableDevice = ({
                         className="p-2 hover:bg-red-500/10 rounded-lg transition-colors"
                         title="Delete"
                       >
-                        <TrashIcon width={25} height={25} />
+                        <TrashIcon
+                          onClick={() => deleateDevice(device.id)}
+                          width={25}
+                          height={25}
+                        />
                       </button>
                     </div>
                   </td>

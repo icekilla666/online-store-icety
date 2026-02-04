@@ -1,8 +1,13 @@
 import type { IBrand } from "@/types/types";
 import HeadTable from "./HeadTable";
-import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 const TableBrand = ({ brands }: { brands: IBrand[] }) => {
+  const [brandData, setBrandData] = useState<IBrand[]>(brands);
+  const deleateBrand = (id: number) => {
+    setBrandData((prev) => prev.filter((brand) => brand.id !== id));
+  };
   return (
     <>
       <HeadTable
@@ -10,6 +15,7 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
         description="Manage all products in your store"
         placeholder="Search brands..."
         textBtn="+ Add Brand"
+        array={brands}
       />
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -35,7 +41,7 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
           </thead>
           <tbody>
             {/* Row 1 */}
-            {brands.map((brand) => (
+            {brandData.map((brand) => (
               <tr
                 key={brand.id}
                 className="border-b border-[var(--color-border)]"
@@ -67,14 +73,9 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
                       <PencilIcon width={25} height={25} />
                     </button>
                     <button
-                      className="p-2 hover:bg-green-500/10 rounded-lg transition-colors"
-                      title="View"
-                    >
-                      <EyeIcon width={25} height={25} />
-                    </button>
-                    <button
                       className="p-2 hover:bg-red-500/10 rounded-lg transition-colors"
                       title="Delete"
+                      onClick={() => deleateBrand(brand.id)}
                     >
                       <TrashIcon width={25} height={25} />
                     </button>

@@ -102,4 +102,5 @@ export interface HeadTableProps {
   description: string;
   placeholder: string;
   textBtn: string;
+  array: (IDevice | IBrand | ITypes)[];
 }
