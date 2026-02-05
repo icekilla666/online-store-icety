@@ -1,6 +1,6 @@
-import type { HeadTableProps } from "@/types/types";
+import type { HeadTableProps, IBrand, IDevice, ITypes } from "@/types/types";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const HeadTable = ({
   title,
@@ -8,11 +8,24 @@ const HeadTable = ({
   placeholder,
   textBtn,
   array,
+  onSearch,
 }: HeadTableProps) => {
   const [search, setSearch] = useState("");
-  console.log("qqq", array);
-  
-  const filterSearch = () => {};
+
+  const filterSearch = () => {
+    if (!search.trim()) return array;
+
+    return array.filter((item) => {
+      return item.name.toLowerCase().includes(search.toLowerCase());
+    });
+  };
+
+  useEffect(() => {
+    if (onSearch) {
+      const filtered = filterSearch();
+      onSearch(filtered);
+    }
+  }, [search, array, onSearch]);
 
   return (
     <div className="p-6 border-b border-[var(--color-border)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -27,6 +40,8 @@ const HeadTable = ({
           <MagnifyingGlassIcon className="absolute left-3 w-5 h-5 text-[var(--color-secondary)]" />
           <input
             type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder={placeholder}
             className="pl-10 pr-4 py-2 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors w-full"
           />

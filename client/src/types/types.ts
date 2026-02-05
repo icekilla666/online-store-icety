@@ -96,11 +96,11 @@ export interface FavouriteProductsProps {
 export interface ProfileInfoProps extends IUser, FavouriteProductsProps {
   onClick: () => void;
 }
-
 export interface HeadTableProps {
   title: string;
   description: string;
   placeholder: string;
   textBtn: string;
   array: (IDevice | IBrand | ITypes)[];
+  onSearch?: (filteredArray: (IDevice | IBrand | ITypes)[]) => void;
 }

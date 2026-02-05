@@ -1,7 +1,7 @@
 import type { DeviceInfoArray, IBrand, IDevice, ITypes } from "@/types/types";
 import HeadTable from "./HeadTable";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { DEVICE_ROUTE } from "@/utils/constants";
 
 const TableDevice = ({
@@ -17,12 +17,18 @@ const TableDevice = ({
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
   const [deviceData, setDeviceData] = useState<IDevice[]>(devices);
+  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>(devices);
+
   const toggleRow = (id: number) => {
     setExpandedRowId(expandedRowId === id ? null : id);
   };
-  const deleateDevice = (id: number) => {
+  const filterDevice = (id: number) => {
     setDeviceData((prev) => prev.filter((device) => device.id !== id));
+    setFilteredDevices((prev) => prev.filter((device) => device.id !== id));
   };
+  const handleSearch = useCallback((filteredArray: IDevice[]) => {
+    setFilteredDevices(filteredArray);
+  }, []);
   const getBrandNameById = (
     brands: IBrand[],
     brandId: number | undefined,
@@ -30,7 +36,7 @@ const TableDevice = ({
     const brand = brands.find((b) => b.id === brandId);
     return brand ? brand.name : "Unknown Brand";
   };
-  const getTypeNameById = (types: IBrand[], typeId?: number): string => {
+  const getTypeNameById = (types: ITypes[], typeId?: number): string => {
     const type = types.find((b) => b.id === typeId);
     return type ? type.name : "Unknown Type";
   };
@@ -43,6 +49,7 @@ const TableDevice = ({
         placeholder="Search devices..."
         textBtn="+ Add Device"
         array={deviceData}
+        onSearch={handleSearch}
       />
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -77,7 +84,7 @@ const TableDevice = ({
             </tr>
           </thead>
           <tbody>
-            {deviceData.map((device) => (
+            {filteredDevices.map((device) => (
               <Fragment key={device.id}>
                 <tr
                   className={`border-b border-[var(--color-border)] ${
@@ -174,7 +181,7 @@ const TableDevice = ({
                         title="Delete"
                       >
                         <TrashIcon
-                          onClick={() => deleateDevice(device.id)}
+                          onClick={() => filterDevice(device.id)}
                           width={25}
                           height={25}
                         />
