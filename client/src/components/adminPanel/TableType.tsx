@@ -1,13 +1,22 @@
-import type { ITypes } from "@/types/types";
+import type { ITypes, UnionArray } from "@/types/types";
 import HeadTable from "./HeadTable";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const TableType = ({ types }: { types: ITypes[] }) => {
   const [typeData, setTypeData] = useState<ITypes[]>(types);
-  const deleateType = (id: number) => {
+  const [filteredTypes, setFilteredTypes] = useState<ITypes[]>(types);
+
+  // фильтрация
+  const filterType = (id: number) => {
     setTypeData((prev) => prev.filter((type) => type.id !== id));
+    setFilteredTypes((prev) => prev.filter((type) => type.id !== id));
   };
+
+  // функция для поиска
+  const handleSearch = useCallback((filteredArray: UnionArray[]) => {
+    setFilteredTypes(filteredArray as ITypes[]);
+  }, []);
   return (
     <>
       <HeadTable
@@ -15,7 +24,8 @@ const TableType = ({ types }: { types: ITypes[] }) => {
         description="Manage all products in your store"
         placeholder="Search types..."
         textBtn="+ Add Type"
-        array={types}
+        array={typeData}
+        onSearch={handleSearch}
       />
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -41,7 +51,7 @@ const TableType = ({ types }: { types: ITypes[] }) => {
           </thead>
           <tbody>
             {/* Row 1 */}
-            {typeData.map((type) => (
+            {filteredTypes.map((type) => (
               <tr
                 key={type.id}
                 className="border-b border-[var(--color-border)]"
@@ -75,7 +85,7 @@ const TableType = ({ types }: { types: ITypes[] }) => {
                     <button
                       className="p-2 hover:bg-red-500/10 rounded-lg transition-colors"
                       title="Delete"
-                      onClick={() => deleateType(type.id)}
+                      onClick={() => filterType(type.id)}
                     >
                       <TrashIcon width={25} height={25} />
                     </button>
@@ -85,6 +95,11 @@ const TableType = ({ types }: { types: ITypes[] }) => {
             ))}
           </tbody>
         </table>
+        {filteredTypes.length === 0 && (
+          <div className="text-center py-9">
+            <h2>Ничего не найдено!</h2>
+          </div>
+        )}
       </div>
     </>
   );

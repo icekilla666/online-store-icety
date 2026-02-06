@@ -24,6 +24,7 @@ export interface IDevice {
   price: number;
   rating: number;
   img: string;
+  images: string[];
   typeId?: number;
   brandId?: number;
 }
@@ -96,11 +97,13 @@ export interface FavouriteProductsProps {
 export interface ProfileInfoProps extends IUser, FavouriteProductsProps {
   onClick: () => void;
 }
+
+export type UnionArray = (IDevice | IBrand | ITypes)
 export interface HeadTableProps {
   title: string;
   description: string;
   placeholder: string;
   textBtn: string;
-  array: (IDevice | IBrand | ITypes)[];
-  onSearch?: (filteredArray: (IDevice | IBrand | ITypes)[]) => void;
+  array: UnionArray[];
+  onSearch?: (filteredArray: UnionArray[]) => void;
 }

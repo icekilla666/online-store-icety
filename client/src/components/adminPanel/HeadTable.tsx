@@ -1,4 +1,4 @@
-import type { HeadTableProps, IBrand, IDevice, ITypes } from "@/types/types";
+import type { HeadTableProps } from "@/types/types";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 

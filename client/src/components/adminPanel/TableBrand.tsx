@@ -1,13 +1,21 @@
-import type { IBrand } from "@/types/types";
+import type { IBrand, UnionArray } from "@/types/types";
 import HeadTable from "./HeadTable";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const TableBrand = ({ brands }: { brands: IBrand[] }) => {
   const [brandData, setBrandData] = useState<IBrand[]>(brands);
-  const deleateBrand = (id: number) => {
+  const [filteredBrands, setFilteredBrands] = useState<IBrand[]>(brands);
+
+  // фильтрация
+  const filterType = (id: number) => {
     setBrandData((prev) => prev.filter((brand) => brand.id !== id));
   };
+
+  // функция для поиска
+  const handleSearch = useCallback((filteredArray: UnionArray[]) => {
+    setFilteredBrands(filteredArray as IBrand[]);
+  }, []);
   return (
     <>
       <HeadTable
@@ -15,7 +23,8 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
         description="Manage all products in your store"
         placeholder="Search brands..."
         textBtn="+ Add Brand"
-        array={brands}
+        array={brandData}
+        onSearch={handleSearch}
       />
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -41,7 +50,7 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
           </thead>
           <tbody>
             {/* Row 1 */}
-            {brandData.map((brand) => (
+            {filteredBrands.map((brand) => (
               <tr
                 key={brand.id}
                 className="border-b border-[var(--color-border)]"
@@ -75,7 +84,7 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
                     <button
                       className="p-2 hover:bg-red-500/10 rounded-lg transition-colors"
                       title="Delete"
-                      onClick={() => deleateBrand(brand.id)}
+                      onClick={() => filterType(brand.id)}
                     >
                       <TrashIcon width={25} height={25} />
                     </button>
@@ -85,6 +94,11 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
             ))}
           </tbody>
         </table>
+        {filteredBrands.length === 0 && (
+          <div className="text-center py-9">
+            <h2>Ничего не найдено!</h2>
+          </div>
+        )}
       </div>
     </>
   );

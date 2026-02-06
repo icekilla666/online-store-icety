@@ -1,4 +1,10 @@
-import type { DeviceInfoArray, IBrand, IDevice, ITypes } from "@/types/types";
+import type {
+  DeviceInfoArray,
+  IBrand,
+  IDevice,
+  ITypes,
+  UnionArray,
+} from "@/types/types";
 import HeadTable from "./HeadTable";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useCallback, useState } from "react";
@@ -19,16 +25,23 @@ const TableDevice = ({
   const [deviceData, setDeviceData] = useState<IDevice[]>(devices);
   const [filteredDevices, setFilteredDevices] = useState<IDevice[]>(devices);
 
-  const toggleRow = (id: number) => {
-    setExpandedRowId(expandedRowId === id ? null : id);
-  };
+  // фильтрация
   const filterDevice = (id: number) => {
     setDeviceData((prev) => prev.filter((device) => device.id !== id));
     setFilteredDevices((prev) => prev.filter((device) => device.id !== id));
   };
-  const handleSearch = useCallback((filteredArray: IDevice[]) => {
-    setFilteredDevices(filteredArray);
+
+  // функция для поиска
+  const handleSearch = useCallback((filteredArray: UnionArray[]) => {
+    setFilteredDevices(filteredArray as IDevice[]);
   }, []);
+
+  // кнопка view которая открывает device info
+  const toggleRow = (id: number) => {
+    setExpandedRowId(expandedRowId === id ? null : id);
+  };
+
+  // приравниваем brandId из device в name
   const getBrandNameById = (
     brands: IBrand[],
     brandId: number | undefined,
@@ -36,6 +49,8 @@ const TableDevice = ({
     const brand = brands.find((b) => b.id === brandId);
     return brand ? brand.name : "Unknown Brand";
   };
+
+  // приравниваем typeId из device в name
   const getTypeNameById = (types: ITypes[], typeId?: number): string => {
     const type = types.find((b) => b.id === typeId);
     return type ? type.name : "Unknown Type";
@@ -218,6 +233,11 @@ const TableDevice = ({
             ))}
           </tbody>
         </table>
+        {filteredDevices.length === 0 && (
+          <div className="text-center py-9">
+            <h2>Ничего не найдено!</h2>
+          </div>
+        )}
       </div>
     </>
   );
