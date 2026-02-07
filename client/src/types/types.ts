@@ -106,6 +106,7 @@ export interface HeadTableProps {
   textBtn: string;
   array: UnionArray[];
   onSearch?: (filteredArray: UnionArray[]) => void;
+  onClick: () => void;
 }
 
 export interface TableTemplateProps<T extends UnionArray> {
@@ -121,4 +122,6 @@ export interface TableTemplateProps<T extends UnionArray> {
   renderRow: (item: T, openDeleteModal: (id: number) => void) => ReactNode;
   // Модалка
   modalName?: string;
+  addTitle?: string;
+  addContent?: string;
 }

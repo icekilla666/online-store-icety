@@ -200,6 +200,8 @@ const TableDevice = ({
       renderHeader={renderHeader}
       renderRow={renderRow}
       modalName="device"
+      addTitle="Add device"
+      addContent="Device Content"
     />
   );
 };

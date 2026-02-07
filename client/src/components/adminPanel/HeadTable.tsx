@@ -9,6 +9,7 @@ const HeadTable = ({
   textBtn,
   array,
   onSearch,
+  onClick,
 }: HeadTableProps) => {
   const [search, setSearch] = useState("");
 
@@ -46,7 +47,7 @@ const HeadTable = ({
             className="pl-10 pr-4 py-2 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors w-full"
           />
         </div>
-        <button className="px-4 py-2 bg-[var(--color-custom)] text-white font-medium rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2">
+        <button onClick={onClick} className="px-4 py-2 bg-[var(--color-custom)] text-white font-medium rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2">
           {textBtn}
         </button>
       </div>

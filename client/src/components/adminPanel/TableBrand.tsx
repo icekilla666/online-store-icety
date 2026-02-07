@@ -77,6 +77,8 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
       renderHeader={renderHeader}
       renderRow={renderRow}
       modalName="brand"
+      addTitle="Add brand"
+      addContent="Brand Content"
     />
   );
 };

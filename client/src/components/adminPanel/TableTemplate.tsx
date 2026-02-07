@@ -2,6 +2,7 @@ import type { TableTemplateProps, UnionArray } from "@/types/types";
 import { useCallback, useState, Fragment } from "react";
 import HeadTable from "./HeadTable";
 import ModalDeleate from "../modals/ModalDeleate";
+import Modal from "../modals/Modal";
 
 const TableTemplate = <T extends UnionArray>({
   data,
@@ -12,11 +13,14 @@ const TableTemplate = <T extends UnionArray>({
   renderHeader,
   renderRow,
   modalName = "item",
+  addTitle = "",
+  addContent = "",
 }: TableTemplateProps<T>) => {
   const [items, setItems] = useState<T[]>(data);
   const [filteredItems, setFilteredItems] = useState<T[]>(data);
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Функция удаления
   const handleDelete = useCallback((id: number) => {
@@ -53,6 +57,7 @@ const TableTemplate = <T extends UnionArray>({
         textBtn={textBtn}
         array={items}
         onSearch={handleSearch}
+        onClick={() => setModalOpen(true)}
       />
 
       <div className="overflow-x-auto">
@@ -86,6 +91,14 @@ const TableTemplate = <T extends UnionArray>({
           if (!state) setItemToDelete(null);
         }}
         func={confirmDelete}
+      />
+      <Modal
+        title={addTitle}
+        content={addContent}
+        open={modalOpen}
+        onChange={(modalState: boolean) => {
+          setModalOpen(modalState);
+        }}
       />
     </>
   );

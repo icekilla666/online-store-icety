@@ -77,6 +77,8 @@ const TableType = ({ types }: { types: ITypes[] }) => {
       renderHeader={renderHeader}
       renderRow={renderRow}
       modalName="type"
+      addTitle="Add type"
+      addContent="Type Content"
     />
   );
 };
