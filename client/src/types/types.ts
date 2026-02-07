@@ -98,7 +98,7 @@ export interface ProfileInfoProps extends IUser, FavouriteProductsProps {
   onClick: () => void;
 }
 
-export type UnionArray = (IDevice | IBrand | ITypes)
+export type UnionArray = IDevice | IBrand | ITypes;
 export interface HeadTableProps {
   title: string;
   description: string;
@@ -106,4 +106,19 @@ export interface HeadTableProps {
   textBtn: string;
   array: UnionArray[];
   onSearch?: (filteredArray: UnionArray[]) => void;
+}
+
+export interface TableTemplateProps<T extends UnionArray> {
+  // Данные
+  data: T[];
+  // Конфигурация
+  title: string;
+  description: string;
+  placeholder: string;
+  textBtn: string;
+  // Рендер
+  renderHeader: () => ReactNode;
+  renderRow: (item: T, openDeleteModal: (id: number) => void) => ReactNode;
+  // Модалка
+  modalName?: string;
 }

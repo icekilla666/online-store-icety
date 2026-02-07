@@ -5,14 +5,20 @@ import Tabs from "@/components/ui/Tabs";
 import { DEVICE_PAGE_TABS, deviceInfo } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const DevicePage = () => {
   const [tab, setTab] = useState("buy");
+  const { device } = useStore();
+  const { id } = useParams();
 
   const handleTabs = (value: string) => {
     setTab(value);
   };
-  const { device } = useStore();
+
+  const currentDevice = device.devices.find(
+    (device) => device.id === Number(id),
+  );
 
   return (
     <section className="container">
@@ -24,38 +30,40 @@ const DevicePage = () => {
           className={`cursor-pointer device-tabs`}
         />
       </div>
-      {device.devices.map((device) => (
-        <div className="grid grid-cols-2 gap-32 mb-16">
-          {device.images.length > 1 ? (
+      {currentDevice ? (
+        <div key={currentDevice?.id} className="grid grid-cols-2 gap-32 mb-16">
+          {currentDevice.images.length > 1 ? (
             <div className="flex items-start justify-end">
               <SwiperSlider
-                images={device.images}
-                mainImage={device.img}
-                productName={device.name}
+                images={currentDevice.images}
+                mainImage={currentDevice.img}
+                productName={currentDevice.name}
               />
             </div>
           ) : (
             <div className="flex items-start justify-end">
               <img
                 className="p-9 bg-wrapper rounded-2xl border-2 border-custom"
-                src={device.img}
-                alt={device.name}
+                src={currentDevice.img}
+                alt={currentDevice.name}
               />
             </div>
           )}
 
           {tab === "buy" ? (
             <BuyNow
-              name={device.name}
-              shortDesc={device.shortDesc}
-              rating={device.rating}
-              price={device.price}
+              name={currentDevice.name}
+              shortDesc={currentDevice.shortDesc}
+              rating={currentDevice.rating}
+              price={currentDevice.price}
             />
           ) : (
             <Specifications deviceInfo={deviceInfo} />
           )}
         </div>
-      ))}
+      ) : (
+        <h1>Данные не найдены!</h1>
+      )}
     </section>
   );
 };
