@@ -18,7 +18,7 @@ const TableDevice = ({
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
 
-  // Вспомогательные функции
+  // вспомогательные функции
   const getBrandNameById = (brandId: number | undefined): string => {
     const brand = brands.find((b) => b.id === brandId);
     return brand ? brand.name : "Unknown Brand";
@@ -29,12 +29,12 @@ const TableDevice = ({
     return type ? type.name : "Unknown Type";
   };
 
-  // Переключение раскрытой строки
+  // переключение раскрытой строки
   const toggleRow = (id: number) => {
     setExpandedRowId(expandedRowId === id ? null : id);
   };
 
-  // Рендер заголовков таблицы
+  // рендер заголовков таблицы
   const renderHeader = () => (
     <>
       <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
@@ -66,7 +66,7 @@ const TableDevice = ({
     </>
   );
 
-  // Рендер строки устройства
+  // рендер строки устройства
   const renderRow = (
     device: IDevice,
     openDeleteModal: (id: number) => void,
@@ -163,7 +163,7 @@ const TableDevice = ({
         </td>
       </tr>
 
-      {/* Раскрывающаяся строка с деталями */}
+      {/* раскрывающаяся строка с деталями */}
       {expandedRowId === device.id && (
         <tr className="border-b border-[var(--color-border)] bg-[var(--color-primary)]">
           <td colSpan={8} className="p-6">
@@ -199,9 +199,6 @@ const TableDevice = ({
       textBtn="+ Add Device"
       renderHeader={renderHeader}
       renderRow={renderRow}
-      modalName="device"
-      addTitle="Add device"
-      addContent="Device Content"
     />
   );
 };

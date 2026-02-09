@@ -120,8 +120,5 @@ export interface TableTemplateProps<T extends UnionArray> {
   // Рендер
   renderHeader: () => ReactNode;
   renderRow: (item: T, openDeleteModal: (id: number) => void) => ReactNode;
-  // Модалка
   modalName?: string;
-  addTitle?: string;
-  addContent?: string;
 }

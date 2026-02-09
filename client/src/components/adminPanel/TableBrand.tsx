@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import TableTemplate from "./TableTemplate";
 
 const TableBrand = ({ brands }: { brands: IBrand[] }) => {
-  // Рендер заголовков таблицы
+  // рендер заголовков таблицы
   const renderHeader = () => (
     <>
       <th className="text-left p-4 text-[var(--color-secondary)] font-medium">
@@ -26,7 +26,7 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
     </>
   );
 
-  // Рендер строки устройства
+  // рендер строки устройства
   const renderRow = (brand: IBrand, openDeleteModal: (id: number) => void) => (
     <Fragment key={brand.id}>
       <tr key={brand.id} className="border-b border-[var(--color-border)]">

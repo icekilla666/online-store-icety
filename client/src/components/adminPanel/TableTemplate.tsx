@@ -2,7 +2,6 @@ import type { TableTemplateProps, UnionArray } from "@/types/types";
 import { useCallback, useState, Fragment } from "react";
 import HeadTable from "./HeadTable";
 import ModalDeleate from "../modals/ModalDeleate";
-import Modal from "../modals/Modal";
 
 const TableTemplate = <T extends UnionArray>({
   data,
@@ -13,8 +12,6 @@ const TableTemplate = <T extends UnionArray>({
   renderHeader,
   renderRow,
   modalName = "item",
-  addTitle = "",
-  addContent = "",
 }: TableTemplateProps<T>) => {
   const [items, setItems] = useState<T[]>(data);
   const [filteredItems, setFilteredItems] = useState<T[]>(data);
@@ -22,24 +19,24 @@ const TableTemplate = <T extends UnionArray>({
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Функция удаления
+  // функция удаления
   const handleDelete = useCallback((id: number) => {
     setItems((prev) => prev.filter((item) => item.id !== id));
     setFilteredItems((prev) => prev.filter((item) => item.id !== id));
   }, []);
 
-  // Функция поиска
+  // функция поиска
   const handleSearch = useCallback((filteredArray: UnionArray[]) => {
     setFilteredItems(filteredArray as T[]);
   }, []);
 
-  // Открытие модалки удаления
+  // открытие модалки удаления
   const openDeleteModal = (id: number) => {
     setItemToDelete(id);
     setOpen(true);
   };
 
-  // Подтверждение удаления
+  // подтверждение удаления
   const confirmDelete = () => {
     if (itemToDelete) {
       handleDelete(itemToDelete);
@@ -82,7 +79,8 @@ const TableTemplate = <T extends UnionArray>({
           </div>
         )}
       </div>
-
+      
+      {/* модалка с подтверждением на удаление */}
       <ModalDeleate
         name={modalName}
         open={open}
@@ -91,14 +89,6 @@ const TableTemplate = <T extends UnionArray>({
           if (!state) setItemToDelete(null);
         }}
         func={confirmDelete}
-      />
-      <Modal
-        title={addTitle}
-        content={addContent}
-        open={modalOpen}
-        onChange={(modalState: boolean) => {
-          setModalOpen(modalState);
-        }}
       />
     </>
   );
