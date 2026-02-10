@@ -119,6 +119,55 @@ export interface TableTemplateProps<T extends UnionArray> {
   textBtn: string;
   // Рендер
   renderHeader: () => ReactNode;
-  renderRow: (item: T, openDeleteModal: (id: number) => void) => ReactNode;
+  renderRow: (
+    item: T,
+    openEditModal: (id: number) => void,
+    openDeleteModal: (id: number) => void,
+  ) => ReactNode;
   modalName?: string;
+  modal: () => void;
+}
+
+export interface Characteristic {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface DeviceFormData {
+  name: string;
+  shortDesc: string;
+  price: number;
+  brandId: number;
+  typeId: number;
+  rating: number;
+  img?: string;
+  images?: string[];
+  characteristics: Characteristic[];
+}
+
+export interface ModalDeviceProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: DeviceFormData) => void;
+  initialData?: DeviceFormData;
+  brands: Array<{ id: number; name: string }>;
+  types: Array<{ id: number; name: string }>;
+  title?: string;
+}
+
+export interface ModalTypeProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: { name: string }) => void;
+  initialData?: { name: string };
+  title?: string;
+}
+
+export interface ModalBrandProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: { name: string }) => void;
+  initialData?: { name: string };
+  title?: string;
 }

@@ -1,9 +1,12 @@
 import type { ITypes } from "@/types/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
+import ModalType from "../modals/ModalType";
 
 const TableType = ({ types }: { types: ITypes[] }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   // рендер заголовков таблицы
   const renderHeader = () => (
     <>
@@ -68,18 +71,24 @@ const TableType = ({ types }: { types: ITypes[] }) => {
   );
 
   return (
-    <TableTemplate<ITypes>
-      data={types}
-      title="Type Inventory"
-      description="Manage all products in your store"
-      placeholder="Search types..."
-      textBtn="+ Add Types"
-      renderHeader={renderHeader}
-      renderRow={renderRow}
-      modalName="type"
-      addTitle="Add type"
-      addContent="Type Content"
-    />
+    <>
+      <TableTemplate<ITypes>
+        data={types}
+        title="Type Inventory"
+        description="Manage all products in your store"
+        placeholder="Search types..."
+        textBtn="+ Add Types"
+        renderHeader={renderHeader}
+        renderRow={renderRow}
+        modalName="type"
+        modal={() => setModalOpen(true)}
+      />
+      <ModalType
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={(data) => console.log(data)}
+      />
+    </>
   );
 };
 

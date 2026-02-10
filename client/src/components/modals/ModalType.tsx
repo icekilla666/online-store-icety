@@ -1,3 +1,4 @@
+import type { ModalTypeProps } from "@/types/types";
 import {
   Dialog,
   DialogBackdrop,
@@ -6,14 +7,6 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-
-interface ModalTypeProps {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (data: { name: string }) => void;
-  initialData?: { name: string };
-  title?: string;
-}
 
 const ModalType = ({
   open,

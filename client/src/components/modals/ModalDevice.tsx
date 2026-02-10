@@ -1,3 +1,4 @@
+import type { DeviceFormData, ModalDeviceProps } from "@/types/types";
 import {
   Dialog,
   DialogBackdrop,
@@ -6,34 +7,6 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-
-interface Characteristic {
-  id: number;
-  title: string;
-  description: string;
-}
-
-interface DeviceFormData {
-  name: string;
-  shortDesc: string;
-  price: number;
-  brandId: number;
-  typeId: number;
-  rating: number;
-  img?: string;
-  images?: string[];
-  characteristics: Characteristic[];
-}
-
-interface ModalDeviceProps {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (data: DeviceFormData) => void;
-  initialData?: DeviceFormData;
-  brands: Array<{ id: number; name: string }>;
-  types: Array<{ id: number; name: string }>;
-  title?: string;
-}
 
 const ModalDevice = ({
   open,

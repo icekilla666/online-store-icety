@@ -2,6 +2,7 @@ import type { TableTemplateProps, UnionArray } from "@/types/types";
 import { useCallback, useState, Fragment } from "react";
 import HeadTable from "./HeadTable";
 import ModalDeleate from "../modals/ModalDeleate";
+import ModalEdit from "../modals/ModalEdit";
 
 const TableTemplate = <T extends UnionArray>({
   data,
@@ -12,12 +13,13 @@ const TableTemplate = <T extends UnionArray>({
   renderHeader,
   renderRow,
   modalName = "item",
+  modal,
 }: TableTemplateProps<T>) => {
   const [items, setItems] = useState<T[]>(data);
   const [filteredItems, setFilteredItems] = useState<T[]>(data);
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   // функция удаления
   const handleDelete = useCallback((id: number) => {
@@ -34,6 +36,12 @@ const TableTemplate = <T extends UnionArray>({
   const openDeleteModal = (id: number) => {
     setItemToDelete(id);
     setOpen(true);
+  };
+
+  // открытие модалки редактирования
+  const openEditModal = (id: number) => {
+    setItemToDelete(id)
+    setEditOpen(true);
   };
 
   // подтверждение удаления
@@ -54,7 +62,7 @@ const TableTemplate = <T extends UnionArray>({
         textBtn={textBtn}
         array={items}
         onSearch={handleSearch}
-        onClick={() => setModalOpen(true)}
+        onClick={modal}
       />
 
       <div className="overflow-x-auto">
@@ -67,7 +75,7 @@ const TableTemplate = <T extends UnionArray>({
           <tbody>
             {filteredItems.map((item) => (
               <Fragment key={item.id}>
-                {renderRow(item, openDeleteModal)}
+                {renderRow(item, openDeleteModal, openEditModal)}
               </Fragment>
             ))}
           </tbody>
@@ -79,7 +87,7 @@ const TableTemplate = <T extends UnionArray>({
           </div>
         )}
       </div>
-      
+
       {/* модалка с подтверждением на удаление */}
       <ModalDeleate
         name={modalName}
@@ -89,6 +97,13 @@ const TableTemplate = <T extends UnionArray>({
           if (!state) setItemToDelete(null);
         }}
         func={confirmDelete}
+      />
+
+      {/* модалка для редактирования */}
+      <ModalEdit
+        id={itemToDelete}
+        open={editOpen}
+        onChange={(state: boolean) => setEditOpen(state)}
       />
     </>
   );

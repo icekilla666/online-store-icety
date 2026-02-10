@@ -4,6 +4,8 @@ import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import { DEVICE_ROUTE } from "@/utils/constants";
 import TableTemplate from "./TableTemplate";
+import ModalDevice from "../modals/ModalDevice";
+import { useStore } from "@/utils/context";
 
 const TableDevice = ({
   devices,
@@ -17,6 +19,8 @@ const TableDevice = ({
   info: DeviceInfoArray[];
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { device } = useStore();
 
   // вспомогательные функции
   const getBrandNameById = (brandId: number | undefined): string => {
@@ -70,6 +74,7 @@ const TableDevice = ({
   const renderRow = (
     device: IDevice,
     openDeleteModal: (id: number) => void,
+    openEditModal: (id: number) => void,
   ) => (
     <Fragment key={device.id}>
       <tr className="border-b border-[var(--color-border)]">
@@ -136,6 +141,7 @@ const TableDevice = ({
             <button
               className="p-2 hover:bg-blue-500/10 rounded-lg transition-colors"
               title="Edit"
+              onClick={() => openEditModal(device.id)}
             >
               <PencilIcon width={25} height={25} />
             </button>
@@ -191,15 +197,25 @@ const TableDevice = ({
   );
 
   return (
-    <TableTemplate<IDevice>
-      data={devices}
-      title="Device Inventory"
-      description="Manage all products in your store"
-      placeholder="Search devices..."
-      textBtn="+ Add Device"
-      renderHeader={renderHeader}
-      renderRow={renderRow}
-    />
+    <>
+      <TableTemplate<IDevice>
+        data={devices}
+        title="Device Inventory"
+        description="Manage all products in your store"
+        placeholder="Search devices..."
+        textBtn="+ Add Device"
+        renderHeader={renderHeader}
+        renderRow={renderRow}
+        modal={() => setModalOpen(true)}
+      />
+      <ModalDevice
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={(data) => console.log(data)}
+        types={device.types}
+        brands={device.brands}
+      />
+    </>
   );
 };
 

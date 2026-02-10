@@ -1,9 +1,11 @@
 import type { IBrand } from "@/types/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
+import ModalBrand from "../modals/ModalBrand";
 
 const TableBrand = ({ brands }: { brands: IBrand[] }) => {
+  const [modalOpen, setModalOpen] = useState(false);
   // рендер заголовков таблицы
   const renderHeader = () => (
     <>
@@ -68,18 +70,20 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
   );
 
   return (
-    <TableTemplate<IBrand>
-      data={brands}
-      title="Brand Inventory"
-      description="Manage all products in your store"
-      placeholder="Search brands..."
-      textBtn="+ Add Brands"
-      renderHeader={renderHeader}
-      renderRow={renderRow}
-      modalName="brand"
-      addTitle="Add brand"
-      addContent="Brand Content"
-    />
+    <>
+      <TableTemplate<IBrand>
+        data={brands}
+        title="Brand Inventory"
+        description="Manage all products in your store"
+        placeholder="Search brands..."
+        textBtn="+ Add Brands"
+        renderHeader={renderHeader}
+        renderRow={renderRow}
+        modalName="brand"
+        modal={() => setModalOpen(true)}
+      />
+      <ModalBrand open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={(data) => console.log(data)}/>
+    </>
   );
 };
 
