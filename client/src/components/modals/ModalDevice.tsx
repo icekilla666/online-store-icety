@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { XMarkIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ModalDevice = ({
   open,
@@ -17,8 +17,23 @@ const ModalDevice = ({
   types,
   title = "Add New Device",
 }: ModalDeviceProps) => {
-  const [formData, setFormData] = useState<DeviceFormData>(
-    initialData || {
+  const [formData, setFormData] = useState<DeviceFormData>({
+    name: "",
+    shortDesc: "",
+    price: 0,
+    brandId: brands[0]?.id || 0,
+    typeId: types[0]?.id || 0,
+    rating: 5.0,
+    characteristics: [],
+  });
+
+  useEffect(() => {
+    if (!open) return;
+    if (initialData) {
+      setFormData(initialData);
+      return;
+    }
+    setFormData({
       name: "",
       shortDesc: "",
       price: 0,
@@ -26,8 +41,8 @@ const ModalDevice = ({
       typeId: types[0]?.id || 0,
       rating: 5.0,
       characteristics: [],
-    },
-  );
+    });
+  }, [open, initialData, brands, types]);
 
   const [newChar, setNewChar] = useState({ title: "", description: "" });
 
@@ -236,19 +251,16 @@ const ModalDevice = ({
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                    <div className="md:col-span-1">
+                  <div className="flex flex-col justify-between md:flex-row">
                       <input
                         type="text"
                         value={newChar.title}
                         onChange={(e) =>
                           setNewChar({ ...newChar, title: e.target.value })
                         }
-                        className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
+                        className="px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
                         placeholder="Title"
                       />
-                    </div>
-                    <div className="md:col-span-1">
                       <input
                         type="text"
                         value={newChar.description}
@@ -258,20 +270,17 @@ const ModalDevice = ({
                             description: e.target.value,
                           })
                         }
-                        className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
+                        className="px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
                         placeholder="Description"
                       />
-                    </div>
-                    <div className="md:col-span-1">
                       <button
                         type="button"
                         onClick={addCharacteristic}
-                        className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-[var(--color-custom)] text-white rounded-lg hover:opacity-90"
+                        className="flex items-center justify-center gap-2 px-3 py-2 bg-[var(--color-custom)] text-white rounded-lg hover:opacity-90"
                       >
                         <PlusIcon className="h-4 w-4" />
                         Add Characteristic
                       </button>
-                    </div>
                   </div>
 
                   {formData.characteristics.length > 0 && (

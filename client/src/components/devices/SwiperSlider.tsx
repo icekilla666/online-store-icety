@@ -1,6 +1,5 @@
-// components/ui/SwiperSlider.tsx
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs, FreeMode, Autoplay } from "swiper/modules"; // Добавили Autoplay
+import { Navigation, Thumbs, FreeMode, Autoplay } from "swiper/modules"; 
 import { useState } from "react";
 import "swiper/swiper.css";
 

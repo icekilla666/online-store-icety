@@ -6,6 +6,15 @@ import ModalType from "../modals/ModalType";
 
 const TableType = ({ types }: { types: ITypes[] }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editingType, setEditingType] = useState<ITypes | null>(null);
+
+  const openEditModal = (typeId: number) => {
+    const type = types.find((item) => item.id === typeId);
+    if (!type) return;
+    setEditingType(type);
+    setEditOpen(true);
+  };
 
   // рендер заголовков таблицы
   const renderHeader = () => (
@@ -54,6 +63,7 @@ const TableType = ({ types }: { types: ITypes[] }) => {
             <button
               className="p-2 hover:bg-blue-500/10 rounded-lg transition-colors"
               title="Edit"
+              onClick={() => openEditModal(type.id)}
             >
               <PencilIcon width={25} height={25} />
             </button>
@@ -87,6 +97,16 @@ const TableType = ({ types }: { types: ITypes[] }) => {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         onSubmit={(data) => console.log(data)}
+      />
+      <ModalType
+        open={editOpen}
+        onClose={() => {
+          setEditOpen(false);
+          setEditingType(null);
+        }}
+        onSubmit={(data) => console.log(data)}
+        initialData={editingType ? { name: editingType.name } : undefined}
+        title="Edit Type"
       />
     </>
   );

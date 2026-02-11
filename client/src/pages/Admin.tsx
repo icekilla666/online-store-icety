@@ -4,6 +4,7 @@ import TableBrand from "@/components/adminPanel/TableBrand";
 import TableDevice from "@/components/adminPanel/TableDevice";
 import TableType from "@/components/adminPanel/TableType";
 import AnimatedContent from "@/components/ui/AnimatedContent";
+import Pagitanion from "@/components/ui/Pagination";
 import Tabs from "@/components/ui/Tabs";
 import { ADMIN_TABS, deviceInfo } from "@/utils/constants";
 import { useStore } from "@/utils/context";
@@ -58,67 +59,29 @@ const Admin = () => {
 
               {/* Таблица Devices */}
               {tab === "dev" && (
-                <TableDevice
-                  devices={device.devices}
-                  types={device.types}
-                  brands={device.brands}
-                  info={deviceInfo}
-                />
+                <>
+                  <TableDevice
+                    devices={device.devices}
+                    types={device.types}
+                    brands={device.brands}
+                    info={deviceInfo}
+                  />
+                  <Pagitanion array={device.devices} />
+                </>
               )}
-              {tab === "type" && <TableType types={device.types} />}
-              {tab === "brand" && <TableBrand brands={device.brands} />}
-
-              {/* Пагинация */}
-              <div className="p-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div className="text-sm text-[var(--color-secondary)]">
-                  Showing{" "}
-                  <span className="font-medium text-[var(--color-def)]">
-                    1-10
-                  </span>{" "}
-                  of{" "}
-                  <span className="font-medium text-[var(--color-def)]">
-                    {device.devices.length}
-                  </span>{" "}
-                  devices
-                </div>
-                <div className="flex items-center space-x-2">
-                  <button className="p-2 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                    ←
-                  </button>
-                  <button className="w-10 h-10 bg-[var(--color-custom)] text-white rounded-lg font-medium">
-                    1
-                  </button>
-                  <button className="w-10 h-10 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors font-medium">
-                    2
-                  </button>
-                  <button className="w-10 h-10 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors font-medium">
-                    3
-                  </button>
-                  <span className="px-2 text-[var(--color-secondary)]">
-                    ...
-                  </span>
-                  <button className="w-10 h-10 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors font-medium">
-                    10
-                  </button>
-                  <button className="p-2 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors">
-                    →
-                  </button>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-[var(--color-secondary)]">
-                    Show:
-                  </span>
-                  <select className="bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg px-3 py-2 text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]">
-                    <option>10</option>
-                    <option>25</option>
-                    <option>50</option>
-                    <option>100</option>
-                  </select>
-                  <span className="text-sm text-[var(--color-secondary)]">
-                    per page
-                  </span>
-                </div>
-              </div>
+              {tab === "type" && (
+                <>
+                  {" "}
+                  <TableType types={device.types} />{" "}
+                  <Pagitanion array={device.types} />
+                </>
+              )}
+              {tab === "brand" && (
+                <>
+                  <TableBrand brands={device.brands} />{" "}
+                  <Pagitanion array={device.brands} />{" "}
+                </>
+              )}
             </div>
           </div>
         </div>

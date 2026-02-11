@@ -1,4 +1,3 @@
-// context/index.ts
 import React, { createContext } from "react";
 import type UserStore from "../store/UserStorage";
 import type DeviceStore from "../store/DeviceStore";

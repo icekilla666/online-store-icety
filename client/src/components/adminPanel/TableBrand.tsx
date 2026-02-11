@@ -6,6 +6,15 @@ import ModalBrand from "../modals/ModalBrand";
 
 const TableBrand = ({ brands }: { brands: IBrand[] }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editingBrand, setEditingBrand] = useState<IBrand | null>(null);
+
+  const openEditModal = (brandId: number) => {
+    const brand = brands.find((item) => item.id === brandId);
+    if (!brand) return;
+    setEditingBrand(brand);
+    setEditOpen(true);
+  };
   // рендер заголовков таблицы
   const renderHeader = () => (
     <>
@@ -53,6 +62,7 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
             <button
               className="p-2 hover:bg-blue-500/10 rounded-lg transition-colors"
               title="Edit"
+              onClick={() => openEditModal(brand.id)}
             >
               <PencilIcon width={25} height={25} />
             </button>
@@ -83,6 +93,16 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
         modal={() => setModalOpen(true)}
       />
       <ModalBrand open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={(data) => console.log(data)}/>
+      <ModalBrand
+        open={editOpen}
+        onClose={() => {
+          setEditOpen(false);
+          setEditingBrand(null);
+        }}
+        onSubmit={(data) => console.log(data)}
+        initialData={editingBrand ? { name: editingBrand.name } : undefined}
+        title="Edit Brand"
+      />
     </>
   );
 };

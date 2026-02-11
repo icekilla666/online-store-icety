@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ModalBrand = ({
   open,
@@ -16,6 +16,12 @@ const ModalBrand = ({
   title = "Add New Brand",
 }: ModalBrandProps) => {
   const [name, setName] = useState(initialData?.name || "");
+
+  useEffect(() => {
+    if (open) {
+      setName(initialData?.name || "");
+    }
+  }, [open, initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

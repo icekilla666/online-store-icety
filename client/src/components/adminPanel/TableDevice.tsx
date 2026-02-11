@@ -1,4 +1,3 @@
-// components/ui/TableDevice.tsx
 import type { DeviceInfoArray, IBrand, IDevice, ITypes } from "@/types/types";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
@@ -20,6 +19,8 @@ const TableDevice = ({
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editingDevice, setEditingDevice] = useState<IDevice | null>(null);
   const { device } = useStore();
 
   // вспомогательные функции
@@ -36,6 +37,13 @@ const TableDevice = ({
   // переключение раскрытой строки
   const toggleRow = (id: number) => {
     setExpandedRowId(expandedRowId === id ? null : id);
+  };
+
+  const openEditModal = (deviceId: number) => {
+    const found = devices.find((item) => item.id === deviceId);
+    if (!found) return;
+    setEditingDevice(found);
+    setEditOpen(true);
   };
 
   // рендер заголовков таблицы
@@ -74,7 +82,6 @@ const TableDevice = ({
   const renderRow = (
     device: IDevice,
     openDeleteModal: (id: number) => void,
-    openEditModal: (id: number) => void,
   ) => (
     <Fragment key={device.id}>
       <tr className="border-b border-[var(--color-border)]">
@@ -214,6 +221,32 @@ const TableDevice = ({
         onSubmit={(data) => console.log(data)}
         types={device.types}
         brands={device.brands}
+      />
+      <ModalDevice
+        open={editOpen}
+        onClose={() => {
+          setEditOpen(false);
+          setEditingDevice(null);
+        }}
+        onSubmit={(data) => console.log(data)}
+        types={device.types}
+        brands={device.brands}
+        initialData={
+          editingDevice
+            ? {
+                name: editingDevice.name,
+                shortDesc: editingDevice.shortDesc,
+                price: editingDevice.price,
+                brandId: editingDevice.brandId ?? device.brands[0]?.id ?? 0,
+                typeId: editingDevice.typeId ?? device.types[0]?.id ?? 0,
+                rating: editingDevice.rating,
+                img: editingDevice.img,
+                images: editingDevice.images,
+                characteristics: [],
+              }
+            : undefined
+        }
+        title="Edit Device"
       />
     </>
   );
