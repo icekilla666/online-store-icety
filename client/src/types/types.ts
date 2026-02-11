@@ -24,6 +24,9 @@ export interface IDevice {
   price: number;
   rating: number;
   img: string;
+  images: string[];
+  typeId?: number;
+  brandId?: number;
 }
 
 export interface HeadProps {
@@ -57,7 +60,7 @@ export interface DeviceInfoArray {
   description: string;
 }
 export interface SpecificationsProps {
-  deviceArray: DeviceInfoArray[];
+  deviceInfo: DeviceInfoArray[];
 }
 
 export interface QuantityCounterProps {
@@ -93,4 +96,77 @@ export interface FavouriteProductsProps {
 
 export interface ProfileInfoProps extends IUser, FavouriteProductsProps {
   onClick: () => void;
+}
+
+export type UnionArray = IDevice | IBrand | ITypes;
+export interface HeadTableProps {
+  title: string;
+  description: string;
+  placeholder: string;
+  textBtn: string;
+  array: UnionArray[];
+  onSearch?: (filteredArray: UnionArray[]) => void;
+  onClick: () => void;
+}
+
+export interface TableTemplateProps<T extends UnionArray> {
+  // Данные
+  data: T[];
+  // Конфигурация
+  title: string;
+  description: string;
+  placeholder: string;
+  textBtn: string;
+  // Рендер
+  renderHeader: () => ReactNode;
+  renderRow: (
+    item: T,
+    openDeleteModal: (id: number) => void,
+  ) => ReactNode;
+  modalName?: string;
+  modal: () => void;
+}
+
+export interface Characteristic {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface DeviceFormData {
+  name: string;
+  shortDesc: string;
+  price: number;
+  brandId: number;
+  typeId: number;
+  rating: number;
+  img?: string;
+  images?: string[];
+  characteristics: Characteristic[];
+}
+
+export interface ModalDeviceProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: DeviceFormData) => void;
+  initialData?: DeviceFormData;
+  brands: Array<{ id: number; name: string }>;
+  types: Array<{ id: number; name: string }>;
+  title?: string;
+}
+
+export interface ModalTypeProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: { name: string }) => void;
+  initialData?: { name: string };
+  title?: string;
+}
+
+export interface ModalBrandProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: { name: string }) => void;
+  initialData?: { name: string };
+  title?: string;
 }

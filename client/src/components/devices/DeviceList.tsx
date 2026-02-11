@@ -52,6 +52,7 @@ const DeviceList = observer(() => {
               key={device.id}
               id={device.id}
               img={device.img}
+              images={device.images}
               name={device.name}
               shortDesc={device.shortDesc}
               rating={device.rating}
@@ -63,6 +64,7 @@ const DeviceList = observer(() => {
               key={device.id}
               id={device.id}
               img={device.img}
+              images={device.images}
               name={device.name}
               shortDesc={device.shortDesc}
               rating={device.rating}

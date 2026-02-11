@@ -23,8 +23,8 @@ const DeviceCardGrid = ({
 
       <div className="flex w-full flex-col justify-between pt-4 border-t-2 border-border gap-8">
         <div className="flex flex-col justify-between">
-          <div className="flex justify-between items-baseline">
-            <h2 className="mb-1">{name}</h2>
+          <div className="flex justify-between items-baseline min-h-[75px] mb-1">
+            <h2 className="text-[24px]">{name}</h2>
             <div className="flex items-center gap-[2px]">
               <StarIcon color="#D7AB4D" width={22} height={22} />
               <span className="text-[18px]">{rating}</span>

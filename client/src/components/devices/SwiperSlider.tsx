@@ -1,6 +1,5 @@
-// components/ui/SwiperSlider.tsx
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs, FreeMode } from "swiper/modules";
+import { Navigation, Thumbs, FreeMode, Autoplay } from "swiper/modules"; 
 import { useState } from "react";
 import "swiper/swiper.css";
 
@@ -25,9 +24,14 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
     <div className={`relative w-full ${className}`}>
       <div className="relative mb-6">
         <Swiper
-          modules={[Navigation, Thumbs]}
+          modules={[Navigation, Thumbs, Autoplay]} 
           thumbs={{ swiper: thumbsSwiper }}
           className="rounded-xl overflow-hidden"
+          loop={true} 
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
         >
           {allImages.map((image, index) => (
             <SwiperSlide key={index}>
@@ -48,24 +52,41 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
       {allImages.length > 1 && (
         <div className="py-2 px-4 border border-border rounded-[30px]">
           <Swiper
-            modules={[FreeMode, Thumbs]}
+            modules={[FreeMode, Thumbs, Autoplay]} 
             onSwiper={setThumbsSwiper}
             watchSlidesProgress
             freeMode={true}
             slidesPerView={4}
             spaceBetween={12}
             className="thumbs-slider"
+            loop={true}
+            autoplay={{
+              delay: 2000, 
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              320: {
+                slidesPerView: 2,
+                spaceBetween: 8,
+              },
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 12,
+              },
+            }}
           >
             {allImages.map((image, index) => (
               <SwiperSlide key={index}>
-                <div
-                  className="cursor-pointer transition-all duration-200 "
-                >
+                <div className="cursor-pointer transition-all duration-200 hover:opacity-80">
                   <div className="aspect-square flex items-center justify-center p-1">
                     <img
                       src={image}
                       alt={`Миниатюра ${index + 1}`}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain rounded-lg"
                     />
                   </div>
                 </div>

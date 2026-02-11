@@ -16,6 +16,8 @@ import {
   InformationCircleIcon,
   HeartIcon,
   Cog6ToothIcon,
+  TagIcon,
+  BoldIcon,
 } from "@heroicons/react/24/outline";
 
 export const ADMIN_ROUTE = "/admin";
@@ -170,16 +172,33 @@ export const DASHBOARD_TABS: TabArrayProps[] = [
   {
     value: "profile",
     name: "Profile Information",
-    img: <InformationCircleIcon width={34} height={34}/>,
+    img: <InformationCircleIcon width={34} height={34} />,
   },
   {
     value: "wishlist",
     name: "Favourite Products",
-    img: <HeartIcon width={34} height={34}/>,
+    img: <HeartIcon width={34} height={34} />,
   },
   {
     value: "settings",
     name: "Account Settings",
-    img: <Cog6ToothIcon width={34} height={34}/>,
+    img: <Cog6ToothIcon width={34} height={34} />,
   },
+];
+export const ADMIN_TABS: TabArrayProps[] = [
+  {
+    value: "dev",
+    name: "Devices",
+    img: <DevicePhoneMobileIcon width={30} height={30} />,
+  },
+  {
+    value: "type",
+    name: "Types",
+    img: <TagIcon width={30} height={30} />,
+  },
+  {
+    value: "brand",
+    name: "Brands",
+    img: <BoldIcon width={30} height={30} />,
+  }
 ];
