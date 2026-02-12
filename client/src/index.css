@@ -114,7 +114,7 @@ p {
     @apply flex border-b border-[var(--color-border)];
   }
   .admin-tabs button {
-    @apply px-6 py-4 font-medium border-b-2 border-transparent text-sm transition-colors relative flex items-center gap-2 text-[var(--color-secondary)] hover:text-[var(--color-def)] ;
+    @apply px-6 py-4 font-medium border-b-2 border-transparent text-sm transition-colors relative flex items-center gap-2 text-[var(--color-secondary)] hover:text-[var(--color-def)];
   }
   .admin-tabs button.active {
     @apply text-[var(--color-custom)] border-b-2 border-[var(--color-custom)];
