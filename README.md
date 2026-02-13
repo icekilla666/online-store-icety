@@ -1,14 +1,13 @@
-npm i
+<h1>npm i</h1>
 
 
-CLIENT: 
-npm run dev
+<h2>CLIENT: <br> npm run dev</h2> 
 
-SERVER: 
-npm run dev
+<h2>SERVER: <br> npm run dev</h2> 
 
 
-ADMIN CREADS
-
-email: adminka@mail.ru
+<h2>ADMIN CREADS:
+<br>
+email: adminka@mail.ru <br>
 pass: admin
+</h2>
