@@ -1,0 +1,74 @@
+import type { BasketListProps } from "@/types/types";
+import { StarIcon } from "@heroicons/react/20/solid";
+import QuantityCounter from "../ui/QuantityCounter";
+
+const BasketList = ({ devices, quantities, onQuantityChange }: BasketListProps) => {
+  
+  return (
+    <div className="grid gap-4">
+      {devices.map((device) => {
+        const qty = quantities[device.id] ?? 1;
+
+        return (
+          <article
+            key={device.id}
+            className="rounded-[26px] border border-[var(--color-border)] bg-wrapper p-5 sm:p-6"
+          >
+            <div className="flex flex-col gap-8 sm:flex-row sm:items-center">
+              <div className="flex items-center gap-4 sm:w-1/2">
+                <div className="w-full p-3 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
+                  <img
+                    src={device.img}
+                    alt={device.name}
+                    className="w-full max-h-[200px] object-contain"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-[20px] font-semibold text-[var(--color-def)]">
+                    {device.name}
+                  </h3>
+                  <p className="text-sm text-[var(--color-secondary)] line-clamp-2">
+                    {device.shortDesc}
+                  </p>
+                  <div className="flex items-center mt-2">
+                    <span className="h-[15px] text-sm text-[var(--color-secondary)]">
+                      {device.rating}
+                    </span>
+                    <StarIcon width={20} height={20} color="#D7AB4D" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-1 items-center justify-between gap-6">
+                <QuantityCounter
+                  initialValue={qty}
+                  onChange={(value) => onQuantityChange(device.id, value)}
+                />
+
+                <div className="text-right">
+                  <p className="text-xs uppercase tracking-[0.25em] text-[var(--color-secondary)]">
+                    Price
+                  </p>
+                  <p className="text-[20px] font-semibold text-[var(--color-def)]">
+                    $
+                    {new Intl.NumberFormat("en-EN").format(device.price * qty)}
+                  </p>
+                </div>
+                <button
+                  onClick={() => console.log("delete", device.id)}
+                  className="text-sm text-[var(--color-secondary)] hover:text-[var(--color-custom)] transition-colors"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+
+      
+    </div>
+  );
+};
+
+export default BasketList;

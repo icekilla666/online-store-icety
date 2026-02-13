@@ -170,3 +170,9 @@ export interface ModalBrandProps {
   initialData?: { name: string };
   title?: string;
 }
+
+export interface BasketListProps {
+  devices: IDevice[];
+  quantities: Record<number, number>;
+  onQuantityChange: (deviceId: number, newQuantity: number) => void;
+}

@@ -1,6 +1,6 @@
 import type { BuyNowProps } from "@/types/types";
 import MyButton from "../ui/Button";
-import QuantityCounter from "./QuantityCounter";
+import QuantityCounter from "../ui/QuantityCounter";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 
