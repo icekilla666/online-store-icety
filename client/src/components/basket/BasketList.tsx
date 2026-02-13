@@ -1,10 +1,8 @@
-import type { FavouriteProductsProps } from "@/types/types";
+import type { BasketListProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 import QuantityCounter from "../ui/QuantityCounter";
-import { useState } from "react";
 
-const BasketList = ({ devices }: FavouriteProductsProps) => {
-  const [quantities, setQuantities] = useState<Record<number, number>>({});
+const BasketList = ({ devices, quantities, onQuantityChange }: BasketListProps) => {
   
   return (
     <div className="grid gap-4">
@@ -44,12 +42,7 @@ const BasketList = ({ devices }: FavouriteProductsProps) => {
               <div className="flex flex-1 items-center justify-between gap-6">
                 <QuantityCounter
                   initialValue={qty}
-                  onChange={(value) =>
-                    setQuantities((prev) => ({
-                      ...prev,
-                      [device.id]: value,
-                    }))
-                  }
+                  onChange={(value) => onQuantityChange(device.id, value)}
                 />
 
                 <div className="text-right">

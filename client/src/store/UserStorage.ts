@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx";
 
 export default class UserStore {
   private _isAuth: boolean = false;
-  private _isAdmin: boolean = true; // временный флаг потому что я забыл пароль от админки)))
+  private _isAdmin: boolean = false; 
   private _user: IUser | null = null;
 
   constructor() {
