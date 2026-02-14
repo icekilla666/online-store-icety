@@ -251,14 +251,14 @@ const ModalDevice = ({
                     </span>
                   </div>
 
-                  <div className="flex flex-col justify-between md:flex-row">
+                  <div className="flex flex-col gap-3 mb-3 justify-between md:flex-row">
                       <input
                         type="text"
                         value={newChar.title}
                         onChange={(e) =>
                           setNewChar({ ...newChar, title: e.target.value })
                         }
-                        className="px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
+                        className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
                         placeholder="Title"
                       />
                       <input
@@ -270,16 +270,16 @@ const ModalDevice = ({
                             description: e.target.value,
                           })
                         }
-                        className="px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
+                        className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
                         placeholder="Description"
                       />
                       <button
                         type="button"
                         onClick={addCharacteristic}
-                        className="flex items-center justify-center gap-2 px-3 py-2 bg-[var(--color-custom)] text-white rounded-lg hover:opacity-90"
+                        className="flex items-center justify-center px-3 py-2 bg-[var(--color-custom)] text-white rounded-lg hover:opacity-90"
                       >
                         <PlusIcon className="h-4 w-4" />
-                        Add Characteristic
+                        Add
                       </button>
                   </div>
 
@@ -315,7 +315,7 @@ const ModalDevice = ({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 text-sm font-medium rounded-lg text-[var(--color-secondary)] hover:text-[var(--color-def)] hover:bg-[var(--color-border)]"
+                    className="px-4 py-2 text-sm bg-transparent font-medium rounded-lg hover:bg-wrapper"
                   >
                     Cancel
                   </button>

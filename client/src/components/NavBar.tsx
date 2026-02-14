@@ -129,7 +129,7 @@ const NavBar = observer(() => {
             <ShoppingCartIcon width={25} height={25} />
           </NavLink>
           {!user.isAuth ? (
-            <NavLink to={LOGIN_ROUTE} className="text-sm/6 font-semibold ">
+            <NavLink to={DASHBOARD_ROUTE} className="text-sm/6 font-semibold ">
               Log in <span aria-hidden="true">&rarr;</span>
             </NavLink>
           ) : (

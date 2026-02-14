@@ -45,7 +45,7 @@ const ModalDeleate = ({
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <DialogTitle
                     as="h3"
-                    className="text-base font-semibold text-white"
+                    className="text-base font-semibold text-def"
                   >
                     Delete <span className="capitalize">{name}</span>
                   </DialogTitle>
@@ -71,7 +71,7 @@ const ModalDeleate = ({
                 type="button"
                 data-autofocus
                 onClick={() => onChange(false)}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
+                className="mt-3 w-full rounded-md transition-all bg-transparent px-3 py-2 text-sm font-semibold text-def inset-ring inset-ring-white/5 hover:bg-primary sm:mt-0 sm:w-auto"
               >
                 Cancel
               </button>

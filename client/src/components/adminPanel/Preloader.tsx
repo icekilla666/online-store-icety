@@ -8,7 +8,7 @@ const Preloader = () => {
       <section className="h-screen relative overflow-hidden">
         <Silk color="#8B5CF6" noiseIntensity={0} />
         <div className="absolute top-40 left-1/4 z-20">
-          <h1 className="text-[150px] leading-[1.2]">
+          <h1 className="text-[150px] text-[#dddddd] leading-[1.2]">
             <TextType
               text={["Hello, \nAdmin", "Welcome \nto Admin Panel"]}
               typingSpeed={100}

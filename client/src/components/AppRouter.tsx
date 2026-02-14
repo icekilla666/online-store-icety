@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { adminRoute, authRoutes, publicRoutes } from "../routes";
 import { LOGIN_ROUTE } from "../utils/constants";
 import { useStore } from "../utils/context";
@@ -6,12 +6,13 @@ import NotFound from "../pages/NotFound";
 
 const AuthRoute = ({ children }: any) => {
   const { user } = useStore();
-  return user.isAuth ? children : <Navigate to={LOGIN_ROUTE} replace />;
+  return user.isAuth ? children : <Navigate to={LOGIN_ROUTE} state={{ from: location.pathname }} replace />;
 };
 
 const AdminRoute = ({ children }: any) => {
   const { user } = useStore();
-  return user.isAdmin ? children : <Navigate to={LOGIN_ROUTE} replace />;
+  const location = useLocation()
+  return user.isAdmin ? children : <Navigate to={LOGIN_ROUTE} state={{ from: location.pathname }} replace />;
 };
 
 
