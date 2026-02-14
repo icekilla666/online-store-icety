@@ -176,3 +176,9 @@ export interface BasketListProps {
   quantities: Record<number, number>;
   onQuantityChange: (deviceId: number, newQuantity: number) => void;
 }
+
+export interface AlertProps {
+  title: string;
+  text: string;
+  mode: "success" | "error" | "info";
+}
