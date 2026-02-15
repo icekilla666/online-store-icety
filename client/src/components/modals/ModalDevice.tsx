@@ -233,7 +233,7 @@ const ModalDevice = ({
                     Image URL
                   </label>
                   <input
-                    type="text"
+                    type="file"
                     value={formData.img || ""}
                     onChange={(e) => handleChange("img", e.target.value)}
                     className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
