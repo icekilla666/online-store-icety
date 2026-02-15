@@ -9,5 +9,5 @@
 <h2>ADMIN CREADS:
 <br>
 email: adminka@mail.ru <br>
-pass: admin
+pass: admin123
 </h2>
