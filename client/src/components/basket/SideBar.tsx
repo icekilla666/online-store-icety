@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Alert from "../ui/alert";
+import Alert from "../ui/Alert";
 
 const SideBar = ({ total }: { total: number }) => {
   const [promocode, setPromocode] = useState(false);
@@ -98,7 +98,7 @@ const SideBar = ({ total }: { total: number }) => {
         </div>
       </aside>
 
-      {showAlert && <Alert title="Error" text="qweqweqweqw" mode="error"/>}
+      {showAlert && <Alert title="Success!" text="Order confirmed. Thank you for your purchase!" mode="success" onClose={setShowAlert}/>}
     </>
   );
 };

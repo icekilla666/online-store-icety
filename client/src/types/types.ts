@@ -181,4 +181,5 @@ export interface AlertProps {
   title: string;
   text: string;
   mode: "success" | "error" | "info";
+  onClose: (state: boolean) => void;
 }
