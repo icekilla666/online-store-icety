@@ -2,8 +2,12 @@ import type { BasketListProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 import QuantityCounter from "../ui/QuantityCounter";
 
-const BasketList = ({ devices, quantities, onQuantityChange }: BasketListProps) => {
-  
+const BasketList = ({
+  devices,
+  quantities,
+  onQuantityChange,
+}: BasketListProps) => {
+
   return (
     <div className="grid gap-4">
       {devices.map((device) => {
@@ -50,8 +54,7 @@ const BasketList = ({ devices, quantities, onQuantityChange }: BasketListProps) 
                     Price
                   </p>
                   <p className="text-[20px] font-semibold text-[var(--color-def)]">
-                    $
-                    {new Intl.NumberFormat("en-EN").format(device.price * qty)}
+                    ${new Intl.NumberFormat("en-EN").format(device.price * qty)}
                   </p>
                 </div>
                 <button
@@ -65,8 +68,6 @@ const BasketList = ({ devices, quantities, onQuantityChange }: BasketListProps) 
           </article>
         );
       })}
-
-      
     </div>
   );
 };

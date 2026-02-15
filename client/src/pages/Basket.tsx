@@ -23,12 +23,20 @@ const Basket = () => {
     }, 0);
   }, [device.devices, quantities]);
 
+  const totalQuantities = useMemo(() => {
+    return device.devices.reduce((sum, device) => {
+      const qty = quantities[device.id] ?? 1;
+      return sum + qty;
+    }, 0);
+  }, [device.devices, quantities]);
+  console.log(totalQuantities);
+
   return (
     <section className="container">
       <div className="py-14">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px]">
           <div className="flex flex-col gap-8">
-            <Header array={device.devices} />
+            <Header totalQuantities={totalQuantities} />
 
             <BasketList
               devices={device.devices}
@@ -39,7 +47,7 @@ const Basket = () => {
             <Recommend />
           </div>
 
-          <SideBar total={totalPrice}/>
+          <SideBar total={totalPrice} />
         </div>
       </div>
     </section>
