@@ -6,7 +6,7 @@ export interface IUser {
   email: string;
   name?: string;
   lastname?: string;
-  phone?: string;
+  number?: string;
   role?: "user" | "admin";
 }
 export interface ITypes {
@@ -119,10 +119,7 @@ export interface TableTemplateProps<T extends UnionArray> {
   textBtn: string;
   // Рендер
   renderHeader: () => ReactNode;
-  renderRow: (
-    item: T,
-    openDeleteModal: (id: number) => void,
-  ) => ReactNode;
+  renderRow: (item: T, openDeleteModal: (id: number) => void) => ReactNode;
   modalName?: string;
   modal: () => void;
 }
@@ -183,3 +180,53 @@ export interface AlertProps {
   mode: "success" | "error" | "info";
   onClose: (state: boolean) => void;
 }
+
+export interface FormData {
+  name: string;
+  lastname: string;
+  number: string;
+  email: string;
+  password: string;
+  r_password: string;
+}
+
+export interface FormErrors {
+  name: string;
+  lastname: string;
+  number: string;
+  email: string;
+  password: string;
+  r_password: string;
+}
+
+export interface TouchedFields {
+  name: boolean;
+  lastname: boolean;
+  number: boolean;
+  email: boolean;
+  password: boolean;
+  r_password: boolean;
+}
+
+export interface FormInputProps {
+  id: string;
+  name: keyof FormData;
+  type: string;
+  label: string;
+  value: string;
+  error?: string;
+  touched: boolean;
+  placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (field: string) => void;
+  required?: boolean;
+  labelClassName?: string;
+}
+export interface FormProps {
+  formData: FormData;
+  errors: FormErrors;
+  touched: TouchedFields;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (field: keyof TouchedFields) => void;
+}
+

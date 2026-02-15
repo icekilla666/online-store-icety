@@ -26,7 +26,10 @@ app.get("/", (req, res) => {
 const start = async () => {
   try {
     await sequelize.authenticate();
+
     await sequelize.sync();
+    // await sequelize.sync({ force: true }); Удаляет нахуй все данные и таблицы и создает их заново(кроме данных)
+
     app.listen(PORT, () => console.log(`Server start on port ${PORT}`));
   } catch (error) {
     console.log("Server Error:", error.message);

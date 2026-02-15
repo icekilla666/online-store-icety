@@ -4,7 +4,7 @@ const Settings = ({
   name,
   lastname,
   email,
-  phone,
+  number,
   onChange,
   onLogout,
   onSave,
@@ -68,7 +68,7 @@ const Settings = ({
           <input
             type="tel"
             name="phoneNumber"
-            value={phone}
+            value={number}
             onChange={onChange}
             className="w-full p-3 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors"
           />

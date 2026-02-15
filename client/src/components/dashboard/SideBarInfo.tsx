@@ -6,7 +6,7 @@ const SideBarInfo = ({
   name,
   lastname,
   email,
-  phone,
+  number,
   onChange,
   className,
   isActive,
@@ -38,7 +38,7 @@ const SideBarInfo = ({
             <p className="text-sm text-[var(--color-secondary)] mb-1">
               Phone Number
             </p>
-            <p className="text-[var(--color-def)] font-medium">{phone}</p>
+            <p className="text-[var(--color-def)] font-medium">{number}</p>
           </div>
         </div>
 

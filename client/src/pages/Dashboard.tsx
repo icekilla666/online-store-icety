@@ -17,7 +17,7 @@ const DashboardPage = observer(() => {
     name: "Alexander",
     lastName: "Johnson",
     email: "alex.johnson@example.com",
-    phoneNumber: "+1 (555) 987-6543",
+    numberNumber: "+1 (555) 987-6543",
   });
   const [editData, setEditData] = useState(userData);
   const { device, user } = useStore();
@@ -39,7 +39,9 @@ const DashboardPage = observer(() => {
   };
 
   const handleLogout = () => {
+    user.setUser(false);
     user.setIsAuth(false);
+    localStorage.removeItem("token");
     navigate(LOGIN_ROUTE);
   };
 
@@ -58,7 +60,7 @@ const DashboardPage = observer(() => {
           tabs={DASHBOARD_TABS}
           name={userData.name}
           lastname={userData.lastName}
-          phone={userData.phoneNumber}
+          number={userData.numberNumber}
           email={userData.email}
           isActive={tab}
           className="dashboard-tabs"
@@ -68,11 +70,7 @@ const DashboardPage = observer(() => {
         {/* Правая колонка - Контент табов */}
         <div className="lg:col-span-3">
           {/* Таб: Избранные товары */}
-          {tab === "wishlist" && (
-            <FavouriteProducts
-              devices={device.devices}
-            />
-          )}
+          {tab === "wishlist" && <FavouriteProducts devices={device.devices} />}
 
           {/* Таб: Настройки */}
 
@@ -80,7 +78,7 @@ const DashboardPage = observer(() => {
             <Settings
               name={editData.name}
               lastname={editData.lastName}
-              phone={editData.phoneNumber}
+              number={editData.numberNumber}
               email={editData.email}
               onChange={handleInputChange}
               onLogout={handleLogout}
@@ -93,7 +91,7 @@ const DashboardPage = observer(() => {
             <ProfileInfo
               name={userData.name}
               lastname={userData.lastName}
-              phone={userData.phoneNumber}
+              number={userData.numberNumber}
               email={userData.email}
               devices={device.devices}
               onClick={() => setTab("settings")}
