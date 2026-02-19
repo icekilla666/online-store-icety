@@ -18,13 +18,13 @@ const BasketList = ({
             key={device.id}
             className="rounded-[26px] border border-[var(--color-border)] bg-wrapper p-5 sm:p-6"
           >
-            <div className="flex flex-col gap-8 sm:flex-row sm:items-center">
-              <div className="flex items-center gap-4 sm:w-1/2">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:w-1/2">
                 <div className="w-full p-3 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
                   <img
                     src={device.img}
                     alt={device.name}
-                    className="w-full max-h-[200px] object-contain"
+                    className="w-full max-h-[160px] sm:max-h-[200px] object-contain"
                   />
                 </div>
                 <div>
@@ -43,13 +43,13 @@ const BasketList = ({
                 </div>
               </div>
 
-              <div className="flex flex-1 items-center justify-between gap-6">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:flex-1">
                 <QuantityCounter
                   initialValue={qty}
                   onChange={(value) => onQuantityChange(device.id, value)}
                 />
 
-                <div className="text-right">
+                <div className="text-left sm:text-right">
                   <p className="text-xs uppercase tracking-[0.25em] text-[var(--color-secondary)]">
                     Price
                   </p>

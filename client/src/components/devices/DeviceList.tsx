@@ -21,16 +21,16 @@ const DeviceList = observer(() => {
   };
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between bg-wrapper rounded-[30px] py-4 px-6 mb-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-wrapper rounded-[30px] py-4 px-4 sm:px-6 mb-6">
         <DropdownSelect value={selectedSort} onChange={handleSortChange} />
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4 sm:gap-5">
           <button onClick={handleViewSwitch} value="list">
             <StretchHorizontal
               className={`cursor-pointer ${
                 viewSwitcher === "list" && "text-custom"
               }`}
-              width={43}
-              height={43}
+              width={32}
+              height={32}
             />
           </button>
           <button onClick={handleViewSwitch} value="grid">
@@ -38,14 +38,20 @@ const DeviceList = observer(() => {
               className={`cursor-pointer ${
                 viewSwitcher === "grid" && "text-custom"
               }`}
-              width={43}
-              height={43}
+              width={32}
+              height={32}
             />
           </button>
         </div>
       </div>
 
-      <div className={`grid gap-4 ${viewSwitcher === "grid" && "grid-cols-3"}`}>
+      <div
+        className={`grid gap-4 ${
+          viewSwitcher === "grid"
+            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            : "grid-cols-1"
+        }`}
+      >
         {device.devices.map((device) =>
           viewSwitcher === "grid" ? (
             <DeviceCardGrid

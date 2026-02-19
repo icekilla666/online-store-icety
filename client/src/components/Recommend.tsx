@@ -11,9 +11,9 @@ const Recommend = () => {
           Useful extras picked for what’s in your basket.
         </p>
       </div>
-      <div className="mt-5 grid gap-4 sm:grid-cols-3">
+      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <article className="rounded-2xl border border-[var(--color-border)] bg-wrapper p-5">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="h-20 w-20 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
               <img
                 src="/1.png"
@@ -32,7 +32,7 @@ const Recommend = () => {
           </div>
         </article>
         <article className="rounded-2xl border border-[var(--color-border)] bg-wrapper p-5">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="h-20 w-20 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
               <img
                 src="/2.png"
@@ -51,7 +51,7 @@ const Recommend = () => {
           </div>
         </article>
         <article className="rounded-2xl border border-[var(--color-border)] bg-wrapper p-5">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="h-20 w-20 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
               <img
                 src="/3.png"

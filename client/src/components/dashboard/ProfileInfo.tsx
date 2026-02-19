@@ -9,7 +9,7 @@ const ProfileInfo = ({
   onClick,
 }: ProfileInfoProps) => {
   return (
-    <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6">
+    <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-4 sm:p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-[var(--color-def)]">
           Profile Overview
@@ -90,7 +90,7 @@ const ProfileInfo = ({
       <div className="mt-8 pt-6 border-t border-[var(--color-border)]">
         <button
           onClick={onClick}
-          className="px-6 py-3 border-2 border-[var(--color-custom)] text-[var(--color-custom)] font-medium rounded-lg hover:bg-[var(--color-custom)] hover:text-white transition-colors"
+          className="w-full sm:w-auto px-6 py-3 border-2 border-[var(--color-custom)] text-[var(--color-custom)] font-medium rounded-lg hover:bg-[var(--color-custom)] hover:text-white transition-colors"
         >
           Edit Profile Information
         </button>

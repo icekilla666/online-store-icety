@@ -19,7 +19,7 @@ const SideBar = ({ total }: { total: number }) => {
 
   return (
     <>
-      <aside className="sticky top-6 rounded-[30px] border border-[var(--color-border)] bg-wrapper p-7 h-fit">
+      <aside className="lg:sticky lg:top-6 rounded-[30px] border border-[var(--color-border)] bg-wrapper p-5 sm:p-7 h-fit">
         <h2 className="text-[26px] font-semibold text-[var(--color-def)]">
           Order summary
         </h2>
@@ -62,7 +62,7 @@ const SideBar = ({ total }: { total: number }) => {
           <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-secondary)]">
             Promo code
           </p>
-          <div className="mt-3 flex items-center gap-2">
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
             <input
               value={value}
               onChange={(e) => setValue(e.target.value)}
@@ -71,7 +71,7 @@ const SideBar = ({ total }: { total: number }) => {
             />
             <button
               onClick={promo}
-              className="px-4 py-2 rounded-lg border border-[var(--color-custom)] text-[var(--color-custom)] font-medium hover:bg-[var(--color-custom)] hover:text-white transition-colors"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-[var(--color-custom)] text-[var(--color-custom)] font-medium hover:bg-[var(--color-custom)] hover:text-white transition-colors"
             >
               Apply
             </button>

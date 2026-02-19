@@ -33,8 +33,8 @@ const Basket = () => {
 
   return (
     <section className="container">
-      <div className="py-14">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px]">
+      <div className="py-10 lg:py-14">
+        <div className="grid gap-6 lg:gap-10 lg:grid-cols-[minmax(0,1fr)_420px]">
           <div className="flex flex-col gap-8">
             <Header totalQuantities={totalQuantities} />
 

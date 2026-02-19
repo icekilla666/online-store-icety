@@ -8,7 +8,7 @@ const AuthForm = () => {
   return (
     <form
       onSubmit={props.handleSubmit}
-      className="py-12 px-8 bg-wrapper w-full max-w-lg rounded-3xl"
+      className="py-8 px-6 sm:py-12 sm:px-8 bg-wrapper w-full max-w-lg rounded-3xl"
     >
       {props.isLogin ? (
         <LoginForm

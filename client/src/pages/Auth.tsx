@@ -9,7 +9,7 @@ const Auth = () => {
   
   return (
     <AnimatedContent>
-      <section className="container flex-center-col h-[calc(100svh-80px)]">
+      <section className="container flex-center-col min-h-[calc(100svh-80px)] py-10">
         <h1>{isLogin ? "Authorization" : "Registration"}</h1>
 
         {isLogin ? (

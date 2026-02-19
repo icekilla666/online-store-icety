@@ -22,7 +22,7 @@ const DevicePage = () => {
 
   return (
     <section className="container">
-      <div className="flex justify-center gap-10 my-14">
+      <div className="flex flex-wrap justify-center gap-4 my-8 lg:my-14">
         <Tabs
           tabs={DEVICE_PAGE_TABS}
           isActive={tab}
@@ -31,9 +31,12 @@ const DevicePage = () => {
         />
       </div>
       {currentDevice ? (
-        <div key={currentDevice?.id} className="grid grid-cols-2 gap-32 mb-16">
+        <div
+          key={currentDevice?.id}
+          className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-32 mb-12 lg:mb-16"
+        >
           {currentDevice.images.length > 1 ? (
-            <div className="flex items-start justify-end">
+            <div className="flex items-start justify-center lg:justify-end">
               <SwiperSlider
                 images={currentDevice.images}
                 mainImage={currentDevice.img}
@@ -41,9 +44,9 @@ const DevicePage = () => {
               />
             </div>
           ) : (
-            <div className="flex items-start justify-end">
+            <div className="flex items-start justify-center lg:justify-end">
               <img
-                className="p-9 bg-wrapper rounded-2xl border-2 border-custom"
+                className="p-6 sm:p-9 bg-wrapper rounded-2xl border-2 border-custom max-w-full"
                 src={currentDevice.img}
                 alt={currentDevice.name}
               />

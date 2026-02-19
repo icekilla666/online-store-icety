@@ -28,7 +28,7 @@ const BuyNow = ({ name, rating, shortDesc, price }: BuyNowProps) => {
           onChange={(value) => setSelectedQuantity(value)}
           className="mb-10"
         />
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:gap-5">
           <MyButton className="uppercase">add to cart</MyButton>
           <MyButton className="uppercase bg-transparent border border-custom hover:bg-custom">
             buy now

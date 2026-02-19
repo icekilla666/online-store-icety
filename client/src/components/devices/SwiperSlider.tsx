@@ -35,12 +35,12 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
         >
           {allImages.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="relative h-[400px] md:h-[600px]">
-                <div className="absolute inset-0 flex items-center justify-center p-8">
+              <div className="relative h-[280px] sm:h-[400px] md:h-[600px]">
+                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8">
                   <img
                     src={image}
                     alt={`${productName} - изображение ${index + 1}`}
-                    className="p-9 bg-wrapper rounded-2xl border-2 border-custom object-contain h-full"
+                    className="p-4 sm:p-9 bg-wrapper rounded-2xl border-2 border-custom object-contain h-full"
                   />
                 </div>
               </div>
@@ -50,7 +50,7 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
       </div>
 
       {allImages.length > 1 && (
-        <div className="py-2 px-4 border border-border rounded-[30px]">
+        <div className="py-2 px-3 sm:px-4 border border-border rounded-[30px]">
           <Swiper
             modules={[FreeMode, Thumbs, Autoplay]} 
             onSwiper={setThumbsSwiper}

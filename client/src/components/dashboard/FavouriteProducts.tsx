@@ -6,7 +6,7 @@ const FavouriteProducts = ({ devices }: FavouriteProductsProps) => {
   const navigate = useNavigate();
   return (
     <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
         <div>
           <h2 className="text-2xl font-bold text-[var(--color-def)]">
             Favorite Products
@@ -25,9 +25,9 @@ const FavouriteProducts = ({ devices }: FavouriteProductsProps) => {
           <article
             onClick={() => navigate(DEVICE_ROUTE + "/" + product.id)}
             key={product.id}
-            className="flex justify-between border border-[var(--color-border)] cursor-pointer rounded-xl px-4 py-6 hover:border-[var(--color-custom)] transition-colors group"
+            className="flex flex-col gap-4 sm:flex-row sm:justify-between border border-[var(--color-border)] cursor-pointer rounded-xl px-4 py-6 hover:border-[var(--color-custom)] transition-colors group"
           >
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
               <div className="w-16 rounded-lg flex items-center justify-center text-2xl mr-4">
                 <img src={product.img} alt={product.name} />
               </div>
@@ -41,7 +41,7 @@ const FavouriteProducts = ({ devices }: FavouriteProductsProps) => {
                 <p className="mt-2">{product.shortDesc}</p>
               </div>
             </div>
-            <div className="flex flex-col justify-between items-center">
+            <div className="flex flex-row items-center justify-between sm:flex-col sm:items-end sm:justify-between">
               <span className="text-xl font-bold text-[var(--color-def)]">
                 {product.price}
               </span>

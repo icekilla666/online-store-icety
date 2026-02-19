@@ -14,9 +14,9 @@ const SideBarInfo = ({
 }: SideBarInfoProps) => {
   return (
     <div className="lg:col-span-1">
-      <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6 sticky top-6">
+      <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-4 sm:p-6 lg:sticky lg:top-6">
         <div className="flex flex-col items-center mb-6">
-          <div className="flex items-center justify-center w-24 h-24 bg-border rounded-full overflow-hidden mb-4 border-4 border-[var(--color-custom)]">
+          <div className="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 bg-border rounded-full overflow-hidden mb-4 border-4 border-[var(--color-custom)]">
             <h1>{name?.split('', 1)}</h1>
           </div>
           <h2 className="text-xl font-bold text-[var(--color-def)] text-center">

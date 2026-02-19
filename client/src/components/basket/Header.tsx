@@ -13,7 +13,7 @@ const Header = ({ totalQuantities }: { totalQuantities: number }) => {
             {totalQuantities} items · Free delivery over $499 · 30-day returns
           </p>
         </div>
-        <button className="mt-4 sm:mt-0 px-5 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-primary)] text-sm font-medium text-[var(--color-def)] hover:border-[var(--color-custom)] transition-colors">
+        <button className="mt-4 sm:mt-0 w-full sm:w-auto px-5 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-primary)] text-sm font-medium text-[var(--color-def)] hover:border-[var(--color-custom)] transition-colors">
           Clear all
         </button>
       </div>

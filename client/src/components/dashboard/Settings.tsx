@@ -10,7 +10,7 @@ const Settings = ({
   onSave,
 }: SettingsProps) => {
   return (
-    <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6">
+    <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-4 sm:p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-[var(--color-def)]">
           Account Settings
@@ -100,7 +100,7 @@ const Settings = ({
         </button>
 
         <button
-          className="px-6 py-3 border border-red-500/30 text-red-500 font-medium rounded-lg hover:bg-red-500/10 transition-colors ml-auto"
+          className="px-6 py-3 border border-red-500/30 text-red-500 font-medium rounded-lg hover:bg-red-500/10 transition-colors sm:ml-auto"
           onClick={onLogout}
         >
           Log Out

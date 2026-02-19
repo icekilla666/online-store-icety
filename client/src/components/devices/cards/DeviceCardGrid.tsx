@@ -15,9 +15,9 @@ const DeviceCardGrid = ({
     <article
       onClick={onClick}
       key={id}
-      className="flex cursor-pointer flex-col items-center gap-8 pt-5 pb-7 px-4 bg-wrapper rounded-[30px]"
+      className="flex cursor-pointer flex-col items-center gap-6 sm:gap-8 pt-5 pb-7 px-4 bg-wrapper rounded-[30px]"
     >
-      <div className="h-[250px] flex justify-center items-center w-full">
+      <div className="h-[200px] sm:h-[250px] flex justify-center items-center w-full">
         <img className="h-full object-contain" src={img} alt={name} />
       </div>
 
@@ -33,7 +33,7 @@ const DeviceCardGrid = ({
           <p className="font-extralight">{shortDesc}</p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <span className="text-[30px]">
             ${new Intl.NumberFormat("en-EN").format(price)}
           </span>
