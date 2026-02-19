@@ -59,6 +59,58 @@ p {
   font-size: 16px;
 }
 
+@media (max-width: 640px) {
+  h1 {
+    font-size: 38px;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+  p {
+    font-size: 14px;
+  }
+
+  .text-\[150px\] {
+    font-size: 96px;
+  }
+  .text-\[72px\] {
+    font-size: 48px;
+  }
+  .text-\[42px\] {
+    font-size: 32px;
+  }
+  .text-\[40px\] {
+    font-size: 30px;
+  }
+  .text-\[36px\] {
+    font-size: 28px;
+  }
+  .text-\[30px\] {
+    font-size: 24px;
+  }
+  .text-\[26px\] {
+    font-size: 22px;
+  }
+  .text-\[24px\] {
+    font-size: 20px;
+  }
+  .text-\[20px\] {
+    font-size: 18px;
+  }
+  .text-\[18px\] {
+    font-size: 16px;
+  }
+  .text-\[15px\] {
+    font-size: 13px;
+  }
+  .text-\[10px\] {
+    font-size: 9px;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
