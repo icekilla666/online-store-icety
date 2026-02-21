@@ -13,7 +13,8 @@ const App = observer(() => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      setIsLoading(false);
+      setTimeout(() => setIsLoading(false), 1000);
+      // setIsLoading(false);
       return;
     }
 
@@ -26,11 +27,7 @@ const App = observer(() => {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className="container flex-center-col h-[calc(100svh-80px)]">
-        Loading...
-      </div>
-    );
+    return;
   }
 
   return (

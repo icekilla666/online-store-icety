@@ -8,14 +8,32 @@ class DeviceController {
     try {
       let { name, shortDesc, price, brandId, typeId, info } = req.body;
       const files = req.files;
+      
+      let mainImage = null;
+      let additionalImages = [];
 
-      const imageNames = [];
-      for (const file of files) {
-        const fileName = uuid.v4() + path.extname(file.name);
+      if (files && files.img) {
+        const fileName = uuid.v4() + path.extname(files.img.name);
         const filePath = path.resolve(__dirname, "..", "static", fileName);
+        await files.img.mv(filePath);
+        mainImage = fileName;
+      }
 
-        await file.mv(filePath);
-        imageNames.push(fileName);
+      if (files && files.images) {
+        if (Array.isArray(files.images)) {
+          for (const file of files.images) {
+            const fileName = uuid.v4() + path.extname(file.name);
+            const filePath = path.resolve(__dirname, "..", "static", fileName);
+            await file.mv(filePath);
+            additionalImages.push(fileName);
+          }
+        } 
+        else {
+          const fileName = uuid.v4() + path.extname(files.images.name);
+          const filePath = path.resolve(__dirname, "..", "static", fileName);
+          await files.images.mv(filePath);
+          additionalImages.push(fileName);
+        }
       }
 
       const device = await Device.create({
@@ -24,8 +42,8 @@ class DeviceController {
         price,
         brandId,
         typeId,
-        img: imageNames[0],
-        images: imageNames,
+        img: mainImage, 
+        images: additionalImages, 
       });
 
       if (info) {

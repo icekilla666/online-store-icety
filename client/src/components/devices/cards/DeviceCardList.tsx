@@ -18,7 +18,7 @@ const DeviceCardList = ({
       className="flex flex-col sm:flex-row cursor-pointer gap-6 sm:gap-7 py-4 px-4 sm:py-[15px] sm:px-[30px] bg-wrapper rounded-[30px]"
     >
       <div className="overflow-hidden flex items-center w-full sm:max-w-[250px] h-[200px] sm:h-[300px]">
-        <img className=" h-full object-contain" src={img} alt={name} />
+        <img className=" h-full object-contain" src={import.meta.env.VITE_API_URL + img} alt={name} />
       </div>
       <div className="flex w-full flex-col gap-4 sm:flex-row sm:justify-between py-2">
         <div className="flex flex-col justify-between">

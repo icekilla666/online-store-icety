@@ -6,13 +6,24 @@ import TableType from "@/components/adminPanel/TableType";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import Pagitanion from "@/components/ui/Pagination";
 import Tabs from "@/components/ui/Tabs";
-import { ADMIN_TABS, deviceInfo } from "@/utils/constants";
+import { fetchOneDevice } from "@/http/deviceAPI";
+import type { DeviceInfoArray } from "@/types/types";
+import { ADMIN_TABS } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Admin = () => {
   const { device } = useStore();
   const [tab, setTab] = useState("dev");
+  const [deviceInfo, setDeviceInfo] = useState<DeviceInfoArray[]>([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchOneDevice(id).then((data) => {
+      setDeviceInfo(data.info);
+    });
+  }, []);
 
   const handleTabs = (value: string) => {
     setTab(value);

@@ -14,7 +14,6 @@ const SideBar = observer(() => {
             key={type.id}
             onClick={() => {
               device.setSeceltedType(type);
-              console.log(type.id, "djn", device.selectedType?.id);
             }}
             className={`cursor-pointer font-light tracking-widest mb-5 ${
               type.id === device.selectedType?.id ? "text-custom" : "text-def "

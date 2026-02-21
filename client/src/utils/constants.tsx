@@ -125,39 +125,6 @@ export const device = {
   images: ["/1.png", "/2.png", "/3.png"],
 };
 
-export const deviceInfo = [
-  {
-    id: 1,
-    title: "Display",
-    description:
-      "6.7-inch Super Retina XDR OLED with ProMotion, 120Hz refresh rate, 2796x1290 pixels resolution, HDR10, Dolby Vision, 2000 nits peak brightness",
-  },
-  {
-    id: 2,
-    title: "Processor",
-    description:
-      "Apple A17 Pro chip, 6-core CPU, 6-core GPU, 16-core Neural Engine, 3nm technology",
-  },
-  {
-    id: 3,
-    title: "Camera System",
-    description:
-      "Triple 48MP main + 12MP ultra-wide + 12MP telephoto with 5x optical zoom, Photonic Engine, Night mode, ProRAW, 4K Dolby Vision HDR recording at 60fps",
-  },
-  {
-    id: 4,
-    title: "Battery & Charging",
-    description:
-      "4400mAh lithium-ion battery, up to 29 hours video playback, 20W fast charging, 15W MagSafe wireless charging, 7.5W Qi wireless charging",
-  },
-  {
-    id: 5,
-    title: "Storage & Memory",
-    description:
-      "8GB RAM, options: 128GB / 256GB / 512GB / 1TB NVMe storage, NVMe protocol for faster data transfer",
-  },
-];
-
 // Табы
 export const DEVICE_PAGE_TABS: TabArrayProps[] = [
   {
