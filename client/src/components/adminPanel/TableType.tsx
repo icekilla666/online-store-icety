@@ -2,7 +2,7 @@ import type { ITypes } from "@/types/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
-import ModalType from "../modals/ModalType";
+import ModalType from "../ui/modals/ModalType";
 
 const TableType = ({ types }: { types: ITypes[] }) => {
   const [modalOpen, setModalOpen] = useState(false);

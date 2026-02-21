@@ -30,7 +30,11 @@ const ModalDevice = ({
   useEffect(() => {
     if (!open) return;
     if (initialData) {
-      setFormData(initialData);
+      // Убеждаемся что characteristics это массив
+      setFormData({
+        ...initialData,
+        characteristics: initialData.characteristics || [],
+      });
       return;
     }
     setFormData({
@@ -62,7 +66,7 @@ const ModalDevice = ({
       setFormData((prev) => ({
         ...prev,
         characteristics: [
-          ...prev.characteristics,
+          ...(prev.characteristics || []),
           {
             id: Date.now(),
             title: newChar.title.trim(),
@@ -77,7 +81,7 @@ const ModalDevice = ({
   const removeCharacteristic = (id: number) => {
     setFormData((prev) => ({
       ...prev,
-      characteristics: prev.characteristics.filter((c) => c.id !== id),
+      characteristics: (prev.characteristics || []).filter((c) => c.id !== id),
     }));
   };
 
@@ -234,57 +238,58 @@ const ModalDevice = ({
                   </label>
                   <input
                     type="file"
-                    value={formData.img || ""}
-                    onChange={(e) => handleChange("img", e.target.value)}
+                    accept="image/*"
                     className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
-                    placeholder="https://example.com/image.jpg"
                   />
                 </div>
 
+                {/* ХАРАКТЕРИСТИКИ */}
                 <div className="border-t border-[var(--color-border)] pt-4">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-sm font-medium text-[var(--color-def)]">
                       Characteristics
                     </h4>
                     <span className="text-xs text-[var(--color-secondary)]">
-                      {formData.characteristics.length} added
+                      {formData.characteristics?.length || 0} added
                     </span>
                   </div>
 
-                  <div className="flex flex-col gap-3 mb-3 justify-between md:flex-row">
-                      <input
-                        type="text"
-                        value={newChar.title}
-                        onChange={(e) =>
-                          setNewChar({ ...newChar, title: e.target.value })
-                        }
-                        className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
-                        placeholder="Title"
-                      />
-                      <input
-                        type="text"
-                        value={newChar.description}
-                        onChange={(e) =>
-                          setNewChar({
-                            ...newChar,
-                            description: e.target.value,
-                          })
-                        }
-                        className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
-                        placeholder="Description"
-                      />
-                      <button
-                        type="button"
-                        onClick={addCharacteristic}
-                        className="flex items-center justify-center px-3 py-2 bg-[var(--color-custom)] text-white rounded-lg hover:opacity-90"
-                      >
-                        <PlusIcon className="h-4 w-4" />
-                        Add
-                      </button>
+                  {/* Поля для добавления новой характеристики */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                    <input
+                      type="text"
+                      value={newChar.title}
+                      onChange={(e) =>
+                        setNewChar({ ...newChar, title: e.target.value })
+                      }
+                      className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
+                      placeholder="Title (e.g. Display)"
+                    />
+                    <input
+                      type="text"
+                      value={newChar.description}
+                      onChange={(e) =>
+                        setNewChar({
+                          ...newChar,
+                          description: e.target.value,
+                        })
+                      }
+                      className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
+                      placeholder="Description (e.g. 6.7-inch OLED)"
+                    />
+                    <button
+                      type="button"
+                      onClick={addCharacteristic}
+                      className="flex items-center justify-center px-3 py-2 bg-[var(--color-custom)] text-white rounded-lg hover:opacity-90"
+                    >
+                      <PlusIcon className="h-4 w-4 mr-1" />
+                      Add
+                    </button>
                   </div>
 
-                  {formData.characteristics.length > 0 && (
-                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {/* Список добавленных характеристик */}
+                  {formData.characteristics && formData.characteristics.length > 0 && (
+                    <div className="space-y-2 max-h-40 overflow-y-auto border border-[var(--color-border)] rounded-lg p-2">
                       {formData.characteristics.map((char) => (
                         <div
                           key={char.id}

@@ -6,25 +6,37 @@ import TableType from "@/components/adminPanel/TableType";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import Pagitanion from "@/components/ui/Pagination";
 import Tabs from "@/components/ui/Tabs";
-import { fetchOneDevice } from "@/http/deviceAPI";
+import {
+  fetchBrand,
+  fetchDevice,
+  fetchOneDevice,
+  fetchType,
+} from "@/http/deviceAPI";
 import type { DeviceInfoArray } from "@/types/types";
 import { ADMIN_TABS } from "@/utils/constants";
 import { useStore } from "@/utils/context";
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
-const Admin = () => {
+const Admin = observer(() => {
   const { device } = useStore();
   const [tab, setTab] = useState("dev");
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfoArray[]>([]);
-  const { id } = useParams();
+
+  const fetchDeviceInfo = async (deviceId: number) => {
+    try {
+      const data = await fetchOneDevice(String(deviceId));
+      setDeviceInfo(data.info);
+    } catch (e: any) {
+      console.error("Error fetching device info:", e);
+    }
+  };
 
   useEffect(() => {
-    fetchOneDevice(id).then((data) => {
-      setDeviceInfo(data.info);
-    });
+    fetchType().then((data) => device.setTypes(data));
+    fetchBrand().then((data) => device.setBrands(data));
+    fetchDevice().then((data) => device.setDevices(data.rows));
   }, []);
-
   const handleTabs = (value: string) => {
     setTab(value);
   };
@@ -76,6 +88,7 @@ const Admin = () => {
                     types={device.types}
                     brands={device.brands}
                     info={deviceInfo}
+                    onDeviceSelect={fetchDeviceInfo}
                   />
                   <Pagitanion array={device.devices} />
                 </>
@@ -101,6 +114,6 @@ const Admin = () => {
   ) : (
     <Preloader />
   );
-};
+});
 
 export default Admin;

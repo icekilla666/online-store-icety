@@ -29,7 +29,6 @@ const Basket = () => {
       return sum + qty;
     }, 0);
   }, [device.devices, quantities]);
-  console.log(totalQuantities);
 
   return (
     <section className="container">

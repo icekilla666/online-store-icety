@@ -3,7 +3,7 @@ import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import { DEVICE_ROUTE } from "@/utils/constants";
 import TableTemplate from "./TableTemplate";
-import ModalDevice from "../modals/ModalDevice";
+import ModalDevice from "../ui/modals/ModalDevice";
 import { useStore } from "@/utils/context";
 
 const TableDevice = ({
@@ -11,11 +11,13 @@ const TableDevice = ({
   brands,
   types,
   info,
+  onDeviceSelect,
 }: {
   devices: IDevice[];
   brands: IBrand[];
   types: ITypes[];
   info: DeviceInfoArray[];
+  onDeviceSelect: (deviceId: number) => void;
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -37,6 +39,7 @@ const TableDevice = ({
   // переключение раскрытой строки
   const toggleRow = (id: number) => {
     setExpandedRowId(expandedRowId === id ? null : id);
+    onDeviceSelect(id);
   };
 
   const openEditModal = (deviceId: number) => {
@@ -93,7 +96,7 @@ const TableDevice = ({
         <td className="p-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-              <img className="h-full" src={device.img} alt={device.name} />
+              <img className="h-full" src={import.meta.env.VITE_API_URL + device.img} alt={device.name} />
             </div>
             <div>
               <h4 className="font-bold text-[var(--color-def)]">
@@ -242,7 +245,7 @@ const TableDevice = ({
                 rating: editingDevice.rating,
                 img: editingDevice.img,
                 images: editingDevice.images,
-                characteristics: [],
+                characteristics: info,
               }
             : undefined
         }

@@ -2,7 +2,7 @@ import type { IBrand } from "@/types/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
-import ModalBrand from "../modals/ModalBrand";
+import ModalBrand from "../ui/modals/ModalBrand";
 
 const TableBrand = ({ brands }: { brands: IBrand[] }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -92,7 +92,11 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
         modalName="brand"
         modal={() => setModalOpen(true)}
       />
-      <ModalBrand open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={(data) => console.log(data)}/>
+      <ModalBrand
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={(data) => console.log(data)}
+      />
       <ModalBrand
         open={editOpen}
         onClose={() => {

@@ -1,7 +1,7 @@
 import type { TableTemplateProps, UnionArray } from "@/types/types";
 import { useCallback, useState, Fragment } from "react";
 import HeadTable from "./HeadTable";
-import ModalDeleate from "../modals/ModalDeleate";
+import ModalDeleate from "../ui/modals/ModalDeleate";
 
 const TableTemplate = <T extends UnionArray>({
   data,
@@ -19,12 +19,6 @@ const TableTemplate = <T extends UnionArray>({
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
 
-  // функция удаления
-  const handleDelete = useCallback((id: number) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-    setFilteredItems((prev) => prev.filter((item) => item.id !== id));
-  }, []);
-
   // функция поиска
   const handleSearch = useCallback((filteredArray: UnionArray[]) => {
     setFilteredItems(filteredArray as T[]);
@@ -39,7 +33,6 @@ const TableTemplate = <T extends UnionArray>({
   // подтверждение удаления
   const confirmDelete = () => {
     if (itemToDelete) {
-      handleDelete(itemToDelete);
       setOpen(false);
       setItemToDelete(null);
     }
