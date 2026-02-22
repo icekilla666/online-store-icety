@@ -3,8 +3,15 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
 import ModalType from "../ui/modals/ModalType";
+import { createType } from "@/http/deviceAPI";
 
-const TableType = ({ types }: { types: ITypes[] }) => {
+const TableType = ({
+  types,
+  onRefresh,
+}: {
+  types: ITypes[];
+  onRefresh: () => void;
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editingType, setEditingType] = useState<ITypes | null>(null);
@@ -14,6 +21,13 @@ const TableType = ({ types }: { types: ITypes[] }) => {
     if (!type) return;
     setEditingType(type);
     setEditOpen(true);
+  };
+
+  // функция для добавления типа
+  const addType = async (data: { name: string }) => {
+    await createType(data.name);
+    onRefresh();
+    setModalOpen(false);
   };
 
   // рендер заголовков таблицы
@@ -93,11 +107,13 @@ const TableType = ({ types }: { types: ITypes[] }) => {
         modalName="type"
         modal={() => setModalOpen(true)}
       />
+      {/* модалка для создания типов */}
       <ModalType
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => addType(data)}
       />
+      {/* модалка для редактирования типов */}
       <ModalType
         open={editOpen}
         onClose={() => {

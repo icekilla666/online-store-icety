@@ -3,8 +3,15 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
 import ModalBrand from "../ui/modals/ModalBrand";
+import { createBrand } from "@/http/deviceAPI";
 
-const TableBrand = ({ brands }: { brands: IBrand[] }) => {
+const TableBrand = ({
+  brands,
+  onRefresh,
+}: {
+  brands: IBrand[];
+  onRefresh: () => void;
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editingBrand, setEditingBrand] = useState<IBrand | null>(null);
@@ -15,6 +22,13 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
     setEditingBrand(brand);
     setEditOpen(true);
   };
+
+  const addBrand = async (data: { name: string }) => {
+    await createBrand(data.name);
+    onRefresh();
+    setModalOpen(false);
+  };
+
   // рендер заголовков таблицы
   const renderHeader = () => (
     <>
@@ -95,7 +109,7 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
       <ModalBrand
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => addBrand(data)}
       />
       <ModalBrand
         open={editOpen}

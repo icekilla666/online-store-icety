@@ -32,10 +32,14 @@ const Admin = observer(() => {
     }
   };
 
-  useEffect(() => {
+  const refreshData = () => {
     fetchType().then((data) => device.setTypes(data));
     fetchBrand().then((data) => device.setBrands(data));
     fetchDevice().then((data) => device.setDevices(data.rows));
+  };
+
+  useEffect(() => {
+    refreshData();
   }, []);
   const handleTabs = (value: string) => {
     setTab(value);
@@ -89,6 +93,7 @@ const Admin = observer(() => {
                     brands={device.brands}
                     info={deviceInfo}
                     onDeviceSelect={fetchDeviceInfo}
+                    onRefresh={refreshData}
                   />
                   <Pagitanion array={device.devices} />
                 </>
@@ -96,13 +101,16 @@ const Admin = observer(() => {
               {tab === "type" && (
                 <>
                   {" "}
-                  <TableType types={device.types} />{" "}
+                  <TableType
+                    types={device.types}
+                    onRefresh={refreshData}
+                  />{" "}
                   <Pagitanion array={device.types} />
                 </>
               )}
               {tab === "brand" && (
                 <>
-                  <TableBrand brands={device.brands} />{" "}
+                  <TableBrand brands={device.brands} onRefresh={refreshData} />{" "}
                   <Pagitanion array={device.brands} />{" "}
                 </>
               )}

@@ -5,6 +5,7 @@ import { DEVICE_ROUTE } from "@/utils/constants";
 import TableTemplate from "./TableTemplate";
 import ModalDevice from "../ui/modals/ModalDevice";
 import { useStore } from "@/utils/context";
+import { createDevice } from "@/http/deviceAPI";
 
 const TableDevice = ({
   devices,
@@ -12,12 +13,14 @@ const TableDevice = ({
   types,
   info,
   onDeviceSelect,
+  onRefresh,
 }: {
   devices: IDevice[];
   brands: IBrand[];
   types: ITypes[];
   info: DeviceInfoArray[];
   onDeviceSelect: (deviceId: number) => void;
+  onRefresh: () => void;
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -45,8 +48,20 @@ const TableDevice = ({
   const openEditModal = (deviceId: number) => {
     const found = devices.find((item) => item.id === deviceId);
     if (!found) return;
-    setEditingDevice(found);
+
+    try {
+      onDeviceSelect(deviceId);
+      setEditingDevice(found);
+    } catch (error) {
+      console.error("Error setting editing device:", error);
+    }
     setEditOpen(true);
+  };
+
+  const addDevice = async (data: any) => {
+    await createDevice({ device: data });
+    setModalOpen(false);
+    onRefresh();
   };
 
   // рендер заголовков таблицы
@@ -96,7 +111,11 @@ const TableDevice = ({
         <td className="p-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-              <img className="h-full" src={import.meta.env.VITE_API_URL + device.img} alt={device.name} />
+              <img
+                className="h-full"
+                src={import.meta.env.VITE_API_URL + device.img}
+                alt={device.name}
+              />
             </div>
             <div>
               <h4 className="font-bold text-[var(--color-def)]">
@@ -221,7 +240,7 @@ const TableDevice = ({
       <ModalDevice
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => addDevice(data)}
         types={device.types}
         brands={device.brands}
       />

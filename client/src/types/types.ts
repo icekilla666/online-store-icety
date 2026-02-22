@@ -137,7 +137,7 @@ export interface DeviceFormData {
   brandId: number;
   typeId: number;
   rating: number;
-  img?: string;
+  img: string | null;
   images?: string[];
   characteristics: Characteristic[];
 }
@@ -229,4 +229,3 @@ export interface FormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (field: keyof TouchedFields) => void;
 }
-

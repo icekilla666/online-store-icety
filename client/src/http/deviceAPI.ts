@@ -2,8 +2,8 @@ import type { IDevice } from "@/types/types";
 import { $authHost, $host } from "./index";
 
 // типы устройств
-export const createType = async ({ type }: { type: string }) => {
-  const { data } = await $authHost.post("api/type", { type });
+export const createType = async (name: string) => {
+  const { data } = await $authHost.post("api/type", { name });
   return data;
 };
 
@@ -13,8 +13,8 @@ export const fetchType = async () => {
 };
 
 // бренды устройств
-export const createBrand = async ({ brand }: { brand: string }) => {
-  const { data } = await $authHost.post("api/brand", { brand });
+export const createBrand = async (name: string) => {
+  const { data } = await $authHost.post("api/brand", { name });
   return data;
 };
 
@@ -24,7 +24,7 @@ export const fetchBrand = async () => {
 };
 
 // устройства
-export const createDevice = async ({device}: {device: IDevice}) => {
+export const createDevice = async ({ device }: { device: IDevice }) => {
   const { data } = await $authHost.post("api/device", device);
   return data;
 };
@@ -38,4 +38,4 @@ export const fetchDevice = async () => {
 export const fetchOneDevice = async (id: string | undefined) => {
   const { data } = await $host.get("api/device/" + id);
   return data;
-}
+};

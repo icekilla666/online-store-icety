@@ -17,6 +17,7 @@ const ModalDevice = ({
   types,
   title = "Add New Device",
 }: ModalDeviceProps) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [formData, setFormData] = useState<DeviceFormData>({
     name: "",
     shortDesc: "",
@@ -24,13 +25,13 @@ const ModalDevice = ({
     brandId: brands[0]?.id || 0,
     typeId: types[0]?.id || 0,
     rating: 5.0,
+    img: null,
     characteristics: [],
   });
 
   useEffect(() => {
     if (!open) return;
     if (initialData) {
-      // Убеждаемся что characteristics это массив
       setFormData({
         ...initialData,
         characteristics: initialData.characteristics || [],
@@ -44,6 +45,7 @@ const ModalDevice = ({
       brandId: brands[0]?.id || 0,
       typeId: types[0]?.id || 0,
       rating: 5.0,
+      img: null,
       characteristics: [],
     });
   }, [open, initialData, brands, types]);
@@ -85,9 +87,24 @@ const ModalDevice = ({
     }));
   };
 
+  const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setSelectedFile(file || null);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    const submitData: any = new FormData();
+    submitData.append("name", formData.name);
+    submitData.append("shortDesc", formData.shortDesc);
+    submitData.append("price", String(formData.price));
+    submitData.append("brandId", String(formData.brandId));
+    submitData.append("typeId", String(formData.typeId));
+    submitData.append("rating", String(formData.rating));
+    {selectedFile && submitData.append("img", selectedFile)}
+    submitData.append("info", JSON.stringify(formData.characteristics));
+
+    onSubmit(submitData);
     onClose();
   };
 
@@ -145,7 +162,7 @@ const ModalDevice = ({
                     </label>
                     <input
                       type="number"
-                      step="0.01"
+                      step="100.00"
                       value={formData.price || ""}
                       onChange={(e) =>
                         handleNumberChange("price", e.target.value)
@@ -239,6 +256,7 @@ const ModalDevice = ({
                   <input
                     type="file"
                     accept="image/*"
+                    onChange={fileChange}
                     className="w-full px-3 py-2 bg-wrapper border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
                   />
                 </div>
@@ -288,32 +306,33 @@ const ModalDevice = ({
                   </div>
 
                   {/* Список добавленных характеристик */}
-                  {formData.characteristics && formData.characteristics.length > 0 && (
-                    <div className="space-y-2 max-h-40 overflow-y-auto border border-[var(--color-border)] rounded-lg p-2">
-                      {formData.characteristics.map((char) => (
-                        <div
-                          key={char.id}
-                          className="flex items-center justify-between p-3 bg-wrapper border border-[var(--color-border)] rounded-lg"
-                        >
-                          <div className="flex-1">
-                            <div className="font-medium text-[var(--color-def)]">
-                              {char.title}
-                            </div>
-                            <div className="text-sm text-[var(--color-secondary)]">
-                              {char.description}
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => removeCharacteristic(char.id)}
-                            className="ml-2 p-1 text-red-500 hover:bg-red-500/10 rounded"
+                  {formData.characteristics &&
+                    formData.characteristics.length > 0 && (
+                      <div className="space-y-2 max-h-40 overflow-y-auto border border-[var(--color-border)] rounded-lg p-2">
+                        {formData.characteristics.map((char) => (
+                          <div
+                            key={char.id}
+                            className="flex items-center justify-between p-3 bg-wrapper border border-[var(--color-border)] rounded-lg"
                           >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                            <div className="flex-1">
+                              <div className="font-medium text-[var(--color-def)]">
+                                {char.title}
+                              </div>
+                              <div className="text-sm text-[var(--color-secondary)]">
+                                {char.description}
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => removeCharacteristic(char.id)}
+                              className="ml-2 p-1 text-red-500 hover:bg-red-500/10 rounded"
+                            >
+                              <TrashIcon className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                 </div>
 
                 <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border)]">
