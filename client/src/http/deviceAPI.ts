@@ -7,6 +7,11 @@ export const createType = async (name: string) => {
   return data;
 };
 
+export const deleteType = async (id: string) => {
+  const { data } = await $authHost.delete("api/type", { data: { id } });
+  return data;
+};
+
 export const fetchType = async () => {
   const { data } = await $host.get("api/type");
   return data;
@@ -18,6 +23,11 @@ export const createBrand = async (name: string) => {
   return data;
 };
 
+export const deleteBrand = async (id: string) => {
+  const { data } = await $authHost.delete("api/brand", { data: { id } });
+  return data;
+};
+
 export const fetchBrand = async () => {
   const { data } = await $host.get("api/brand");
   return data;
@@ -26,6 +36,11 @@ export const fetchBrand = async () => {
 // устройства
 export const createDevice = async ({ device }: { device: IDevice }) => {
   const { data } = await $authHost.post("api/device", device);
+  return data;
+};
+
+export const deleteDevice = async (id: string) => {
+  const { data } = await $authHost.delete("api/device", { data: { id } });
   return data;
 };
 

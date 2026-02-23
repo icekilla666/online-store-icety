@@ -3,7 +3,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
 import ModalType from "../ui/modals/ModalType";
-import { createType } from "@/http/deviceAPI";
+import { createType, deleteType } from "@/http/deviceAPI";
 
 const TableType = ({
   types,
@@ -22,6 +22,14 @@ const TableType = ({
     setEditingType(type);
     setEditOpen(true);
   };
+
+  const deleteItem = async (id: number) => {
+    await deleteType(id.toString());
+    onRefresh();
+    // ТОСТ
+    console.log("Deleted type with id:", id);
+  };
+
 
   // функция для добавления типа
   const addType = async (data: { name: string }) => {
@@ -106,6 +114,7 @@ const TableType = ({
         renderRow={renderRow}
         modalName="type"
         modal={() => setModalOpen(true)}
+        deleteFunc={(id) => deleteItem(id)}
       />
       {/* модалка для создания типов */}
       <ModalType

@@ -63,6 +63,15 @@ class DeviceController {
     }
   }
 
+  async delete(req, res, next) {
+    const {id} = req.body;
+    const device = await Device.destroy({ where: { id } });
+    if (!device) {
+      return next(ApiError.badRequest("Device not found."));
+    }
+    return res.json({ message: "Device deleted successfully." });
+  }
+
   async getAll(req, res) {
     let { brandId, typeId, limit, page } = req.query;
     page = page || 1;

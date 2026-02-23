@@ -3,7 +3,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
 import ModalBrand from "../ui/modals/ModalBrand";
-import { createBrand } from "@/http/deviceAPI";
+import { createBrand, deleteBrand } from "@/http/deviceAPI";
 
 const TableBrand = ({
   brands,
@@ -27,6 +27,13 @@ const TableBrand = ({
     await createBrand(data.name);
     onRefresh();
     setModalOpen(false);
+  };
+
+  const deleteItem = async (id: number) => {
+    await deleteBrand(id.toString());
+    onRefresh();
+    // ТОСТ
+    console.log("Deleted brand with id:", id);
   };
 
   // рендер заголовков таблицы
@@ -105,6 +112,7 @@ const TableBrand = ({
         renderRow={renderRow}
         modalName="brand"
         modal={() => setModalOpen(true)}
+        deleteFunc={(id) => deleteItem(id)}
       />
       <ModalBrand
         open={modalOpen}

@@ -4,6 +4,7 @@ const deviceController = require("../controllers/deviceController");
 const authRoleMiddleware = require("../middleware/authRoleMiddleware");
 
 router.post('/', authRoleMiddleware("ADMIN"), deviceController.create);
+router.delete('/', authRoleMiddleware("ADMIN"), deviceController.delete);
 router.get('/', deviceController.getAll);
 router.get('/:id', deviceController.getOne);
 

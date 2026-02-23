@@ -5,7 +5,7 @@ import { DEVICE_ROUTE } from "@/utils/constants";
 import TableTemplate from "./TableTemplate";
 import ModalDevice from "../ui/modals/ModalDevice";
 import { useStore } from "@/utils/context";
-import { createDevice } from "@/http/deviceAPI";
+import { createDevice, deleteDevice } from "@/http/deviceAPI";
 
 const TableDevice = ({
   devices,
@@ -56,6 +56,13 @@ const TableDevice = ({
       console.error("Error setting editing device:", error);
     }
     setEditOpen(true);
+  };
+
+  const deleteItem = async (id: number) => {
+    await deleteDevice(id.toString());
+    onRefresh();
+    // ТОСТ
+    console.log("Deleted device with id:", id);
   };
 
   const addDevice = async (data: any) => {
@@ -236,6 +243,7 @@ const TableDevice = ({
         renderHeader={renderHeader}
         renderRow={renderRow}
         modal={() => setModalOpen(true)}
+        deleteFunc={(id) => deleteItem(id)}
       />
       <ModalDevice
         open={modalOpen}

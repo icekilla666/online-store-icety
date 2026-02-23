@@ -122,6 +122,7 @@ export interface TableTemplateProps<T extends UnionArray> {
   renderRow: (item: T, openDeleteModal: (id: number) => void) => ReactNode;
   modalName?: string;
   modal: () => void;
+  deleteFunc: (id: number) => void;
 }
 
 export interface Characteristic {

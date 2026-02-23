@@ -13,8 +13,8 @@ const TableTemplate = <T extends UnionArray>({
   renderRow,
   modalName = "item",
   modal,
+  deleteFunc,
 }: TableTemplateProps<T>) => {
-  const [items, setItems] = useState<T[]>(data);
   const [filteredItems, setFilteredItems] = useState<T[]>(data);
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
@@ -33,6 +33,7 @@ const TableTemplate = <T extends UnionArray>({
   // подтверждение удаления
   const confirmDelete = () => {
     if (itemToDelete) {
+      deleteFunc(itemToDelete);
       setOpen(false);
       setItemToDelete(null);
     }
@@ -45,7 +46,7 @@ const TableTemplate = <T extends UnionArray>({
         description={description}
         placeholder={placeholder}
         textBtn={textBtn}
-        array={items}
+        array={data}
         onSearch={handleSearch}
         onClick={modal}
       />
