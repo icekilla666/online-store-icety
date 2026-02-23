@@ -3,7 +3,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
 import ModalType from "../ui/modals/ModalType";
-import { createType, deleteType } from "@/http/deviceAPI";
+import { createType, deleteType, editType } from "@/http/deviceAPI";
 
 const TableType = ({
   types,
@@ -30,12 +30,22 @@ const TableType = ({
     console.log("Deleted type with id:", id);
   };
 
+  const editItem = async (data: { name: string }) => {
+    if (!editingType) return;
+    await editType(editingType.id.toString(), data.name);
+    onRefresh();
+
+    // ТОСТ
+    console.log("Edited type:", { id: editingType.id, name: data.name });
+  };
 
   // функция для добавления типа
   const addType = async (data: { name: string }) => {
     await createType(data.name);
     onRefresh();
     setModalOpen(false);
+    // ТОСТ
+    console.log("Added new type:", data);
   };
 
   // рендер заголовков таблицы
@@ -129,7 +139,7 @@ const TableType = ({
           setEditOpen(false);
           setEditingType(null);
         }}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => editItem(data)}
         initialData={editingType ? { name: editingType.name } : undefined}
         title="Edit Type"
       />

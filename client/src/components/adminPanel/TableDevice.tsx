@@ -5,7 +5,7 @@ import { DEVICE_ROUTE } from "@/utils/constants";
 import TableTemplate from "./TableTemplate";
 import ModalDevice from "../ui/modals/ModalDevice";
 import { useStore } from "@/utils/context";
-import { createDevice, deleteDevice } from "@/http/deviceAPI";
+import { createDevice, deleteDevice, editDevice } from "@/http/deviceAPI";
 
 const TableDevice = ({
   devices,
@@ -65,10 +65,36 @@ const TableDevice = ({
     console.log("Deleted device with id:", id);
   };
 
+  const editItem = async (id: number, data: FormData) => {
+    try {
+      const deviceData: any = {};
+      for (let [key, value] of data.entries()) {
+        if (key !== "img" && key !== "images") {
+          deviceData[key] = value;
+        }
+      }
+      if (data.has("info")) {
+        deviceData.info = data.get("info");
+      }
+      await editDevice(id.toString(), deviceData);
+
+      // ТОСТ
+      console.log("Edit successful");
+
+      setEditOpen(false);
+      setEditingDevice(null);
+      onRefresh();
+    } catch (error: any) {
+      console.log("EDIT ERROR:", error);
+    }
+  };
+
   const addDevice = async (data: any) => {
     await createDevice({ device: data });
     setModalOpen(false);
     onRefresh();
+    // ТОСТ
+    console.log("Added new device:", data);
   };
 
   // рендер заголовков таблицы
@@ -258,7 +284,11 @@ const TableDevice = ({
           setEditOpen(false);
           setEditingDevice(null);
         }}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data: any) => {
+          if (editingDevice?.id) {
+            editItem(editingDevice.id, data);
+          }
+        }}
         types={device.types}
         brands={device.brands}
         initialData={

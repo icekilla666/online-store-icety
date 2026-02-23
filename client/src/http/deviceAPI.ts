@@ -12,6 +12,11 @@ export const deleteType = async (id: string) => {
   return data;
 };
 
+export const editType = async (id: string, name: string) => {
+  const { data } = await $authHost.patch("api/type", { id, name });
+  return data;
+};
+
 export const fetchType = async () => {
   const { data } = await $host.get("api/type");
   return data;
@@ -28,6 +33,11 @@ export const deleteBrand = async (id: string) => {
   return data;
 };
 
+export const editBrand = async (id: string, name: string) => {
+  const { data } = await $authHost.patch("api/brand", { id, name });
+  return data;
+};
+
 export const fetchBrand = async () => {
   const { data } = await $host.get("api/brand");
   return data;
@@ -41,6 +51,11 @@ export const createDevice = async ({ device }: { device: IDevice }) => {
 
 export const deleteDevice = async (id: string) => {
   const { data } = await $authHost.delete("api/device", { data: { id } });
+  return data;
+};
+
+export const editDevice = async (id: string, deviceData: Partial<IDevice>) => {
+  const { data } = await $authHost.patch(`api/device/${id}`, deviceData);
   return data;
 };
 

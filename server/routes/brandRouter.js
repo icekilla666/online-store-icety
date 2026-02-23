@@ -5,6 +5,7 @@ const authRoleMiddleware = require("../middleware/authRoleMiddleware");
 
 router.post("/", authRoleMiddleware("ADMIN"), brandController.create);
 router.delete("/", authRoleMiddleware("ADMIN"), brandController.delete);
+router.patch("/", authRoleMiddleware("ADMIN"), brandController.edit);
 router.get("/", brandController.getAll);
 
 module.exports = router;

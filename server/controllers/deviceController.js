@@ -8,7 +8,7 @@ class DeviceController {
     try {
       let { name, shortDesc, price, brandId, typeId, info } = req.body;
       const files = req.files;
-      
+
       let mainImage = null;
       let additionalImages = [];
 
@@ -27,8 +27,7 @@ class DeviceController {
             await file.mv(filePath);
             additionalImages.push(fileName);
           }
-        } 
-        else {
+        } else {
           const fileName = uuid.v4() + path.extname(files.images.name);
           const filePath = path.resolve(__dirname, "..", "static", fileName);
           await files.images.mv(filePath);
@@ -42,8 +41,8 @@ class DeviceController {
         price,
         brandId,
         typeId,
-        img: mainImage, 
-        images: additionalImages, 
+        img: mainImage,
+        images: additionalImages,
       });
 
       if (info) {
@@ -64,12 +63,36 @@ class DeviceController {
   }
 
   async delete(req, res, next) {
-    const {id} = req.body;
+    const { id } = req.body;
     const device = await Device.destroy({ where: { id } });
     if (!device) {
       return next(ApiError.badRequest("Device not found."));
     }
+    console.log(`Device with ID ${id} deleted.`);
     return res.json({ message: "Device deleted successfully." });
+  }
+
+  async edit(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { name, shortDesc, price, brandId, typeId } = req.body;
+      const device = await Device.findByPk(id);
+      if (!device) {
+        return res.status(404).json({ message: "Device not found" });
+      }
+
+      if (name) device.name = name;
+      if (shortDesc) device.shortDesc = shortDesc;
+      if (price) device.price = price;
+      if (brandId) device.brandId = brandId;
+      if (typeId) device.typeId = typeId;
+
+      await device.save();
+
+      res.json(device);
+    } catch (error) {
+      return next(ApiError.badRequest(error.message));
+    }
   }
 
   async getAll(req, res) {

@@ -16,6 +16,22 @@ class BrandController {
     return res.json({ message: "Brand deleted successfully." });
   }
 
+  async edit(req, res, next) {
+    const { id, name } = req.body;
+    const brand = await Brand.findOne({ where: { id } });
+    if (!brand) {
+      return next(ApiError.badRequest("Brand not found."));
+    }
+
+    try {
+      brand.name = name;
+      await brand.save();
+      return res.json(brand);
+    } catch (error) {
+      return next(ApiError.badRequest(error.message));
+    }
+  }
+
   async getAll(req, res) {
     const brands = await Brand.findAll();
     return res.json(brands);
