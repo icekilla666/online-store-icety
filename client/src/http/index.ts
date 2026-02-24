@@ -9,7 +9,14 @@ const $authHost = axios.create({
 });
 
 const authInterceptor = (config: any) => {
-  config.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.authorization = `Bearer ${token}`;
+  }
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  }
+  
   return config;
 };
 

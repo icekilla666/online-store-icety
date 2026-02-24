@@ -75,23 +75,57 @@ class DeviceController {
   async edit(req, res, next) {
     try {
       const { id } = req.params;
-      const { name, shortDesc, price, brandId, typeId } = req.body;
+      const { name, shortDesc, price, brandId, typeId, rating, info } = req.body;
+      const files = req.files;
+
       const device = await Device.findByPk(id);
       if (!device) {
         return res.status(404).json({ message: "Device not found" });
       }
 
-      if (name) device.name = name;
-      if (shortDesc) device.shortDesc = shortDesc;
-      if (price) device.price = price;
-      if (brandId) device.brandId = brandId;
-      if (typeId) device.typeId = typeId;
+      if (name !== undefined) device.name = name;
+      if (shortDesc !== undefined) device.shortDesc = shortDesc;
+      if (price !== undefined) device.price = price;
+      if (brandId !== undefined) device.brandId = brandId;
+      if (typeId !== undefined) device.typeId = typeId;
+      if (rating !== undefined) device.rating = rating;
+
+      if (files && files.img) {
+        const fileName = uuid.v4() + path.extname(files.img.name);
+        const filePath = path.resolve(__dirname, "..", "static", fileName);
+        await files.img.mv(filePath);
+        device.img = fileName;
+      }
 
       await device.save();
 
-      res.json(device);
+      if (info) {
+        try {
+          const parsedInfo = JSON.parse(info);
+          
+          await DeviceInfo.destroy({ where: { deviceId: id } });
+          
+          for (const i of parsedInfo) {
+            await DeviceInfo.create({
+              title: i.title,
+              description: i.description,
+              deviceId: device.id,
+            });
+          }
+        } catch (e) {
+          console.log("Error parsing info:", e.message);
+        }
+      }
+
+      const updatedDevice = await Device.findOne({
+        where: { id },
+        include: [{ model: DeviceInfo, as: "info" }],
+      });
+
+      res.json(updatedDevice);
+      
     } catch (error) {
-      return next(ApiError.badRequest(error.message));
+      res.status(500).json({ message: error.message });
     }
   }
 

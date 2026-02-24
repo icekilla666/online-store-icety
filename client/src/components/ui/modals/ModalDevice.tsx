@@ -89,7 +89,17 @@ const ModalDevice = ({
 
   const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setSelectedFile(file || null);
+    if (file) {
+      console.log(
+        "📸 File selected in input:",
+        file.name,
+        file.type,
+        file.size,
+      );
+      setSelectedFile(file);
+    } else {
+      console.log("📸 No file selected");
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -101,8 +111,13 @@ const ModalDevice = ({
     submitData.append("brandId", String(formData.brandId));
     submitData.append("typeId", String(formData.typeId));
     submitData.append("rating", String(formData.rating));
-    {selectedFile && submitData.append("img", selectedFile)}
-    submitData.append("info", JSON.stringify(formData.characteristics));
+
+    const characteristicsJson = JSON.stringify(formData.characteristics);
+    submitData.append("info", characteristicsJson);
+
+    if (selectedFile) {
+      submitData.append("img", selectedFile);
+    }
 
     onSubmit(submitData);
     onClose();
