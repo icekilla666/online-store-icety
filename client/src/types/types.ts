@@ -53,6 +53,8 @@ export interface BuyNowProps {
   shortDesc: string;
   price: number;
   rating: number;
+  deviceId: string;
+  addToBasketHandler: (id: string) => void;
 }
 export interface DeviceInfoArray {
   id: number;
@@ -173,6 +175,7 @@ export interface BasketListProps {
   devices: IDevice[];
   quantities: Record<number, number>;
   onQuantityChange: (deviceId: number, newQuantity: number) => void;
+  deleteItem: (deviceId: string) => void;
 }
 
 export interface AlertProps {

@@ -1,4 +1,10 @@
-const Header = ({ totalQuantities }: { totalQuantities: number }) => {
+const Header = ({
+  totalQuantities,
+  clearBasket,
+}: {
+  totalQuantities: number;
+  clearBasket: () => void;
+}) => {
   return (
     <div className="rounded-[28px] border border-[var(--color-border)] bg-wrapper p-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -13,7 +19,10 @@ const Header = ({ totalQuantities }: { totalQuantities: number }) => {
             {totalQuantities} items · Free delivery over $499 · 30-day returns
           </p>
         </div>
-        <button className="mt-4 sm:mt-0 w-full sm:w-auto px-5 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-primary)] text-sm font-medium text-[var(--color-def)] hover:border-[var(--color-custom)] transition-colors">
+        <button
+          onClick={clearBasket}
+          className="mt-4 sm:mt-0 w-full sm:w-auto px-5 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-primary)] text-sm font-medium text-[var(--color-def)] hover:border-[var(--color-custom)] transition-colors"
+        >
           Clear all
         </button>
       </div>

@@ -4,7 +4,14 @@ import QuantityCounter from "../ui/QuantityCounter";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 
-const BuyNow = ({ name, rating, shortDesc, price }: BuyNowProps) => {
+const BuyNow = ({
+  name,
+  rating,
+  shortDesc,
+  price,
+  deviceId,
+  addToBasketHandler,
+}: BuyNowProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   return (
@@ -28,10 +35,12 @@ const BuyNow = ({ name, rating, shortDesc, price }: BuyNowProps) => {
           onChange={(value) => setSelectedQuantity(value)}
           className="mb-10"
         />
-        <div className="flex flex-col gap-3 sm:flex-row sm:gap-5">
-          <MyButton className="uppercase">add to cart</MyButton>
-          <MyButton className="uppercase bg-transparent border border-custom hover:bg-custom">
-            buy now
+        <div className="flex max-w-80 flex-col gap-3 sm:flex-row sm:gap-5">
+          <MyButton
+            onClick={() => addToBasketHandler(deviceId)}
+            className="uppercase bg-transparent border border-custom hover:bg-custom"
+          >
+            add to cart
           </MyButton>
         </div>
       </div>

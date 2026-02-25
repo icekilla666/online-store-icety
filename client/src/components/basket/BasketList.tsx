@@ -6,8 +6,8 @@ const BasketList = ({
   devices,
   quantities,
   onQuantityChange,
+  deleteItem,
 }: BasketListProps) => {
-
   return (
     <div className="grid gap-4">
       {devices.map((device) => {
@@ -20,11 +20,11 @@ const BasketList = ({
           >
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:w-1/2">
-                <div className="w-full p-3 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
+                <div className="w-full max-w-[200px] h-[200px] p-3 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
                   <img
-                    src={device.img}
+                    src={import.meta.env.VITE_API_URL + device.img}
                     alt={device.name}
-                    className="w-full max-h-[160px] sm:max-h-[200px] object-contain"
+                    className="w-full object-contain h-full"
                   />
                 </div>
                 <div>
@@ -58,7 +58,7 @@ const BasketList = ({
                   </p>
                 </div>
                 <button
-                  onClick={() => console.log("delete", device.id)}
+                  onClick={() => deleteItem(String(device.id))}
                   className="text-sm text-[var(--color-secondary)] hover:text-[var(--color-custom)] transition-colors"
                 >
                   Remove

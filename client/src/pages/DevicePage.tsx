@@ -2,7 +2,7 @@ import BuyNow from "@/components/devices/BuyNow";
 import Specifications from "@/components/devices/Specifications";
 import SwiperSlider from "@/components/devices/SwiperSlider";
 import Tabs from "@/components/ui/Tabs";
-import { fetchOneDevice } from "@/http/deviceAPI";
+import { addBasket, fetchOneDevice } from "@/http/deviceAPI";
 import type { DeviceInfoArray, IDevice } from "@/types/types";
 import { DEVICE_PAGE_TABS } from "@/utils/constants";
 import { useEffect, useState } from "react";
@@ -16,6 +16,9 @@ const DevicePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
     fetchOneDevice(id)
       .then((data) => {
         setDevices(data);
@@ -23,6 +26,13 @@ const DevicePage = () => {
       })
       .finally(() => setLoading(false));
   }, [id]);
+
+  const addToBasket = async (id: string) => {
+    await addBasket(id).then((data) =>
+      // ТОСТ
+      console.log("товар добавлен", data),
+    );
+  };
 
   const handleTabs = (value: string) => {
     setTab(value);
@@ -74,10 +84,12 @@ const DevicePage = () => {
 
           {tab === "buy" ? (
             <BuyNow
-              name={devices?.name}
+              name={devices.name}
               shortDesc={devices.shortDesc}
               rating={devices.rating}
               price={devices.price}
+              deviceId={devices.id.toString()}
+              addToBasketHandler={addToBasket}
             />
           ) : (
             <Specifications deviceInfo={deviceInfo} />

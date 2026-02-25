@@ -65,7 +65,28 @@ export const fetchDevice = async () => {
 };
 
 // получение одного устройства
-export const fetchOneDevice = async (id: string | undefined) => {
+export const fetchOneDevice = async (id: string) => {
   const { data } = await $host.get("api/device/" + id);
+  return data;
+};
+
+// корзина
+export const fetchBasket = async () => {
+  const { data } = await $authHost.get("api/basket");
+  return data;
+};
+
+export const addBasket = async (deviceId: string) => {
+  const { data } = await $authHost.post("api/basket", { deviceId });
+  return data;
+};
+
+export const deleteBasket = async (deviceId: string) => {
+  const { data } = await $authHost.delete("api/basket", { data: { deviceId } });
+  return data;
+};
+
+export const clearBasket = async () => {
+  const { data } = await $authHost.delete("api/basket");
   return data;
 };

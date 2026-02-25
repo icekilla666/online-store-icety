@@ -32,17 +32,54 @@ class BasketController {
   }
 
   async removeDevice(req, res, next) {
-    const { deviceId } = req.body;
-    const userId = req.user.id;
+    const { deviceId } = req.params;
+    const userId = req.user?.id;
+
     try {
+      if (!userId) {
+        return next(ApiError.unauthorized("User not authenticated"));
+      }
+
       const basket = await Basket.findOne({ where: { userId } });
-      const basketItem = await BasketDevice.destroy({
+      if (!basket) {
+        return next(ApiError.badRequest("Basket not found"));
+      }
+
+      const deletedCount = await BasketDevice.destroy({
         where: { basketId: basket.id, deviceId: deviceId },
       });
-      if (!basketItem) {
+
+      if (deletedCount === 0) {
         return next(ApiError.badRequest("Device not found in basket."));
       }
+
       return res.json({ message: "Device removed from basket." });
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
+  }
+
+  async clearBasket(req, res, next) {
+    const userId = req.user?.id;
+
+    try {
+      if (!userId) {
+        return next(ApiError.unauthorized("User not authenticated"));
+      }
+
+      const basket = await Basket.findOne({ where: { userId } });
+      if (!basket) {
+        return next(ApiError.badRequest("Basket not found"));
+      }
+
+      const deletedCount = await BasketDevice.destroy({
+        where: { basketId: basket.id },
+      });
+
+      return res.json({
+        message: "Basket cleared successfully",
+        count: deletedCount,
+      });
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
