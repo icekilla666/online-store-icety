@@ -54,6 +54,8 @@ export interface BuyNowProps {
   price: number;
   rating: number;
   deviceId: string;
+  selectedQuantity: number; 
+  onQuantityChange: (value: number) => void; 
   addToBasketHandler: (id: string) => void;
 }
 export interface DeviceInfoArray {

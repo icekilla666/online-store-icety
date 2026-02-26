@@ -1,6 +1,6 @@
 import type { QuantityCounterProps } from "@/types/types";
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const QuantityCounter: React.FC<QuantityCounterProps> = ({
   initialValue = 1,
@@ -11,20 +11,34 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({
 }) => {
   const [quantity, setQuantity] = useState(initialValue);
 
+  useEffect(() => {
+    setQuantity(initialValue);
+  }, [initialValue]);
+
   const handleDecrease = () => {
     if (quantity > min) {
-      const value = quantity - 1;
-      setQuantity(value);
-      onChange?.(value);
+      const newValue = quantity - 1;
+      setQuantity(newValue);
+      onChange?.(newValue);
     }
   };
+
   const handleIncrease = () => {
-    if (quantity <= max) {
-      const value = quantity + 1;
+    if (quantity < max) {
+      const newValue = quantity + 1;
+      setQuantity(newValue);
+      onChange?.(newValue);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= min && value <= max) {
       setQuantity(value);
       onChange?.(value);
     }
   };
+
   return (
     <div
       className={`flex max-w-32 items-center justify-between py-4 px-5 border border-[#E6E6E6] rounded-[30px] ${className}`}
@@ -40,10 +54,8 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({
       <input
         type="text"
         value={quantity}
-        onChange={() => console.log('')}
-        min={min}
-        max={max}
-        className="text-center w-full bg-transparent py-1 focus:outline-none cursor-default"
+        onChange={handleInputChange}
+        className="text-center w-full bg-transparent py-1 focus:outline-none"
       />
 
       <button

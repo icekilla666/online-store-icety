@@ -2,7 +2,6 @@ import type { BuyNowProps } from "@/types/types";
 import MyButton from "../ui/Button";
 import QuantityCounter from "../ui/QuantityCounter";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 
 const BuyNow = ({
   name,
@@ -10,10 +9,10 @@ const BuyNow = ({
   shortDesc,
   price,
   deviceId,
+  selectedQuantity, // 👈 Получаем quantity
+  onQuantityChange, // 👈 Получаем обработчик
   addToBasketHandler,
 }: BuyNowProps) => {
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
-
   return (
     <div className="flex flex-col gap-4 items-start">
       <h1 className="">{name}</h1>
@@ -32,7 +31,8 @@ const BuyNow = ({
       <div className="w-full">
         <h2 className="mb-5">Unit</h2>
         <QuantityCounter
-          onChange={(value) => setSelectedQuantity(value)}
+          initialValue={selectedQuantity}
+          onChange={onQuantityChange} 
           className="mb-10"
         />
         <div className="flex max-w-80 flex-col gap-3 sm:flex-row sm:gap-5">

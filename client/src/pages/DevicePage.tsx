@@ -12,13 +12,12 @@ const DevicePage = () => {
   const [tab, setTab] = useState("buy");
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfoArray[]>([]);
   const [devices, setDevices] = useState<IDevice>();
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) {
-      return;
-    }
+    if (!id) return;
     fetchOneDevice(id)
       .then((data) => {
         setDevices(data);
@@ -28,10 +27,17 @@ const DevicePage = () => {
   }, [id]);
 
   const addToBasket = async (id: string) => {
-    await addBasket(id).then((data) =>
+    try {
+      const data = await addBasket(id, selectedQuantity);
+      console.log("товар добавлен", data);
       // ТОСТ
-      console.log("товар добавлен", data),
-    );
+    } catch (error) {
+      console.error("❌ Ошибка добавления в корзину:", error);
+    }
+  };
+
+  const handleQuantityChange = (value: number) => {
+    setSelectedQuantity(value);
   };
 
   const handleTabs = (value: string) => {
@@ -89,6 +95,8 @@ const DevicePage = () => {
               rating={devices.rating}
               price={devices.price}
               deviceId={devices.id.toString()}
+              selectedQuantity={selectedQuantity}
+              onQuantityChange={handleQuantityChange}
               addToBasketHandler={addToBasket}
             />
           ) : (

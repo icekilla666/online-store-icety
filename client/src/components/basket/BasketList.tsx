@@ -1,6 +1,7 @@
 import type { BasketListProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 import QuantityCounter from "../ui/QuantityCounter";
+import { updateBasketQuantity } from "@/http/deviceAPI";
 
 const BasketList = ({
   devices,
@@ -8,6 +9,16 @@ const BasketList = ({
   onQuantityChange,
   deleteItem,
 }: BasketListProps) => {
+  
+  const handleQuantityChange = async (deviceId: number, newQuantity: number) => {
+    try {
+      await updateBasketQuantity(deviceId.toString(), newQuantity);
+      onQuantityChange(deviceId, newQuantity);
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
+
   return (
     <div className="grid gap-4">
       {devices.map((device) => {
@@ -46,7 +57,7 @@ const BasketList = ({
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:flex-1">
                 <QuantityCounter
                   initialValue={qty}
-                  onChange={(value) => onQuantityChange(device.id, value)}
+                  onChange={(value) => handleQuantityChange(device.id, value)}
                 />
 
                 <div className="text-left sm:text-right">

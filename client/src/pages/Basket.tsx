@@ -18,22 +18,45 @@ const Basket = observer(() => {
         (item: { device: IDevice }) => item.device,
       );
       device.setDevices(devices);
+      
+      const initialQuantities: Record<number, number> = {};
+      data.basket_devices.forEach((item: any) => {
+        if (item.device) {
+          initialQuantities[item.device.id] = item.quantity || 1;
+        }
+      });
+      setQuantities(initialQuantities);
     });
   }, []);
 
   const deleteBasketHandler = async (deviceId: string) => {
-    deleteBasket(deviceId).then(() => {
+    try {
+      await deleteBasket(deviceId);
       // ТОСТ
       console.log("Товар удален", deviceId);
-    });
-    device.setDevices(device.devices.filter((d) => d.id !== Number(deviceId)));
+      
+      device.setDevices(device.devices.filter((d) => d.id !== Number(deviceId)));
+      
+      setQuantities((prev) => {
+        const newQuantities = { ...prev };
+        delete newQuantities[Number(deviceId)];
+        return newQuantities;
+      });
+      
+    } catch (error) {
+      console.error("Ошибка удаления:", error);
+    }
   };
 
   const clearBasketHandler = async () => {
-    const data = await clearBasket();
-    // ТОСТ
-    console.log("Все товары удалены", data);
-    device.setDevices([]);
+    try {
+      const data = await clearBasket();
+      console.log("Все товары удалены", data);
+      device.setDevices([]);
+      setQuantities({}); 
+    } catch (error) {
+      console.error("Ошибка очистки:", error);
+    }
   };
 
   const handleQuantityChange = (deviceId: number, newQuantity: number) => {

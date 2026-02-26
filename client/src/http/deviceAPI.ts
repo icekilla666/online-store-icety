@@ -76,13 +76,18 @@ export const fetchBasket = async () => {
   return data;
 };
 
-export const addBasket = async (deviceId: string) => {
-  const { data } = await $authHost.post("api/basket", { deviceId });
+export const addBasket = async (deviceId: string, quantity: number = 1) => {
+  const { data } = await $authHost.post("api/basket", { deviceId, quantity });
+  return data;
+};
+
+export const updateBasketQuantity = async (deviceId: string, quantity: number) => {
+  const { data } = await $authHost.patch(`api/basket/${deviceId}`, { quantity });
   return data;
 };
 
 export const deleteBasket = async (deviceId: string) => {
-  const { data } = await $authHost.delete("api/basket", { data: { deviceId } });
+  const { data } = await $authHost.delete(`api/basket/${deviceId}`);
   return data;
 };
 

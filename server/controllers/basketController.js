@@ -3,16 +3,38 @@ const ApiError = require("../error/ApiError");
 
 class BasketController {
   async addDevice(req, res, next) {
-    const { deviceId } = req.body;
+    const { deviceId, quantity = 1 } = req.body;
     const userId = req.user.id;
 
     try {
       const basket = await Basket.findOne({ where: { userId } });
-      const basketItem = await BasketDevice.create({
-        basketId: basket.id,
-        deviceId: deviceId,
+
+      const existingItem = await BasketDevice.findOne({
+        where: { basketId: basket.id, deviceId: deviceId },
       });
-      return res.json(basketItem);
+
+      if (existingItem) {
+        existingItem.quantity += quantity; 
+        await existingItem.save();
+
+        const updatedItem = await BasketDevice.findOne({
+          where: { id: existingItem.id },
+          include: [Device],
+        });
+        return res.json(updatedItem);
+      } else {
+        const basketItem = await BasketDevice.create({
+          basketId: basket.id,
+          deviceId: deviceId,
+          quantity: quantity,
+        });
+
+        const newItem = await BasketDevice.findOne({
+          where: { id: basketItem.id },
+          include: [Device],
+        });
+        return res.json(newItem);
+      }
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
@@ -23,9 +45,49 @@ class BasketController {
     try {
       const basket = await Basket.findOne({
         where: { userId },
-        include: [{ model: BasketDevice, include: [Device] }],
+        include: [
+          {
+            model: BasketDevice,
+            include: [Device],
+          },
+        ],
       });
       return res.json(basket);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
+  }
+
+  async updateQuantity(req, res, next) {
+    const { deviceId } = req.params;
+    const { quantity } = req.body;
+    const userId = req.user.id;
+
+    try {
+      const basket = await Basket.findOne({ where: { userId } });
+
+      const item = await BasketDevice.findOne({
+        where: { basketId: basket.id, deviceId },
+      });
+
+      if (!item) {
+        return next(ApiError.badRequest("Device not found in basket"));
+      }
+
+      if (quantity <= 0) {
+        await item.destroy();
+        return res.json({ message: "Device removed from basket" });
+      }
+
+      item.quantity = quantity;
+      await item.save();
+
+      const updatedItem = await BasketDevice.findOne({
+        where: { id: item.id },
+        include: [Device],
+      });
+
+      return res.json(updatedItem);
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
@@ -36,22 +98,14 @@ class BasketController {
     const userId = req.user?.id;
 
     try {
-      if (!userId) {
-        return next(ApiError.unauthorized("User not authenticated"));
-      }
-
       const basket = await Basket.findOne({ where: { userId } });
       if (!basket) {
         return next(ApiError.badRequest("Basket not found"));
       }
 
-      const deletedCount = await BasketDevice.destroy({
+      await BasketDevice.destroy({
         where: { basketId: basket.id, deviceId: deviceId },
       });
-
-      if (deletedCount === 0) {
-        return next(ApiError.badRequest("Device not found in basket."));
-      }
 
       return res.json({ message: "Device removed from basket." });
     } catch (error) {
@@ -63,9 +117,6 @@ class BasketController {
     const userId = req.user?.id;
 
     try {
-      if (!userId) {
-        return next(ApiError.unauthorized("User not authenticated"));
-      }
 
       const basket = await Basket.findOne({ where: { userId } });
       if (!basket) {
