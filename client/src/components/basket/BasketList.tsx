@@ -2,6 +2,7 @@ import type { BasketListProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 import QuantityCounter from "../ui/QuantityCounter";
 import { updateBasketQuantity } from "@/http/deviceAPI";
+import EmptyBasket from "./EmptyBasket";
 
 const BasketList = ({
   devices,
@@ -9,8 +10,10 @@ const BasketList = ({
   onQuantityChange,
   deleteItem,
 }: BasketListProps) => {
-  
-  const handleQuantityChange = async (deviceId: number, newQuantity: number) => {
+  const handleQuantityChange = async (
+    deviceId: number,
+    newQuantity: number,
+  ) => {
     try {
       await updateBasketQuantity(deviceId.toString(), newQuantity);
       onQuantityChange(deviceId, newQuantity);
@@ -21,6 +24,7 @@ const BasketList = ({
 
   return (
     <div className="grid gap-4">
+      {!devices.length && <EmptyBasket />}
       {devices.map((device) => {
         const qty = quantities[device.id] ?? 1;
 

@@ -1,10 +1,10 @@
 import AppRouter from "./components/AppRouter";
 import { BrowserRouter, useLocation } from "react-router-dom";
-import NavBar from "./components/NavBar";
 import { observer } from "mobx-react-lite";
 import { useStore } from "./utils/context";
 import { useEffect, useState } from "react";
 import { check } from "./http/userAPI";
+import Header from "./components/header/Header";
 
 const App = observer(() => {
   const { user } = useStore();
@@ -44,7 +44,7 @@ const AppContent = () => {
 
   return (
     <>
-      {shouldShowNavBar && <NavBar />}
+      {shouldShowNavBar && <Header />}
       <AppRouter />
     </>
   );
