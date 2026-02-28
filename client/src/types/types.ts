@@ -27,6 +27,7 @@ export interface IDevice {
   images: string[];
   typeId?: number;
   brandId?: number;
+  createdAt?: string;
 }
 
 export interface HeadProps {
@@ -54,8 +55,8 @@ export interface BuyNowProps {
   price: number;
   rating: number;
   deviceId: string;
-  selectedQuantity: number; 
-  onQuantityChange: (value: number) => void; 
+  selectedQuantity: number;
+  onQuantityChange: (value: number) => void;
   addToBasketHandler: (id: string) => void;
 }
 export interface DeviceInfoArray {
@@ -234,4 +235,10 @@ export interface FormProps {
   touched: TouchedFields;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (field: keyof TouchedFields) => void;
+}
+
+export interface RecommendProps {
+  title: string;
+  description: string;
+  devices: IDevice[];
 }

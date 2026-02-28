@@ -5,6 +5,7 @@ export default class DeviceStore {
   private _types: ITypes[] = [];
   private _brands: IBrand[] = [];
   private _devices: IDevice[] = [];
+  private _allDevices: IDevice[] = [];
 
   private _selectedType: ITypes | null = null;
   private _selectedBrand: IBrand | null = null;
@@ -22,6 +23,9 @@ export default class DeviceStore {
   }
   setDevices(devices: IDevice[]): void {
     this._devices = devices;
+  }
+  setAllDevices(devices: IDevice[]) {
+    this._allDevices = devices;
   }
   setSeceltedType(type: ITypes): void {
     this._selectedType = type;
@@ -41,6 +45,9 @@ export default class DeviceStore {
   }
   get devices(): IDevice[] {
     return this._devices;
+  }
+  get allDevices() {
+    return this._allDevices;
   }
   get selectedType() {
     return this._selectedType;

@@ -5,13 +5,19 @@ import { useEffect, useMemo, useState } from "react";
 import SideBar from "@/components/basket/SideBar";
 import Recommend from "@/components/Recommend";
 import { observer } from "mobx-react-lite";
-import { clearBasket, deleteBasket, fetchBasket } from "@/http/deviceAPI";
+import {
+  clearBasket,
+  deleteBasket,
+  fetchBasket,
+  fetchDevice,
+} from "@/http/deviceAPI";
 import type { IDevice } from "@/types/types";
 
 const Basket = observer(() => {
   const { device, basket } = useStore();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
+  // запрос на получение всех товаров и товарво корзины
   useEffect(() => {
     fetchBasket().then((data) => {
       const devices = data.basket_devices.map(
@@ -27,8 +33,22 @@ const Basket = observer(() => {
       });
       setQuantities(initialQuantities);
     });
+
+    fetchDevice().then((data) => {
+      device.setAllDevices(data.rows || data);
+    });
   }, []);
 
+  // фильтрация последних товаров
+  const latestDevices = [...(device.allDevices || [])]
+    .sort((a, b) => {
+      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dateB - dateA;
+    })
+    .slice(0, 3);
+
+  // удаление одного товара
   const deleteBasketHandler = async (deviceId: string) => {
     try {
       await deleteBasket(deviceId);
@@ -45,12 +65,12 @@ const Basket = observer(() => {
         delete newQuantities[Number(deviceId)];
         return newQuantities;
       });
-      
     } catch (error) {
       console.error("Ошибка удаления:", error);
     }
   };
 
+  // укдаление всей корзины
   const clearBasketHandler = async () => {
     try {
       const data = await clearBasket();
@@ -63,6 +83,7 @@ const Basket = observer(() => {
     }
   };
 
+  // добавление кол-ва товара
   const handleQuantityChange = (deviceId: number, newQuantity: number) => {
     setQuantities((prev) => ({
       ...prev,
@@ -101,7 +122,11 @@ const Basket = observer(() => {
               deleteItem={deleteBasketHandler}
             />
 
-            <Recommend />
+            <Recommend
+              title={"New Arrivals"}
+              description={"Check out the latest products added to our store"}
+              devices={latestDevices}
+            />
           </div>
 
           <SideBar total={totalPrice} />
