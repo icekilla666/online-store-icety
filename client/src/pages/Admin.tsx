@@ -1,3 +1,4 @@
+import BottomParams from "@/components/adminPanel/BottomParams";
 import Preloader from "@/components/adminPanel/Preloader";
 import Stats from "@/components/adminPanel/Stats";
 import TableBrand from "@/components/adminPanel/TableBrand";
@@ -35,12 +36,25 @@ const Admin = observer(() => {
   const refreshData = () => {
     fetchType().then((data) => device.setTypes(data));
     fetchBrand().then((data) => device.setBrands(data));
-    fetchDevice().then((data) => device.setDevices(data.rows));
+    fetchDevice({
+      typeId: device.selectedType?.id,
+      brandId: device.selectedBrand?.id,
+      page: device.page,
+      limit: device.limit,
+    }).then((data) => {
+      device.setDevices(data.rows);
+      device.setTotalCount(data.count);
+    });
+    fetchDevice().then((data) => device.setAllDevices(data.rows));
   };
 
   useEffect(() => {
     refreshData();
-  }, []);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [device.page, device.limit]);
   const handleTabs = (value: string) => {
     setTab(value);
   };
@@ -72,7 +86,7 @@ const Admin = observer(() => {
 
             {/* Карточки статистики */}
             <Stats
-              devices={device.devices}
+              devices={device.allDevices}
               types={device.types}
               brands={device.brands}
             />
@@ -95,7 +109,7 @@ const Admin = observer(() => {
                     onDeviceSelect={fetchDeviceInfo}
                     onRefresh={refreshData}
                   />
-                  <Pagitanion array={device.devices} />
+                  <BottomParams />
                 </>
               )}
               {tab === "type" && (
@@ -105,13 +119,13 @@ const Admin = observer(() => {
                     types={device.types}
                     onRefresh={refreshData}
                   />{" "}
-                  <Pagitanion array={device.types} />
+                  <BottomParams />
                 </>
               )}
               {tab === "brand" && (
                 <>
                   <TableBrand brands={device.brands} onRefresh={refreshData} />{" "}
-                  <Pagitanion array={device.brands} />{" "}
+                  <BottomParams />{" "}
                 </>
               )}
             </div>

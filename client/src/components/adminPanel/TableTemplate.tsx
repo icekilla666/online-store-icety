@@ -2,6 +2,8 @@ import type { TableTemplateProps, UnionArray } from "@/types/types";
 import { useCallback, useState, Fragment } from "react";
 import HeadTable from "./HeadTable";
 import ModalDeleate from "../ui/modals/ModalDeleate";
+import Empty from "../Empty";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const TableTemplate = <T extends UnionArray>({
   data,
@@ -68,9 +70,11 @@ const TableTemplate = <T extends UnionArray>({
         </table>
 
         {filteredItems.length === 0 && (
-          <div className="text-center py-9">
-            <h2>Ничего не найдено!</h2>
-          </div>
+          <Empty
+            icon={<MagnifyingGlassIcon className="w-24 h-24" />}
+            title="No results"
+            description="We couldn't find anything matching your current filters. Try adjusting your search criteria."
+          />
         )}
       </div>
 

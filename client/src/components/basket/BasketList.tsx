@@ -2,8 +2,10 @@ import type { BasketListProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 import QuantityCounter from "../ui/QuantityCounter";
 import { updateBasketQuantity } from "@/http/deviceAPI";
-import EmptyBasket from "./EmptyBasket";
 import { useStore } from "@/utils/context";
+import Empty from "../Empty";
+import { ShoppingCart } from "lucide-react";
+import { SHOP_ROUTE } from "@/utils/constants";
 
 const BasketList = ({
   devices,
@@ -27,7 +29,15 @@ const BasketList = ({
 
   return (
     <div className="grid gap-4">
-      {!devices.length && <EmptyBasket />}
+      {!devices.length && (
+        <Empty
+          icon={<ShoppingCart className="w-24 h-24 stroke-1" />}
+          title="Your cart is feeling lonely"
+          description="Add some items to your cart and they'll appear here. "
+          link="Add now!"
+          linkHref={SHOP_ROUTE}
+        />
+      )}
       {devices.map((device) => {
         const qty = quantities[device.id] ?? 1;
 

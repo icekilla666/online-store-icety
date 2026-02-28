@@ -35,7 +35,7 @@ const Basket = observer(() => {
     });
 
     fetchDevice().then((data) => {
-      device.setAllDevices(data.rows || data);
+      device.setAllDevices(data.rows);
     });
   }, []);
 

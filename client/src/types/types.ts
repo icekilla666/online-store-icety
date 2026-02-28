@@ -242,3 +242,11 @@ export interface RecommendProps {
   description: string;
   devices: IDevice[];
 }
+
+export interface EmptyProps {
+  icon?: React.ReactNode | string;
+  title: string;
+  description: string;
+  link?: string;
+  linkHref?: string;
+}

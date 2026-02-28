@@ -59,8 +59,25 @@ export const editDevice = async (id: string, deviceData: Partial<IDevice>) => {
   return data;
 };
 
-export const fetchDevice = async () => {
-  const { data } = await $host.get("api/device");
+export const fetchDevice = async ({
+  typeId,
+  brandId,
+  page,
+  limit,
+}: {
+  typeId?: number;
+  brandId?: number;
+  page?: number;
+  limit?: number;
+} = {}) => {
+  const { data } = await $host.get("api/device", {
+    params: {
+      typeId,
+      brandId,
+      page,
+      limit,
+    },
+  });
   return data;
 };
 
@@ -81,8 +98,13 @@ export const addBasket = async (deviceId: string, quantity: number = 1) => {
   return data;
 };
 
-export const updateBasketQuantity = async (deviceId: string, quantity: number) => {
-  const { data } = await $authHost.patch(`api/basket/${deviceId}`, { quantity });
+export const updateBasketQuantity = async (
+  deviceId: string,
+  quantity: number,
+) => {
+  const { data } = await $authHost.patch(`api/basket/${deviceId}`, {
+    quantity,
+  });
   return data;
 };
 

@@ -6,6 +6,9 @@ export default class DeviceStore {
   private _brands: IBrand[] = [];
   private _devices: IDevice[] = [];
   private _allDevices: IDevice[] = [];
+  private _page: number = 1;
+  private _limit: number = 6;
+  private _totalCount: number = 0;
 
   private _selectedType: ITypes | null = null;
   private _selectedBrand: IBrand | null = null;
@@ -27,14 +30,25 @@ export default class DeviceStore {
   setAllDevices(devices: IDevice[]) {
     this._allDevices = devices;
   }
-  setSeceltedType(type: ITypes): void {
+  setSelectedType(type: ITypes | null): void {
+    this.setPage(1);
     this._selectedType = type;
   }
-  setSelectedBrand(brand: IBrand): void {
+  setSelectedBrand(brand: IBrand | null): void {
+    this.setPage(1);
     this._selectedBrand = brand;
   }
   setSelectedDevice(device: IDevice): void {
     this._selectedDevice = device;
+  }
+  setPage(page: number): void {
+    this._page = page;
+  }
+  setLimit(limit: number): void {
+    this._limit = limit;
+  }
+  setTotalCount(count: number): void {
+    this._totalCount = count;
   }
 
   get types(): ITypes[] {
@@ -57,6 +71,15 @@ export default class DeviceStore {
   }
   get selectedDevice() {
     return this._selectedDevice;
+  }
+  get page() {
+    return this._page;
+  }
+  get limit() {
+    return this._limit;
+  }
+  get totalCount() {
+    return this._totalCount;
   }
 }
 

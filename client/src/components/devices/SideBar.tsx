@@ -9,11 +9,21 @@ const SideBar = observer(() => {
         types
       </h2>
       <ul className="mb-12">
+        <li
+          onClick={() => device.setSelectedType(null)}
+          className={`cursor-pointer font-light tracking-widest mb-5 ${
+            !device.selectedType
+              ? "text-custom font-semibold"
+              : "text-def hover:text-custom"
+          } transition-colors`}
+        >
+          All Types
+        </li>
         {device.types.map((type) => (
           <li
             key={type.id}
             onClick={() => {
-              device.setSeceltedType(type);
+              device.setSelectedType(type);
             }}
             className={`cursor-pointer font-light tracking-widest mb-5 ${
               type.id === device.selectedType?.id ? "text-custom" : "text-def "
@@ -28,6 +38,16 @@ const SideBar = observer(() => {
         brands
       </h2>
       <ul>
+        <li
+          onClick={() => device.setSelectedBrand(null)}
+          className={`cursor-pointer font-light tracking-widest mb-5 ${
+            !device.selectedBrand
+              ? "text-custom font-semibold"
+              : "text-def hover:text-custom"
+          } transition-colors`}
+        >
+          All Brands
+        </li>
         {device.brands.map((brand) => (
           <li
             key={brand.id}

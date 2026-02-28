@@ -1,55 +1,33 @@
-import type { UnionArray } from "@/types/types";
-import { useState } from "react";
+import { useStore } from "@/utils/context";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { observer } from "mobx-react-lite";
 
-const Pagitanion = ({ array }: { array: UnionArray[] }) => {
-  const [pages, setPages] = useState(10);
+const Pagitanion = observer(({ className }: { className?: string }) => {
+  const { device } = useStore();
+  const pageCount = Math.ceil(device.totalCount / device.limit);
+  const pages: number[] = [];
+  for (let i = 0; i < pageCount; i++) {
+    pages.push(i + 1);
+  }
   return (
-    <div className="p-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row justify-between items-center gap-4">
-      <div className="text-sm text-[var(--color-secondary)]">
-        Showing{" "}
-        <span className="font-medium text-[var(--color-def)]">1-{pages}</span>{" "}
-        of{" "}
-        <span className="font-medium text-[var(--color-def)]">
-          {array.length}
-        </span>{" "}
-        devices
-      </div>
-      <div className="flex items-center space-x-2">
-        <button className="p-2 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-          ←
-        </button>
-        <button className="w-10 h-10 bg-[var(--color-custom)] text-white rounded-lg font-medium">
-          1
-        </button>
-        <button className="w-10 h-10 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors font-medium">
-          2
-        </button>
-        <button className="w-10 h-10 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors font-medium">
-          3
-        </button>
-        <span className="px-2 text-[var(--color-secondary)]">...</span>
-        <button className="w-10 h-10 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors font-medium">
-          10
-        </button>
-        <button className="p-2 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-primary)] transition-colors">
-          →
-        </button>
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="text-sm text-[var(--color-secondary)]">Show:</span>
-        <select
-          onChange={(e) => setPages(Number(e.target.value))}
-          className="bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg px-3 py-2 text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)]"
+    <div className={`flex items-center space-x-2 ${className}`}>
+      <button className="p-2 border border-transparent rounded-lg transition-colors hover:border-custom">
+        <ArrowLeft width={13} />
+      </button>
+      {pages.map((page) => (
+        <button
+          key={page}
+          onClick={() => device.setPage(page)}
+          className={`w-10 h-10 border border-[var(--color-border)] rounded-lg transition-colors font-medium ${device.page === page ? "bg-border" : "bg-transparent hover:bg-border"}`}
         >
-          <option value={10}>10</option>
-          <option value={25}>25</option>
-          <option value={50}>50</option>
-          <option value={100}>100</option>
-        </select>
-        <span className="text-sm text-[var(--color-secondary)]">per page</span>
-      </div>
+          {page}
+        </button>
+      ))}
+      <button className="p-2 border border-transparent rounded-lg transition-colors hover:border-custom">
+        <ArrowRight width={13} />
+      </button>
     </div>
   );
-};
+});
 
 export default Pagitanion;

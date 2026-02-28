@@ -7,6 +7,7 @@ import DeviceCardList from "./cards/DeviceCardList";
 import DeviceCardGrid from "./cards/DeviceCardGrid";
 import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "@/utils/constants";
+import Pagitanion from "../ui/Pagination";
 
 const DeviceList = observer(() => {
   const { device } = useStore();
@@ -106,6 +107,7 @@ const DeviceList = observer(() => {
           ),
         )}
       </div>
+      <Pagitanion className="justify-center mt-8"/>
     </div>
   );
 });
