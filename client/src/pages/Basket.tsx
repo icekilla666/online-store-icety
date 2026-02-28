@@ -9,7 +9,7 @@ import { clearBasket, deleteBasket, fetchBasket } from "@/http/deviceAPI";
 import type { IDevice } from "@/types/types";
 
 const Basket = observer(() => {
-  const { device } = useStore();
+  const { device, basket } = useStore();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Basket = observer(() => {
         (item: { device: IDevice }) => item.device,
       );
       device.setDevices(devices);
-      
+
       const initialQuantities: Record<number, number> = {};
       data.basket_devices.forEach((item: any) => {
         if (item.device) {
@@ -32,11 +32,14 @@ const Basket = observer(() => {
   const deleteBasketHandler = async (deviceId: string) => {
     try {
       await deleteBasket(deviceId);
+      await basket.refreshBasket();
       // ТОСТ
       console.log("Товар удален", deviceId);
-      
-      device.setDevices(device.devices.filter((d) => d.id !== Number(deviceId)));
-      
+
+      device.setDevices(
+        device.devices.filter((d) => d.id !== Number(deviceId)),
+      );
+
       setQuantities((prev) => {
         const newQuantities = { ...prev };
         delete newQuantities[Number(deviceId)];
@@ -51,9 +54,10 @@ const Basket = observer(() => {
   const clearBasketHandler = async () => {
     try {
       const data = await clearBasket();
+      await basket.refreshBasket();
       console.log("Все товары удалены", data);
       device.setDevices([]);
-      setQuantities({}); 
+      setQuantities({});
     } catch (error) {
       console.error("Ошибка очистки:", error);
     }

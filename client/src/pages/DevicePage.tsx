@@ -5,16 +5,19 @@ import Tabs from "@/components/ui/Tabs";
 import { addBasket, fetchOneDevice } from "@/http/deviceAPI";
 import type { DeviceInfoArray, IDevice } from "@/types/types";
 import { DEVICE_PAGE_TABS } from "@/utils/constants";
+import { useStore } from "@/utils/context";
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const DevicePage = () => {
+const DevicePage = observer(() => {
   const [tab, setTab] = useState("buy");
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfoArray[]>([]);
   const [devices, setDevices] = useState<IDevice>();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
+  const { basket } = useStore();
 
   useEffect(() => {
     if (!id) return;
@@ -29,6 +32,7 @@ const DevicePage = () => {
   const addToBasket = async (id: string) => {
     try {
       const data = await addBasket(id, selectedQuantity);
+      await basket.refreshBasket();
       console.log("товар добавлен", data);
       // ТОСТ
     } catch (error) {
@@ -108,6 +112,6 @@ const DevicePage = () => {
       )}
     </section>
   );
-};
+});
 
 export default DevicePage;

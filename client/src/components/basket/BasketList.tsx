@@ -3,6 +3,7 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import QuantityCounter from "../ui/QuantityCounter";
 import { updateBasketQuantity } from "@/http/deviceAPI";
 import EmptyBasket from "./EmptyBasket";
+import { useStore } from "@/utils/context";
 
 const BasketList = ({
   devices,
@@ -10,6 +11,7 @@ const BasketList = ({
   onQuantityChange,
   deleteItem,
 }: BasketListProps) => {
+  const { basket } = useStore();
   const handleQuantityChange = async (
     deviceId: number,
     newQuantity: number,
@@ -17,6 +19,7 @@ const BasketList = ({
     try {
       await updateBasketQuantity(deviceId.toString(), newQuantity);
       onQuantityChange(deviceId, newQuantity);
+      await basket.refreshBasket();
     } catch (error) {
       console.error("Error updating quantity:", error);
     }

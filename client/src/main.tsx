@@ -5,11 +5,14 @@ import "./index.css";
 import { userStore } from "./store/UserStorage.ts";
 import { deviceStore } from "./store/DeviceStore.ts";
 import { Context } from "./utils/context.ts";
+import { basketStore } from "./store/BasketStore.ts";
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Context.Provider value={{ user: userStore, device: deviceStore }}>
+    <Context.Provider
+      value={{ user: userStore, device: deviceStore, basket: basketStore }}
+    >
       <App />
     </Context.Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
