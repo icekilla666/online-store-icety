@@ -46,7 +46,15 @@ class WishlistController {
   async getWishDevices(req, res, next) {
     const userId = req.user.id;
     try {
-      let wishlist = await Wishlist.findOne({ where: { userId } });
+      let wishlist = await Wishlist.findOne({
+        where: { userId },
+        include: [
+          {
+            model: WishlistDevice,
+            include: [Device],
+          },
+        ],
+      });
       if (!wishlist) {
         wishlist = await Wishlist.create({ userId });
       }
@@ -64,6 +72,14 @@ class WishlistController {
       const wishlist = await Wishlist.findOne({ where: { userId } });
       if (!wishlist) {
         return next(ApiError.badRequest("Wishlist not found"));
+      }
+
+      const wishlistDevice = await WishlistDevice.findOne({
+        where: { wishlistId: wishlist.id, deviceId: deviceId },
+      });
+
+      if (!wishlistDevice) {
+        return res.json({ message: "Device not found" });
       }
 
       await WishlistDevice.destroy({
