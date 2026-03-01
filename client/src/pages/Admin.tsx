@@ -5,7 +5,6 @@ import TableBrand from "@/components/adminPanel/TableBrand";
 import TableDevice from "@/components/adminPanel/TableDevice";
 import TableType from "@/components/adminPanel/TableType";
 import AnimatedContent from "@/components/ui/AnimatedContent";
-import Pagitanion from "@/components/ui/Pagination";
 import Tabs from "@/components/ui/Tabs";
 import {
   fetchBrand,

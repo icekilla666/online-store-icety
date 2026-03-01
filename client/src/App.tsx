@@ -8,7 +8,7 @@ import { fetchBasket } from "./http/deviceAPI";
 import Header from "./components/header/Header";
 
 const App = observer(() => {
-  const { user, basket } = useStore(); 
+  const { user, basket } = useStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -16,27 +16,23 @@ const App = observer(() => {
     
     if (!token) {
       basket.clearBasket();
-      setTimeout(() => setIsLoading(false), 1000);
+      setIsLoading(false);
       return;
     }
 
-    Promise.all([
-      check(),
-      fetchBasket().catch(() => null) 
-    ])
+    Promise.all([check(), fetchBasket().catch(() => null)])
       .then(() => {
         user.setUser(true);
         user.setIsAuth(true);
       })
       .catch(() => {
-
         basket.clearBasket();
       })
       .finally(() => setIsLoading(false));
   }, []);
 
   if (isLoading) {
-    return null; 
+    return null;
   }
 
   return (
