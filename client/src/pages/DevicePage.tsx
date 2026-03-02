@@ -2,7 +2,7 @@ import BuyNow from "@/components/devices/BuyNow";
 import Specifications from "@/components/devices/Specifications";
 import SwiperSlider from "@/components/devices/SwiperSlider";
 import Tabs from "@/components/ui/Tabs";
-import { addBasket, fetchOneDevice } from "@/http/deviceAPI";
+import { addBasket, addWishlist, fetchOneDevice } from "@/http/deviceAPI";
 import type { DeviceInfoArray, IDevice } from "@/types/types";
 import { DEVICE_PAGE_TABS } from "@/utils/constants";
 import { useStore } from "@/utils/context";
@@ -29,6 +29,7 @@ const DevicePage = observer(() => {
       .finally(() => setLoading(false));
   }, [id]);
 
+  // добавить в корзину
   const addToBasket = async (id: string) => {
     try {
       const data = await addBasket(id, selectedQuantity);
@@ -40,10 +41,23 @@ const DevicePage = observer(() => {
     }
   };
 
+  // добавть в избранное
+  const addToWishlist = async (id: string) => {
+    try {
+      const data = await addWishlist(id);
+      // ТОСТ
+      console.log("товар долавблен в избранное", data);
+    } catch (error: any) {
+      console.log("error | ", error.response.data);
+    }
+  };
+
+  // изменение кол-ва
   const handleQuantityChange = (value: number) => {
     setSelectedQuantity(value);
   };
 
+  // смена табов
   const handleTabs = (value: string) => {
     setTab(value);
   };
@@ -102,6 +116,7 @@ const DevicePage = observer(() => {
               selectedQuantity={selectedQuantity}
               onQuantityChange={handleQuantityChange}
               addToBasketHandler={addToBasket}
+              addToWishlistHandler={addToWishlist}
             />
           ) : (
             <Specifications deviceInfo={deviceInfo} />

@@ -117,3 +117,21 @@ export const clearBasket = async () => {
   const { data } = await $authHost.delete("api/basket");
   return data;
 };
+
+// избранное
+export const fetchWishlist = async () => {
+  const { data } = await $authHost.get("api/wishlist");
+  return data;
+};
+
+export const addWishlist = async (deviceId: string) => {
+  const { data } = await $authHost.post("api/wishlist", { deviceId });
+  return data;
+};
+
+export const deleteWishlist = async (deviceId: string) => {
+  const { data } = await $authHost.delete("api/wishlist", {
+    data: { deviceId },
+  });
+  return data;
+};

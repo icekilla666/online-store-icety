@@ -2,6 +2,7 @@ import type { BuyNowProps } from "@/types/types";
 import MyButton from "../ui/Button";
 import QuantityCounter from "../ui/QuantityCounter";
 import { StarIcon } from "@heroicons/react/20/solid";
+import { Heart } from "lucide-react";
 
 const BuyNow = ({
   name,
@@ -9,9 +10,10 @@ const BuyNow = ({
   shortDesc,
   price,
   deviceId,
-  selectedQuantity, // 👈 Получаем quantity
-  onQuantityChange, // 👈 Получаем обработчик
+  selectedQuantity, 
+  onQuantityChange, 
   addToBasketHandler,
+  addToWishlistHandler
 }: BuyNowProps) => {
   return (
     <div className="flex flex-col gap-4 items-start">
@@ -32,7 +34,7 @@ const BuyNow = ({
         <h2 className="mb-5">Unit</h2>
         <QuantityCounter
           initialValue={selectedQuantity}
-          onChange={onQuantityChange} 
+          onChange={onQuantityChange}
           className="mb-10"
         />
         <div className="flex max-w-80 flex-col gap-3 sm:flex-row sm:gap-5">
@@ -41,6 +43,12 @@ const BuyNow = ({
             className="uppercase bg-transparent border border-custom hover:bg-custom"
           >
             add to cart
+          </MyButton>
+          <MyButton
+            onClick={() => addToWishlistHandler(deviceId)}
+            className="w-fit uppercase bg-transparent border border-custom hover:bg-custom"
+          >
+            <Heart width={30} height={30} />
           </MyButton>
         </div>
       </div>

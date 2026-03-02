@@ -14,6 +14,7 @@ const BasketList = ({
   deleteItem,
 }: BasketListProps) => {
   const { basket } = useStore();
+  
   const handleQuantityChange = async (
     deviceId: number,
     newQuantity: number,

@@ -58,6 +58,7 @@ export interface BuyNowProps {
   selectedQuantity: number;
   onQuantityChange: (value: number) => void;
   addToBasketHandler: (id: string) => void;
+  addToWishlistHandler: (id: string) => void;
 }
 export interface DeviceInfoArray {
   id: number;
