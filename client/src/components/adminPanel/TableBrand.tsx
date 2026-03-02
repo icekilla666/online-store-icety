@@ -2,9 +2,16 @@ import type { IBrand } from "@/types/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
-import ModalBrand from "../modals/ModalBrand";
+import ModalBrand from "../ui/modals/ModalBrand";
+import { createBrand, deleteBrand, editBrand } from "@/http/deviceAPI";
 
-const TableBrand = ({ brands }: { brands: IBrand[] }) => {
+const TableBrand = ({
+  brands,
+  onRefresh,
+}: {
+  brands: IBrand[];
+  onRefresh: () => void;
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editingBrand, setEditingBrand] = useState<IBrand | null>(null);
@@ -15,6 +22,30 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
     setEditingBrand(brand);
     setEditOpen(true);
   };
+
+  const deleteItem = async (id: number) => {
+    await deleteBrand(id.toString());
+    onRefresh();
+    // ТОСТ
+    console.log("Deleted brand with id:", id);
+  };
+
+  const editItem = async (data: { name: string }) => {
+    if (!editingBrand) return;
+    await editBrand(editingBrand.id.toString(), data.name);
+    onRefresh();
+    // ТОСТ
+    console.log("Edited brand:", { id: editingBrand.id, name: data.name });
+  };
+
+  const addBrand = async (data: { name: string }) => {
+    await createBrand(data.name);
+    onRefresh();
+    setModalOpen(false);
+    // ТОСТ
+    console.log("Added new brand:", data);
+  };
+
   // рендер заголовков таблицы
   const renderHeader = () => (
     <>
@@ -91,15 +122,20 @@ const TableBrand = ({ brands }: { brands: IBrand[] }) => {
         renderRow={renderRow}
         modalName="brand"
         modal={() => setModalOpen(true)}
+        deleteFunc={(id) => deleteItem(id)}
       />
-      <ModalBrand open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={(data) => console.log(data)}/>
+      <ModalBrand
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={(data) => addBrand(data)}
+      />
       <ModalBrand
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
           setEditingBrand(null);
         }}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => editItem(data)}
         initialData={editingBrand ? { name: editingBrand.name } : undefined}
         title="Edit Brand"
       />

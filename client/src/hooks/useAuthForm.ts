@@ -168,6 +168,8 @@ export const useAuthForm = () => {
         formData.email === admin && formData.password === passwordAdmin;
 
       if (isAdmin) {
+        data = await login(formData);
+        user.setIsAuth(true);
         user.setIsAdmin(isAdmin);
         navigate(ADMIN_ROUTE, { replace: true });
       } else {

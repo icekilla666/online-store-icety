@@ -2,11 +2,19 @@ import type { BuyNowProps } from "@/types/types";
 import MyButton from "../ui/Button";
 import QuantityCounter from "../ui/QuantityCounter";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { Heart } from "lucide-react";
 
-const BuyNow = ({ name, rating, shortDesc, price }: BuyNowProps) => {
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
-
+const BuyNow = ({
+  name,
+  rating,
+  shortDesc,
+  price,
+  deviceId,
+  selectedQuantity, 
+  onQuantityChange, 
+  addToBasketHandler,
+  addToWishlistHandler
+}: BuyNowProps) => {
   return (
     <div className="flex flex-col gap-4 items-start">
       <h1 className="">{name}</h1>
@@ -25,13 +33,22 @@ const BuyNow = ({ name, rating, shortDesc, price }: BuyNowProps) => {
       <div className="w-full">
         <h2 className="mb-5">Unit</h2>
         <QuantityCounter
-          onChange={(value) => setSelectedQuantity(value)}
+          initialValue={selectedQuantity}
+          onChange={onQuantityChange}
           className="mb-10"
         />
-        <div className="flex flex-col gap-3 sm:flex-row sm:gap-5">
-          <MyButton className="uppercase">add to cart</MyButton>
-          <MyButton className="uppercase bg-transparent border border-custom hover:bg-custom">
-            buy now
+        <div className="flex max-w-80 flex-col gap-3 sm:flex-row sm:gap-5">
+          <MyButton
+            onClick={() => addToBasketHandler(deviceId)}
+            className="uppercase bg-transparent border border-custom hover:bg-custom"
+          >
+            add to cart
+          </MyButton>
+          <MyButton
+            onClick={() => addToWishlistHandler(deviceId)}
+            className="w-fit uppercase bg-transparent border border-custom hover:bg-custom"
+          >
+            <Heart width={30} height={30} />
           </MyButton>
         </div>
       </div>

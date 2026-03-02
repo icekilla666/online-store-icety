@@ -15,6 +15,11 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "static")));
 app.use(fileUpload({}));
 app.use("/api", router);
+app.use(
+  fileUpload({
+    limits: { fileSize: 10 * 1024 * 1024 },
+  }),
+);
 
 // middleware
 app.use(errorHandler);
@@ -28,7 +33,6 @@ const start = async () => {
     await sequelize.authenticate();
 
     await sequelize.sync();
-    // await sequelize.sync({ force: true }); Удаляет нахуй все данные и таблицы и создает их заново(кроме данных)
 
     app.listen(PORT, () => console.log(`Server start on port ${PORT}`));
   } catch (error) {

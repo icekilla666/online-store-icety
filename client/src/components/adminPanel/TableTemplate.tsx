@@ -1,7 +1,9 @@
 import type { TableTemplateProps, UnionArray } from "@/types/types";
 import { useCallback, useState, Fragment } from "react";
 import HeadTable from "./HeadTable";
-import ModalDeleate from "../modals/ModalDeleate";
+import ModalDeleate from "../ui/modals/ModalDeleate";
+import Empty from "../Empty";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const TableTemplate = <T extends UnionArray>({
   data,
@@ -13,17 +15,11 @@ const TableTemplate = <T extends UnionArray>({
   renderRow,
   modalName = "item",
   modal,
+  deleteFunc,
 }: TableTemplateProps<T>) => {
-  const [items, setItems] = useState<T[]>(data);
   const [filteredItems, setFilteredItems] = useState<T[]>(data);
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
-
-  // функция удаления
-  const handleDelete = useCallback((id: number) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-    setFilteredItems((prev) => prev.filter((item) => item.id !== id));
-  }, []);
 
   // функция поиска
   const handleSearch = useCallback((filteredArray: UnionArray[]) => {
@@ -39,7 +35,7 @@ const TableTemplate = <T extends UnionArray>({
   // подтверждение удаления
   const confirmDelete = () => {
     if (itemToDelete) {
-      handleDelete(itemToDelete);
+      deleteFunc(itemToDelete);
       setOpen(false);
       setItemToDelete(null);
     }
@@ -52,7 +48,7 @@ const TableTemplate = <T extends UnionArray>({
         description={description}
         placeholder={placeholder}
         textBtn={textBtn}
-        array={items}
+        array={data}
         onSearch={handleSearch}
         onClick={modal}
       />
@@ -74,9 +70,11 @@ const TableTemplate = <T extends UnionArray>({
         </table>
 
         {filteredItems.length === 0 && (
-          <div className="text-center py-9">
-            <h2>Ничего не найдено!</h2>
-          </div>
+          <Empty
+            icon={<MagnifyingGlassIcon className="w-24 h-24" />}
+            title="No results"
+            description="We couldn't find anything matching your current filters. Try adjusting your search criteria."
+          />
         )}
       </div>
 

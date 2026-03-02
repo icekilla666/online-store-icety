@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite";
 import DropdownSelect from "../ui/DropdownSelect";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { StretchHorizontal, LayoutGrid } from "lucide-react";
 import { useStore } from "@/utils/context";
 import DeviceCardList from "./cards/DeviceCardList";
 import DeviceCardGrid from "./cards/DeviceCardGrid";
 import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "@/utils/constants";
+import Pagitanion from "../ui/Pagination";
 
 const DeviceList = observer(() => {
   const { device } = useStore();
@@ -19,6 +20,32 @@ const DeviceList = observer(() => {
   const handleViewSwitch = (event: React.MouseEvent<HTMLButtonElement>) => {
     setViewSwitcher(event.currentTarget.value);
   };
+
+  // сортировка
+  const sortDevices = useMemo(() => {
+    const devices = [...device.devices];
+
+    switch (selectedSort) {
+      case "price-desc":
+        return devices.sort((a, b) => b.price - a.price);
+      case "price-asc":
+        return devices.sort((a, b) => a.price - b.price);
+      case "date-newest":
+        return devices.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
+      case "date-oldest":
+        return devices.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateA - dateB;
+        });
+      default:
+        return devices;
+    }
+  }, [device.devices, selectedSort]);
   return (
     <div className="w-full">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-wrapper rounded-[30px] py-4 px-4 sm:px-6 mb-6">
@@ -52,7 +79,7 @@ const DeviceList = observer(() => {
             : "grid-cols-1"
         }`}
       >
-        {device.devices.map((device) =>
+        {sortDevices.map((device) =>
           viewSwitcher === "grid" ? (
             <DeviceCardGrid
               key={device.id}
@@ -80,6 +107,7 @@ const DeviceList = observer(() => {
           ),
         )}
       </div>
+      <Pagitanion className="justify-center mt-8"/>
     </div>
   );
 });

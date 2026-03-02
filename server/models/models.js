@@ -4,9 +4,9 @@ const { DataTypes } = require("sequelize");
 const User = sequelize.define("user", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: DataTypes.STRING, unique: true },
-  name: {type: DataTypes.STRING},
-  lastname: {type: DataTypes.STRING},
-  number: {type: DataTypes.INTEGER, unique: true },
+  name: { type: DataTypes.STRING },
+  lastname: { type: DataTypes.STRING },
+  number: { type: DataTypes.INTEGER, unique: true },
   password: { type: DataTypes.STRING },
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
@@ -16,6 +16,15 @@ const Basket = sequelize.define("basket", {
 });
 
 const BasketDevice = sequelize.define("basket_device", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  quantity: { type: DataTypes.INTEGER, defaultValue: 1 },
+});
+
+const Wishlist = sequelize.define("wishlist", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+const WishlistDevice = sequelize.define("wishlist_device", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
@@ -57,11 +66,17 @@ const TypeBrand = sequelize.define("type_brand", {
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
+User.hasOne(Wishlist);
+Wishlist.belongsTo(User);
+
 User.hasMany(Rating);
 Rating.belongsTo(User);
 
 Basket.hasMany(BasketDevice);
 BasketDevice.belongsTo(Basket);
+
+Wishlist.hasMany(WishlistDevice);
+WishlistDevice.belongsTo(Wishlist);
 
 Type.hasMany(Device);
 Device.belongsTo(Type);
@@ -75,6 +90,9 @@ Rating.belongsTo(Device);
 Device.hasMany(BasketDevice);
 BasketDevice.belongsTo(Device);
 
+Device.hasMany(WishlistDevice);
+WishlistDevice.belongsTo(Device);
+
 Device.hasMany(DeviceInfo, { as: "info" });
 DeviceInfo.belongsTo(Device);
 
@@ -85,6 +103,8 @@ module.exports = {
   User,
   Basket,
   BasketDevice,
+  Wishlist,
+  WishlistDevice,
   Device,
   Type,
   Brand,

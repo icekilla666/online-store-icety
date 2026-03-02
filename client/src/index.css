@@ -172,7 +172,10 @@ p {
     @apply text-[var(--color-custom)] border-b-2 border-[var(--color-custom)];
   }
 }
-
+.dashboard-tabs button svg {
+  fill: transparent;
+  transition: all .1s ease-in;
+}
 .dashboard-tabs button:hover svg {
   fill: var(--color-custom);
 }

@@ -2,9 +2,16 @@ import type { ITypes } from "@/types/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
-import ModalType from "../modals/ModalType";
+import ModalType from "../ui/modals/ModalType";
+import { createType, deleteType, editType } from "@/http/deviceAPI";
 
-const TableType = ({ types }: { types: ITypes[] }) => {
+const TableType = ({
+  types,
+  onRefresh,
+}: {
+  types: ITypes[];
+  onRefresh: () => void;
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editingType, setEditingType] = useState<ITypes | null>(null);
@@ -14,6 +21,31 @@ const TableType = ({ types }: { types: ITypes[] }) => {
     if (!type) return;
     setEditingType(type);
     setEditOpen(true);
+  };
+
+  const deleteItem = async (id: number) => {
+    await deleteType(id.toString());
+    onRefresh();
+    // ТОСТ
+    console.log("Deleted type with id:", id);
+  };
+
+  const editItem = async (data: { name: string }) => {
+    if (!editingType) return;
+    await editType(editingType.id.toString(), data.name);
+    onRefresh();
+
+    // ТОСТ
+    console.log("Edited type:", { id: editingType.id, name: data.name });
+  };
+
+  // функция для добавления типа
+  const addType = async (data: { name: string }) => {
+    await createType(data.name);
+    onRefresh();
+    setModalOpen(false);
+    // ТОСТ
+    console.log("Added new type:", data);
   };
 
   // рендер заголовков таблицы
@@ -92,19 +124,22 @@ const TableType = ({ types }: { types: ITypes[] }) => {
         renderRow={renderRow}
         modalName="type"
         modal={() => setModalOpen(true)}
+        deleteFunc={(id) => deleteItem(id)}
       />
+      {/* модалка для создания типов */}
       <ModalType
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => addType(data)}
       />
+      {/* модалка для редактирования типов */}
       <ModalType
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
           setEditingType(null);
         }}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => editItem(data)}
         initialData={editingType ? { name: editingType.name } : undefined}
         title="Edit Type"
       />

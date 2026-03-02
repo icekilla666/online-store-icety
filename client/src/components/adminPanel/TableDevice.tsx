@@ -3,19 +3,24 @@ import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import { DEVICE_ROUTE } from "@/utils/constants";
 import TableTemplate from "./TableTemplate";
-import ModalDevice from "../modals/ModalDevice";
+import ModalDevice from "../ui/modals/ModalDevice";
 import { useStore } from "@/utils/context";
+import { createDevice, deleteDevice, editDevice } from "@/http/deviceAPI";
 
 const TableDevice = ({
   devices,
   brands,
   types,
   info,
+  onDeviceSelect,
+  onRefresh,
 }: {
   devices: IDevice[];
   brands: IBrand[];
   types: ITypes[];
   info: DeviceInfoArray[];
+  onDeviceSelect: (deviceId: number) => void;
+  onRefresh: () => void;
 }) => {
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -37,13 +42,59 @@ const TableDevice = ({
   // переключение раскрытой строки
   const toggleRow = (id: number) => {
     setExpandedRowId(expandedRowId === id ? null : id);
+    onDeviceSelect(id);
   };
 
   const openEditModal = (deviceId: number) => {
     const found = devices.find((item) => item.id === deviceId);
     if (!found) return;
-    setEditingDevice(found);
+
+    try {
+      onDeviceSelect(deviceId);
+      setEditingDevice(found);
+    } catch (error) {
+      console.error("Error setting editing device:", error);
+    }
     setEditOpen(true);
+  };
+
+  const deleteItem = async (id: number) => {
+    await deleteDevice(id.toString());
+    onRefresh();
+    // ТОСТ
+    console.log("Deleted device with id:", id);
+  };
+
+  const editItem = async (id: number, data: FormData) => {
+    try {
+      const deviceData: any = {};
+      for (let [key, value] of data.entries()) {
+        if (key !== "img" && key !== "images") {
+          deviceData[key] = value;
+        }
+      }
+      if (data.has("info")) {
+        deviceData.info = data.get("info");
+      }
+      await editDevice(id.toString(), deviceData);
+
+      // ТОСТ
+      console.log("Edit successful");
+
+      setEditOpen(false);
+      setEditingDevice(null);
+      onRefresh();
+    } catch (error: any) {
+      console.log("EDIT ERROR:", error);
+    }
+  };
+
+  const addDevice = async (data: any) => {
+    await createDevice({ device: data });
+    setModalOpen(false);
+    onRefresh();
+    // ТОСТ
+    console.log("Added new device:", data);
   };
 
   // рендер заголовков таблицы
@@ -93,7 +144,11 @@ const TableDevice = ({
         <td className="p-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-              <img className="h-full" src={device.img} alt={device.name} />
+              <img
+                className="h-full"
+                src={import.meta.env.VITE_API_URL + device.img}
+                alt={device.name}
+              />
             </div>
             <div>
               <h4 className="font-bold text-[var(--color-def)]">
@@ -214,11 +269,12 @@ const TableDevice = ({
         renderHeader={renderHeader}
         renderRow={renderRow}
         modal={() => setModalOpen(true)}
+        deleteFunc={(id) => deleteItem(id)}
       />
       <ModalDevice
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => addDevice(data)}
         types={device.types}
         brands={device.brands}
       />
@@ -228,7 +284,11 @@ const TableDevice = ({
           setEditOpen(false);
           setEditingDevice(null);
         }}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data: any) => {
+          if (editingDevice?.id) {
+            editItem(editingDevice.id, data);
+          }
+        }}
         types={device.types}
         brands={device.brands}
         initialData={
@@ -242,7 +302,7 @@ const TableDevice = ({
                 rating: editingDevice.rating,
                 img: editingDevice.img,
                 images: editingDevice.images,
-                characteristics: [],
+                characteristics: info,
               }
             : undefined
         }

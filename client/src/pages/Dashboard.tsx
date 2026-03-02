@@ -20,7 +20,7 @@ const DashboardPage = observer(() => {
     numberNumber: "+1 (555) 987-6543",
   });
   const [editData, setEditData] = useState(userData);
-  const { device, user } = useStore();
+  const { device, user, basket } = useStore();
 
   const handleTabs = (value: string) => {
     setTab(value);
@@ -42,6 +42,7 @@ const DashboardPage = observer(() => {
     user.setUser(false);
     user.setIsAuth(false);
     localStorage.removeItem("token");
+    basket.clearBasket();
     navigate(LOGIN_ROUTE);
   };
 

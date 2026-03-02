@@ -27,6 +27,7 @@ export interface IDevice {
   images: string[];
   typeId?: number;
   brandId?: number;
+  createdAt?: string;
 }
 
 export interface HeadProps {
@@ -53,6 +54,11 @@ export interface BuyNowProps {
   shortDesc: string;
   price: number;
   rating: number;
+  deviceId: string;
+  selectedQuantity: number;
+  onQuantityChange: (value: number) => void;
+  addToBasketHandler: (id: string) => void;
+  addToWishlistHandler: (id: string) => void;
 }
 export interface DeviceInfoArray {
   id: number;
@@ -122,6 +128,7 @@ export interface TableTemplateProps<T extends UnionArray> {
   renderRow: (item: T, openDeleteModal: (id: number) => void) => ReactNode;
   modalName?: string;
   modal: () => void;
+  deleteFunc: (id: number) => void;
 }
 
 export interface Characteristic {
@@ -137,7 +144,7 @@ export interface DeviceFormData {
   brandId: number;
   typeId: number;
   rating: number;
-  img?: string;
+  img: string | null;
   images?: string[];
   characteristics: Characteristic[];
 }
@@ -172,6 +179,7 @@ export interface BasketListProps {
   devices: IDevice[];
   quantities: Record<number, number>;
   onQuantityChange: (deviceId: number, newQuantity: number) => void;
+  deleteItem: (deviceId: string) => void;
 }
 
 export interface AlertProps {
@@ -230,3 +238,16 @@ export interface FormProps {
   onBlur: (field: keyof TouchedFields) => void;
 }
 
+export interface RecommendProps {
+  title: string;
+  description: string;
+  devices: IDevice[];
+}
+
+export interface EmptyProps {
+  icon?: React.ReactNode | string;
+  title: string;
+  description: string;
+  link?: string;
+  linkHref?: string;
+}

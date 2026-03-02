@@ -1,15 +1,44 @@
 import type { BasketListProps } from "@/types/types";
 import { StarIcon } from "@heroicons/react/20/solid";
 import QuantityCounter from "../ui/QuantityCounter";
+import { updateBasketQuantity } from "@/http/deviceAPI";
+import { useStore } from "@/utils/context";
+import Empty from "../Empty";
+import { ShoppingCart } from "lucide-react";
+import { SHOP_ROUTE } from "@/utils/constants";
 
 const BasketList = ({
   devices,
   quantities,
   onQuantityChange,
+  deleteItem,
 }: BasketListProps) => {
+  const { basket } = useStore();
+  
+  const handleQuantityChange = async (
+    deviceId: number,
+    newQuantity: number,
+  ) => {
+    try {
+      await updateBasketQuantity(deviceId.toString(), newQuantity);
+      onQuantityChange(deviceId, newQuantity);
+      await basket.refreshBasket();
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
 
   return (
     <div className="grid gap-4">
+      {!devices.length && (
+        <Empty
+          icon={<ShoppingCart className="w-24 h-24 stroke-1" />}
+          title="Your cart is feeling lonely"
+          description="Add some items to your cart and they'll appear here. "
+          link="Add now!"
+          linkHref={SHOP_ROUTE}
+        />
+      )}
       {devices.map((device) => {
         const qty = quantities[device.id] ?? 1;
 
@@ -20,11 +49,11 @@ const BasketList = ({
           >
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:w-1/2">
-                <div className="w-full p-3 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
+                <div className="w-full max-w-[200px] h-[200px] p-3 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center">
                   <img
-                    src={device.img}
+                    src={import.meta.env.VITE_API_URL + device.img}
                     alt={device.name}
-                    className="w-full max-h-[160px] sm:max-h-[200px] object-contain"
+                    className="w-full object-contain h-full"
                   />
                 </div>
                 <div>
@@ -46,7 +75,7 @@ const BasketList = ({
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:flex-1">
                 <QuantityCounter
                   initialValue={qty}
-                  onChange={(value) => onQuantityChange(device.id, value)}
+                  onChange={(value) => handleQuantityChange(device.id, value)}
                 />
 
                 <div className="text-left sm:text-right">
@@ -58,7 +87,7 @@ const BasketList = ({
                   </p>
                 </div>
                 <button
-                  onClick={() => console.log("delete", device.id)}
+                  onClick={() => deleteItem(String(device.id))}
                   className="text-sm text-[var(--color-secondary)] hover:text-[var(--color-custom)] transition-colors"
                 >
                   Remove

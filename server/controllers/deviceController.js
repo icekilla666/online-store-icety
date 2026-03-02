@@ -9,13 +9,30 @@ class DeviceController {
       let { name, shortDesc, price, brandId, typeId, info } = req.body;
       const files = req.files;
 
-      const imageNames = [];
-      for (const file of files) {
-        const fileName = uuid.v4() + path.extname(file.name);
-        const filePath = path.resolve(__dirname, "..", "static", fileName);
+      let mainImage = null;
+      let additionalImages = [];
 
-        await file.mv(filePath);
-        imageNames.push(fileName);
+      if (files && files.img) {
+        const fileName = uuid.v4() + path.extname(files.img.name);
+        const filePath = path.resolve(__dirname, "..", "static", fileName);
+        await files.img.mv(filePath);
+        mainImage = fileName;
+      }
+
+      if (files && files.images) {
+        if (Array.isArray(files.images)) {
+          for (const file of files.images) {
+            const fileName = uuid.v4() + path.extname(file.name);
+            const filePath = path.resolve(__dirname, "..", "static", fileName);
+            await file.mv(filePath);
+            additionalImages.push(fileName);
+          }
+        } else {
+          const fileName = uuid.v4() + path.extname(files.images.name);
+          const filePath = path.resolve(__dirname, "..", "static", fileName);
+          await files.images.mv(filePath);
+          additionalImages.push(fileName);
+        }
       }
 
       const device = await Device.create({
@@ -24,8 +41,8 @@ class DeviceController {
         price,
         brandId,
         typeId,
-        img: imageNames[0],
-        images: imageNames,
+        img: mainImage,
+        images: additionalImages,
       });
 
       if (info) {
@@ -42,6 +59,73 @@ class DeviceController {
       return res.json(device);
     } catch (error) {
       next(ApiError.badRequest(error.message));
+    }
+  }
+
+  async delete(req, res, next) {
+    const { id } = req.body;
+    const device = await Device.destroy({ where: { id } });
+    if (!device) {
+      return next(ApiError.badRequest("Device not found."));
+    }
+    console.log(`Device with ID ${id} deleted.`);
+    return res.json({ message: "Device deleted successfully." });
+  }
+
+  async edit(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { name, shortDesc, price, brandId, typeId, rating, info } = req.body;
+      const files = req.files;
+
+      const device = await Device.findByPk(id);
+      if (!device) {
+        return res.status(404).json({ message: "Device not found" });
+      }
+
+      if (name !== undefined) device.name = name;
+      if (shortDesc !== undefined) device.shortDesc = shortDesc;
+      if (price !== undefined) device.price = price;
+      if (brandId !== undefined) device.brandId = brandId;
+      if (typeId !== undefined) device.typeId = typeId;
+      if (rating !== undefined) device.rating = rating;
+
+      if (files && files.img) {
+        const fileName = uuid.v4() + path.extname(files.img.name);
+        const filePath = path.resolve(__dirname, "..", "static", fileName);
+        await files.img.mv(filePath);
+        device.img = fileName;
+      }
+
+      await device.save();
+
+      if (info) {
+        try {
+          const parsedInfo = JSON.parse(info);
+          
+          await DeviceInfo.destroy({ where: { deviceId: id } });
+          
+          for (const i of parsedInfo) {
+            await DeviceInfo.create({
+              title: i.title,
+              description: i.description,
+              deviceId: device.id,
+            });
+          }
+        } catch (e) {
+          console.log("Error parsing info:", e.message);
+        }
+      }
+
+      const updatedDevice = await Device.findOne({
+        where: { id },
+        include: [{ model: DeviceInfo, as: "info" }],
+      });
+
+      res.json(updatedDevice);
+      
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
   }
 
