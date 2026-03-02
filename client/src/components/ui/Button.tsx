@@ -5,7 +5,7 @@ const MyButton = ({ children, className, ...props }: MyButtonProps) => {
   return (
     <>
       <Button
-        className={`bg-custom text-secondary rounded-md p-2 w-full ${className}`}
+        className={`bg-custom text-secondary rounded-md p-2 ${className}`}
         {...props}
       >
         {children}
