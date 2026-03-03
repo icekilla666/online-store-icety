@@ -28,7 +28,7 @@ const AuthForm = () => {
         />
       )}
 
-      <MyButton type="submit" className="text-white">
+      <MyButton type="submit" className="text-white w-full">
         {props.isLogin ? "Log in" : "Sign up"}
       </MyButton>
     </form>

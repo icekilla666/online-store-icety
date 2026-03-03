@@ -40,7 +40,7 @@ const BuyNow = ({
         <div className="flex max-w-80 flex-col gap-3 sm:flex-row sm:gap-5">
           <MyButton
             onClick={() => addToBasketHandler(deviceId)}
-            className="uppercase bg-transparent border border-custom hover:bg-custom"
+            className="uppercase w-full bg-transparent border border-custom hover:bg-custom"
           >
             add to cart
           </MyButton>

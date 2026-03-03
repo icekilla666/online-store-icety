@@ -1,8 +1,14 @@
 import BuyNow from "@/components/devices/BuyNow";
 import Specifications from "@/components/devices/Specifications";
 import SwiperSlider from "@/components/devices/SwiperSlider";
+import Recommend from "@/components/Recommend";
 import Tabs from "@/components/ui/Tabs";
-import { addBasket, addWishlist, fetchOneDevice } from "@/http/deviceAPI";
+import {
+  addBasket,
+  addWishlist,
+  fetchDevice,
+  fetchOneDevice,
+} from "@/http/deviceAPI";
 import type { DeviceInfoArray, IDevice } from "@/types/types";
 import { DEVICE_PAGE_TABS } from "@/utils/constants";
 import { useStore } from "@/utils/context";
@@ -17,8 +23,7 @@ const DevicePage = observer(() => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const { basket } = useStore();
-
+  const { basket, device } = useStore();
   useEffect(() => {
     if (!id) return;
     fetchOneDevice(id)
@@ -27,8 +32,18 @@ const DevicePage = observer(() => {
         setDeviceInfo(data.info || []);
       })
       .finally(() => setLoading(false));
+    fetchDevice().then((data) => {
+      device.setAllDevices(data.rows);
+    });
   }, [id]);
 
+  // сопутствующие товары
+  const relatedProducts = [...device.allDevices]
+    .filter(
+      (device) =>
+        device.brandId === devices?.brandId && device.id !== devices?.id,
+    )
+    .slice(0, 3);
   // добавить в корзину
   const addToBasket = async (id: string) => {
     try {
@@ -125,6 +140,11 @@ const DevicePage = observer(() => {
       ) : (
         <div>Device not found</div>
       )}
+      <Recommend
+        title="You might also like"
+        description="Other great options from the same brand"
+        devices={relatedProducts}
+      />
     </section>
   );
 });

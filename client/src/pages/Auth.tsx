@@ -6,7 +6,7 @@ import AuthForm from "@/components/auth/AuthForm";
 
 const Auth = () => {
   const { isLogin } = useAuthForm();
-  
+
   return (
     <AnimatedContent>
       <section className="container flex-center-col min-h-[calc(100svh-80px)] py-10">
