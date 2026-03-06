@@ -6,6 +6,7 @@ const ProfileInfo = ({
   email,
   number,
   devices,
+  role,
   onClick,
   basketCount,
 }: ProfileInfoProps) => {
@@ -73,7 +74,7 @@ const ProfileInfo = ({
                 Account Status
               </p>
               <p className="text-lg font-bold text-[var(--color-custom)]">
-                Active
+                {role}
               </p>
             </div>
           </div>

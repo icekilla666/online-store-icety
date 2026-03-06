@@ -108,6 +108,7 @@ const DashboardPage = observer(() => {
               number={user.user.number}
               email={user.user.email}
               devices={device.devices}
+              role={user.user.role}
               basketCount={basket.items.length}
               onClick={() => setTab("settings")}
             />
