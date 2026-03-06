@@ -1,34 +1,10 @@
-import { deleteWishlist, fetchWishlist } from "@/http/deviceAPI";
-import type { FavouriteProductsProps, IDevice } from "@/types/types";
+import type { FavouriteProductsProps } from "@/types/types";
 import { DEVICE_ROUTE } from "@/utils/constants";
-import { useStore } from "@/utils/context";
-import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
 
-const FavouriteProducts = observer(({ devices }: FavouriteProductsProps) => {
-  const { device } = useStore();
-
-  const loadWishlist = async () => {
-    await fetchWishlist().then((data) => {
-      const wishlist = data.wishlist_devices.map(
-        (item: { device: IDevice }) => item.device,
-      );
-      device.setDevices(wishlist);
-    });
-  };
-
-  const deleteHandlerWishlist = async (deivceId: string) => {
-    await deleteWishlist(deivceId).then((data) => {
-      // ТОСТ
-      console.log(data.message);
-      loadWishlist();
-    });
-  };
-
-  useEffect(() => {
-    loadWishlist();
-  }, []);
-
+const FavouriteProducts = ({
+  devices,
+  deleteHandlerWishlist,
+}: FavouriteProductsProps) => {
   return (
     <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -89,7 +65,7 @@ const FavouriteProducts = observer(({ devices }: FavouriteProductsProps) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  deleteHandlerWishlist(String(product.id));
+                  deleteHandlerWishlist(product.id);
                 }}
                 className="text-sm text-[var(--color-secondary)] hover:text-red-500 hover:scale-110 transition-all duration-200 font-medium"
               >
@@ -101,6 +77,6 @@ const FavouriteProducts = observer(({ devices }: FavouriteProductsProps) => {
       </div>
     </div>
   );
-});
+};
 
 export default FavouriteProducts;

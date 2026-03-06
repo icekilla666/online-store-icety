@@ -175,12 +175,10 @@ export const useAuthForm = () => {
       } else {
         data = await login(formData);
         user.setIsAuth(true);
-        console.log(data);
         navigate(from, { replace: true });
       }
     } else {
       data = await registration(formData);
-      console.log(data);
 
       setFormData({
         name: "",

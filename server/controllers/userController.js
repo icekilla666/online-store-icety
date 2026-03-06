@@ -32,7 +32,6 @@ class UserController {
       number,
       password: hashPassword,
     });
-    const basket = await Basket.create({ userId: user.id });
     const jwtToken = generateJwt(
       user.id,
       user.email,
@@ -62,11 +61,11 @@ class UserController {
       user.name,
       user.lastname,
       user.number,
-    ); // При каждой сессии генерируем новый токен, будь это регистрация или логин. Токен представляет из себя зашифрованную информацию о пользователе и сроке действия токена. Если бы токена не было, то при каждом запросе к защищенному ресурсу серверу пришлось бы каждый раз заново проверять логин и пароль пользователя, что неэффективно и неудобно.
+    );
     return res.json({ jwtToken });
   }
 
-  async check(req, res, next) {
+  async check(req, res) {
     const jwtToken = generateJwt(
       req.user.id,
       req.user.email,

@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import React from "react";
 import App from "./App.tsx";
 import "./index.css";
-import { userStore } from "./store/UserStorage.ts";
+import { userStore } from "./store/UserStore.ts";
 import { deviceStore } from "./store/DeviceStore.ts";
 import { Context } from "./utils/context.ts";
 import { basketStore } from "./store/BasketStore.ts";

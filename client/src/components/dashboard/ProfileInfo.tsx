@@ -7,6 +7,7 @@ const ProfileInfo = ({
   number,
   devices,
   onClick,
+  basketCount,
 }: ProfileInfoProps) => {
   return (
     <div className="bg-[var(--color-wrapper)] border border-[var(--color-border)] rounded-xl p-4 sm:p-6">
@@ -45,14 +46,6 @@ const ProfileInfo = ({
               </p>
               <p className="text-[var(--color-def)] font-medium">{number}</p>
             </div>
-            <div>
-              <p className="text-sm text-[var(--color-secondary)] mb-1">
-                Account Created
-              </p>
-              <p className="text-[var(--color-def)] font-medium">
-                March 15, 2023
-              </p>
-            </div>
           </div>
         </div>
 
@@ -65,7 +58,7 @@ const ProfileInfo = ({
               <p className="text-sm text-[var(--color-secondary)] mb-1">
                 Basket Items
               </p>
-              <p className="text-2xl font-bold text-[var(--color-def)]">18</p>
+              <p className="text-2xl font-bold text-[var(--color-def)]">{basketCount}</p>
             </div>
             <div className="p-4 bg-[var(--color-primary)] rounded-lg">
               <p className="text-sm text-[var(--color-secondary)] mb-1">

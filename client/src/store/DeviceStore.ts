@@ -5,7 +5,6 @@ export default class DeviceStore {
   private _types: ITypes[] = [];
   private _brands: IBrand[] = [];
   private _devices: IDevice[] = [];
-  private _currentDevice: IDevice | null = null;
   private _allDevices: IDevice[] = [];
   private _page: number = 1;
   private _limit: number = 6;
