@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import type UserStore from "../store/UserStorage";
+import type UserStore from "../store/UserStore";
 import type DeviceStore from "../store/DeviceStore";
 import type BasketStore from "@/store/BasketStore";
 

@@ -59,7 +59,7 @@ const Recommend = ({ title, description, devices }: RecommendProps) => {
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-lg font-bold text-[var(--color-custom)]">
-                    ${device.price.toLocaleString()}
+                    ${new Intl.NumberFormat("en-EN").format(device.price)}
                   </span>
                   <span className="text-xs text-[var(--color-secondary)] line-through ml-2">
                     ${(device.price * 1.2).toFixed(0)}

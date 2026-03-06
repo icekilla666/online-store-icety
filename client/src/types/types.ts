@@ -98,10 +98,13 @@ export interface SettingsProps extends IUser {
 export interface FavouriteProductsProps {
   devices: IDevice[];
   onClick?: () => void;
+  deleteHandlerWishlist: (id: number) => void;
 }
 
-export interface ProfileInfoProps extends IUser, FavouriteProductsProps {
+export interface ProfileInfoProps extends IUser {
+  devices: IDevice[];
   onClick: () => void;
+  basketCount: number;
 }
 
 export type UnionArray = IDevice | IBrand | ITypes;

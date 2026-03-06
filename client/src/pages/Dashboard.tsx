@@ -6,40 +6,79 @@ import Head from "@/components/ui/Head";
 import { LOGIN_ROUTE } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DASHBOARD_TABS } from "@/utils/constants";
+import { deleteWishlist, fetchWishlist } from "@/http/deviceAPI";
+import type { IDevice } from "@/types/types";
+import { editUser } from "@/http/userAPI";
 
 const DashboardPage = observer(() => {
   const navigate = useNavigate();
   const [tab, setTab] = useState("profile");
-  const [userData, setUserData] = useState({
-    name: "Alexander",
-    lastName: "Johnson",
-    email: "alex.johnson@example.com",
-    numberNumber: "+1 (555) 987-6543",
-  });
-  const [editData, setEditData] = useState(userData);
   const { device, user, basket } = useStore();
 
   const handleTabs = (value: string) => {
     setTab(value);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setEditData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (user.user) {
+      user.setUser({ ...user.user, [name]: value });
+    }
   };
 
-  const handleSave = () => {
-    setUserData(editData);
+  const handleSave = async () => {
+    if (!user.user) return;
+
+    console.log("🔵 Текущий пользователь в сторе:", user.user);
+
+    try {
+      const updatedUser = await editUser({
+        name: user.user.name || "",
+        lastname: user.user.lastname || "",
+        email: user.user.email || "",
+        number: user.user.number || "",
+      });
+
+      console.log("🟢 Получены обновленные данные:", updatedUser);
+
+      // Проверяем структуру
+      console.log("🟢 updatedUser.name:", updatedUser?.name);
+      console.log("🟢 updatedUser.email:", updatedUser?.email);
+
+      user.setUser(updatedUser);
+
+      console.log("🟢 Стор после setUser:", user.user);
+    } catch (error) {
+      console.error("🔴 Ошибка:", error);
+    }
   };
+
+  const loadWishlist = async () => {
+    await fetchWishlist().then((data) => {
+      const wishlist = data.wishlist_devices.map(
+        (item: { device: IDevice }) => item.device,
+      );
+      device.setDevices(wishlist);
+    });
+  };
+
+  const deleteItem = async (deivceId: string) => {
+    await deleteWishlist(deivceId).then((data) => {
+      // ТОСТ
+      console.log(data);
+      loadWishlist();
+    });
+  };
+
+  useEffect(() => {
+    loadWishlist();
+  }, []);
 
   const handleLogout = () => {
-    user.setUser(false);
+    user.setUser(null);
     user.setIsAuth(false);
     localStorage.removeItem("token");
     basket.clearBasket();
@@ -50,51 +89,59 @@ const DashboardPage = observer(() => {
     <section className="container p-4 md:p-6">
       {/* Заголовок */}
       <Head
-        title={`Welcome back, ${userData.name}!`}
+        title={`Welcome back, ${user.user?.name}!`}
         description={`Here's what's happening with your account today.`}
         className="mb-8"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Левая колонка */}
-        <SideBarInfo
-          tabs={DASHBOARD_TABS}
-          name={userData.name}
-          lastname={userData.lastName}
-          number={userData.numberNumber}
-          email={userData.email}
-          isActive={tab}
-          className="dashboard-tabs"
-          onChange={handleTabs}
-        />
+        {user.user && (
+          <SideBarInfo
+            tabs={DASHBOARD_TABS}
+            name={user.user.name}
+            lastname={user.user.lastname}
+            number={user.user.number}
+            email={user.user.email}
+            isActive={tab}
+            className="dashboard-tabs"
+            onChange={handleTabs}
+          />
+        )}
 
-        {/* Правая колонка - Контент табов */}
+        {/* Правая колонка */}
         <div className="lg:col-span-3">
           {/* Таб: Избранные товары */}
-          {tab === "wishlist" && <FavouriteProducts devices={device.devices} />}
+          {tab === "wishlist" && (
+            <FavouriteProducts
+              deleteHandlerWishlist={(deviceId) => deleteItem(String(deviceId))}
+              devices={device.devices}
+            />
+          )}
 
           {/* Таб: Настройки */}
-
-          {tab === "settings" && (
+          {tab === "settings" && user.user && (
             <Settings
-              name={editData.name}
-              lastname={editData.lastName}
-              number={editData.numberNumber}
-              email={editData.email}
-              onChange={handleInputChange}
+              name={user.user.name}
+              lastname={user.user.lastname}
+              number={user.user.number}
+              email={user.user.email}
               onLogout={handleLogout}
+              onChange={handleChange}
               onSave={handleSave}
             />
           )}
 
           {/* Таб: Профиль */}
-          {tab === "profile" && (
+          {tab === "profile" && user.user && (
             <ProfileInfo
-              name={userData.name}
-              lastname={userData.lastName}
-              number={userData.numberNumber}
-              email={userData.email}
+              name={user.user.name}
+              lastname={user.user.lastname}
+              number={user.user.number}
+              email={user.user.email}
               devices={device.devices}
+              role={user.user.role}
+              basketCount={basket.items.length}
               onClick={() => setTab("settings")}
             />
           )}

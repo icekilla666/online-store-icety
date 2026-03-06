@@ -4,7 +4,7 @@ import { makeAutoObservable } from "mobx";
 export default class UserStore {
   private _isAuth: boolean = false;
   private _isAdmin: boolean = false;
-  private _user: IUser | null | boolean = null;
+  private _user: IUser | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -18,7 +18,7 @@ export default class UserStore {
     this._isAdmin = admin;
   }
 
-  setUser(user: IUser | null | boolean): void {
+  setUser(user: IUser | null): void {
     this._user = user;
   }
 
@@ -30,7 +30,7 @@ export default class UserStore {
     return this._isAdmin;
   }
 
-  get user(): IUser | null | boolean {
+  get user(): IUser | null {
     return this._user;
   }
 }
