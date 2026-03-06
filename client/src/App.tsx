@@ -3,10 +3,9 @@ import { BrowserRouter, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "./utils/context";
 import { useEffect, useState } from "react";
-import { check } from "./http/userAPI";
+import { check, editUser } from "./http/userAPI";
 import { fetchBasket } from "./http/deviceAPI";
 import Header from "./components/header/Header";
-import type { IUser } from "./types/types";
 
 const App = observer(() => {
   const { user, basket } = useStore();

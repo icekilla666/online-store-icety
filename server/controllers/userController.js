@@ -76,6 +76,21 @@ class UserController {
     );
     res.json({ jwtToken });
   }
+
+  async edit(req, res, next) {
+    const { email, name, lastname, number } = req.body;
+    const user = await User.findOne({ where: { id: req.user.id } });
+
+    if (!user) {
+      return next(ApiError.badRequest("User not found"));
+    }
+    await user.update({ email, name, lastname, number });
+    const updatedUser = await User.findByPk(req.user.id, {
+      attributes: { exclude: ["password"] },
+    });
+
+    res.json(updatedUser);
+  }
 }
 
 module.exports = new UserController();

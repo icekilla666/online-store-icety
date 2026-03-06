@@ -11,13 +11,49 @@ import { useNavigate } from "react-router-dom";
 import { DASHBOARD_TABS } from "@/utils/constants";
 import { deleteWishlist, fetchWishlist } from "@/http/deviceAPI";
 import type { IDevice } from "@/types/types";
+import { editUser } from "@/http/userAPI";
 
 const DashboardPage = observer(() => {
   const navigate = useNavigate();
   const [tab, setTab] = useState("profile");
   const { device, user, basket } = useStore();
+
   const handleTabs = (value: string) => {
     setTab(value);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (user.user) {
+      user.setUser({ ...user.user, [name]: value });
+    }
+  };
+
+  const handleSave = async () => {
+    if (!user.user) return;
+
+    console.log("🔵 Текущий пользователь в сторе:", user.user);
+
+    try {
+      const updatedUser = await editUser({
+        name: user.user.name || "",
+        lastname: user.user.lastname || "",
+        email: user.user.email || "",
+        number: user.user.number || "",
+      });
+
+      console.log("🟢 Получены обновленные данные:", updatedUser);
+
+      // Проверяем структуру
+      console.log("🟢 updatedUser.name:", updatedUser?.name);
+      console.log("🟢 updatedUser.email:", updatedUser?.email);
+
+      user.setUser(updatedUser);
+
+      console.log("🟢 Стор после setUser:", user.user);
+    } catch (error) {
+      console.error("🔴 Ошибка:", error);
+    }
   };
 
   const loadWishlist = async () => {
@@ -91,12 +127,8 @@ const DashboardPage = observer(() => {
               number={user.user.number}
               email={user.user.email}
               onLogout={handleLogout}
-              onChange={() => {
-                console.log("change");
-              }}
-              onSave={() => {
-                console.log("save");
-              }}
+              onChange={handleChange}
+              onSave={handleSave}
             />
           )}
 

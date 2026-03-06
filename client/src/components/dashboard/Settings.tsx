@@ -29,7 +29,7 @@ const Settings = ({
             <input
               type="text"
               name="name"
-              value={name}
+              value={name ?? ''}
               onChange={onChange}
               className="w-full p-3 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors"
             />
@@ -40,8 +40,8 @@ const Settings = ({
             </label>
             <input
               type="text"
-              name="lastName"
-              value={lastname}
+              name="lastname"
+              value={lastname ?? ''}
               onChange={onChange}
               className="w-full p-3 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors"
             />
@@ -55,7 +55,7 @@ const Settings = ({
           <input
             type="email"
             name="email"
-            value={email}
+            value={email ?? ''}
             onChange={onChange}
             className="w-full p-3 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors"
           />
@@ -67,26 +67,11 @@ const Settings = ({
           </label>
           <input
             type="tel"
-            name="phoneNumber"
-            value={number}
+            name="number"
+            value={number ?? ''}
             onChange={onChange}
             className="w-full p-3 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors"
           />
-        </div>
-
-        {/* Пароль (дополнительно) */}
-        <div>
-          <label className="block text-sm font-medium text-[var(--color-secondary)] mb-2">
-            Change Password
-          </label>
-          <input
-            type="password"
-            placeholder="Enter new password"
-            className="w-full p-3 bg-[var(--color-primary)] border border-[var(--color-border)] rounded-lg text-[var(--color-def)] focus:outline-none focus:border-[var(--color-custom)] transition-colors"
-          />
-          <p className="text-xs text-[var(--color-secondary)] mt-2">
-            Leave empty if you don't want to change password
-          </p>
         </div>
       </div>
 
