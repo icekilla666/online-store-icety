@@ -31,9 +31,6 @@ const DashboardPage = observer(() => {
 
   const handleSave = async () => {
     if (!user.user) return;
-
-    console.log("🔵 Текущий пользователь в сторе:", user.user);
-
     try {
       const updatedUser = await editUser({
         name: user.user.name || "",
@@ -41,16 +38,9 @@ const DashboardPage = observer(() => {
         email: user.user.email || "",
         number: user.user.number || "",
       });
-
-      console.log("🟢 Получены обновленные данные:", updatedUser);
-
-      // Проверяем структуру
-      console.log("🟢 updatedUser.name:", updatedUser?.name);
-      console.log("🟢 updatedUser.email:", updatedUser?.email);
-
       user.setUser(updatedUser);
-
-      console.log("🟢 Стор после setUser:", user.user);
+      // ТОСТ
+      console.log("Данные обновлены", updatedUser);
     } catch (error) {
       console.error("🔴 Ошибка:", error);
     }

@@ -13,7 +13,6 @@ const App = observer(() => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       basket.clearBasket();
       setIsLoading(false);
@@ -21,8 +20,10 @@ const App = observer(() => {
     }
 
     Promise.all([check(), fetchBasket().catch(() => null)])
-      .then((data: any) => {
-        user.setUser(data[0]);
+      .then(async (data: any) => {
+        const userData = data[0];
+        const fullUser = await editUser(userData.id);
+        user.setUser(fullUser);
         user.setIsAuth(true);
       })
       .catch(() => {

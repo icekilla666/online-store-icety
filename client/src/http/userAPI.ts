@@ -39,7 +39,7 @@ export const login = async ({
 export const check = async () => {
   const { data } = await $authHost.get("api/user/auth");
   localStorage.setItem("token", data.jwtToken);
-  return jwtDecode(data.jwtToken);
+  return data.user;
 };
 
 export const editUser = async ({
