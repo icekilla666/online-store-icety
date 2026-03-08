@@ -10,6 +10,7 @@ import {
   fetchOneDevice,
 } from "@/http/deviceAPI";
 import type { DeviceInfoArray, IDevice } from "@/types/types";
+import { useAlert } from "@/utils/alertContext";
 import { DEVICE_PAGE_TABS } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { observer } from "mobx-react-lite";
@@ -24,6 +25,7 @@ const DevicePage = observer(() => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const { basket, device } = useStore();
+  const { showAlert } = useAlert();
   useEffect(() => {
     if (!id) return;
     fetchOneDevice(id)
@@ -47,23 +49,21 @@ const DevicePage = observer(() => {
   // добавить в корзину
   const addToBasket = async (id: string) => {
     try {
-      const data = await addBasket(id, selectedQuantity);
+      await addBasket(id, selectedQuantity);
       await basket.refreshBasket();
-      console.log("товар добавлен", data);
-      // ТОСТ
-    } catch (error) {
-      console.error("❌ Ошибка добавления в корзину:", error);
+      showAlert("success", "Added to Cart", "Item added successfully");
+    } catch (error: any) {
+      showAlert("error", "Error!", error.response?.data?.message);
     }
   };
 
   // добавть в избранное
   const addToWishlist = async (id: string) => {
     try {
-      const data = await addWishlist(id);
-      // ТОСТ
-      console.log("товар долавблен в избранное", data);
+      await addWishlist(id);
+      showAlert("success", "Saved", "Added to wishlist");
     } catch (error: any) {
-      console.log("error | ", error.response.data);
+      showAlert("error", "Error!", error.response?.data?.message);
     }
   };
 

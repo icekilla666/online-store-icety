@@ -5,8 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import SideBar from "@/components/basket/SideBar";
 import Recommend from "@/components/Recommend";
 import { observer } from "mobx-react-lite";
+import { useAlert } from "@/utils/alertContext";
 import {
-  clearBasket,
   deleteBasket,
   fetchBasket,
   fetchDevice,
@@ -15,6 +15,7 @@ import type { IDevice } from "@/types/types";
 
 const Basket = observer(() => {
   const { device, basket } = useStore();
+  const { showAlert } = useAlert();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   // запрос на получение всех товаров и товарво корзины
@@ -53,9 +54,6 @@ const Basket = observer(() => {
     try {
       await deleteBasket(deviceId);
       await basket.refreshBasket();
-      // ТОСТ
-      console.log("Товар удален", deviceId);
-
       device.setDevices(
         device.devices.filter((d) => d.id !== Number(deviceId)),
       );
@@ -65,21 +63,19 @@ const Basket = observer(() => {
         delete newQuantities[Number(deviceId)];
         return newQuantities;
       });
-    } catch (error) {
-      console.error("Ошибка удаления:", error);
+    } catch (error: any) {
+      showAlert("error", "Error!", error.message);
     }
   };
 
   // укдаление всей корзины
   const clearBasketHandler = async () => {
     try {
-      const data = await clearBasket();
       await basket.refreshBasket();
-      console.log("Все товары удалены", data);
       device.setDevices([]);
       setQuantities({});
-    } catch (error) {
-      console.error("Ошибка очистки:", error);
+    } catch (error: any) {
+      showAlert("error", "Error!", error.message);
     }
   };
 
@@ -129,7 +125,11 @@ const Basket = observer(() => {
             />
           </div>
 
-          <SideBar total={totalPrice} />
+          <SideBar
+            total={totalPrice}
+            totalQuantities={totalQuantities}
+            clearBasket={clearBasketHandler}
+          />
         </div>
       </div>
     </section>

@@ -6,6 +6,7 @@ import TableTemplate from "./TableTemplate";
 import ModalDevice from "../ui/modals/ModalDevice";
 import { useStore } from "@/utils/context";
 import { createDevice, deleteDevice, editDevice } from "@/http/deviceAPI";
+import { useAlert } from "@/utils/alertContext";
 
 const TableDevice = ({
   devices,
@@ -27,6 +28,7 @@ const TableDevice = ({
   const [editOpen, setEditOpen] = useState(false);
   const [editingDevice, setEditingDevice] = useState<IDevice | null>(null);
   const { device } = useStore();
+  const { showAlert } = useAlert();
 
   // вспомогательные функции
   const getBrandNameById = (brandId: number | undefined): string => {
@@ -61,8 +63,7 @@ const TableDevice = ({
   const deleteItem = async (id: number) => {
     await deleteDevice(id.toString());
     onRefresh();
-    // ТОСТ
-    console.log("Deleted device with id:", id);
+    showAlert("error", "Deleted", "Device removed successfully");
   };
 
   const editItem = async (id: number, data: FormData) => {
@@ -77,9 +78,7 @@ const TableDevice = ({
         deviceData.info = data.get("info");
       }
       await editDevice(id.toString(), deviceData);
-
-      // ТОСТ
-      console.log("Edit successful");
+      showAlert("info", "Updated", "Device updated successfully");
 
       setEditOpen(false);
       setEditingDevice(null);
@@ -93,8 +92,7 @@ const TableDevice = ({
     await createDevice({ device: data });
     setModalOpen(false);
     onRefresh();
-    // ТОСТ
-    console.log("Added new device:", data);
+    showAlert("success", "Added", "Device added successfully");
   };
 
   // рендер заголовков таблицы

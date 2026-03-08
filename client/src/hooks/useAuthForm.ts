@@ -1,5 +1,6 @@
 import { login, registration } from "@/http/userAPI";
 import type { FormData, FormErrors, TouchedFields } from "@/types/types";
+import { useAlert } from "@/utils/alertContext";
 import { ADMIN_ROUTE, LOGIN_ROUTE } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { useState, type ChangeEvent, type FormEvent } from "react";
@@ -12,6 +13,7 @@ export const useAuthForm = () => {
   const { user } = useStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const { showAlert } = useAlert();
 
   // Состояния для ошибок
   const [errors, setErrors] = useState<FormErrors>({
@@ -166,7 +168,7 @@ export const useAuthForm = () => {
       // ЛОГИКА ВХОДА
       const isAdmin =
         formData.email === admin && formData.password === passwordAdmin;
-
+      showAlert("success", "Success!", "Logged in successfully");
       if (isAdmin) {
         data = await login(formData);
         user.setIsAuth(true);
@@ -199,6 +201,7 @@ export const useAuthForm = () => {
       });
 
       // Перенаправляем на страницу входа
+      showAlert('success', 'Welcome!', 'Registration successful')
       setTimeout(() => {
         navigate(LOGIN_ROUTE);
       }, 1000);

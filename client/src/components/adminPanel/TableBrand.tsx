@@ -4,6 +4,7 @@ import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
 import ModalBrand from "../ui/modals/ModalBrand";
 import { createBrand, deleteBrand, editBrand } from "@/http/deviceAPI";
+import { useAlert } from "@/utils/alertContext";
 
 const TableBrand = ({
   brands,
@@ -15,6 +16,7 @@ const TableBrand = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editingBrand, setEditingBrand] = useState<IBrand | null>(null);
+  const { showAlert } = useAlert();
 
   const openEditModal = (brandId: number) => {
     const brand = brands.find((item) => item.id === brandId);
@@ -26,24 +28,21 @@ const TableBrand = ({
   const deleteItem = async (id: number) => {
     await deleteBrand(id.toString());
     onRefresh();
-    // ТОСТ
-    console.log("Deleted brand with id:", id);
+    showAlert("error", "Deleted", "Brand removed successfully");
   };
 
   const editItem = async (data: { name: string }) => {
     if (!editingBrand) return;
     await editBrand(editingBrand.id.toString(), data.name);
     onRefresh();
-    // ТОСТ
-    console.log("Edited brand:", { id: editingBrand.id, name: data.name });
+    showAlert("info", "Updated", "Brand updated successfully");
   };
 
   const addBrand = async (data: { name: string }) => {
     await createBrand(data.name);
     onRefresh();
     setModalOpen(false);
-    // ТОСТ
-    console.log("Added new brand:", data);
+    showAlert("success", "Added", "Brand added successfully");
   };
 
   // рендер заголовков таблицы
