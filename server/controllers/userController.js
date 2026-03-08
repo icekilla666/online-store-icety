@@ -65,17 +65,33 @@ class UserController {
     return res.json({ jwtToken });
   }
 
-  async check(req, res) {
-    const jwtToken = generateJwt(
-      req.user.id,
-      req.user.email,
-      req.user.role,
-      req.user.name,
-      req.user.lastname,
-      req.user.number,
-    );
-    res.json({ jwtToken });
+  async check(req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: { id: req.user.id },
+        attributes: { exclude: ["password"] },
+      });
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.role },
+        process.env.SECRET_KEY,
+        { expiresIn: "24h" },
+      );
+      return res.json({
+        jwtToken: token,
+        user: {
+          id: user.id,
+          name: user.name,
+          lastname: user.lastname,
+          email: user.email,
+          number: user.number,
+          role: user.role,
+        },
+      });
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
+  typescript;
 
   async edit(req, res, next) {
     const { email, name, lastname, number } = req.body;
