@@ -6,6 +6,7 @@ import TableDevice from "@/components/adminPanel/TableDevice";
 import TableType from "@/components/adminPanel/TableType";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import Tabs from "@/components/ui/Tabs";
+import { useTitle } from "@/hooks/useTitle";
 import {
   fetchBrand,
   fetchDevice,
@@ -19,6 +20,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
 const Admin = observer(() => {
+  useTitle("Admin Panel");
   const { device } = useStore();
   const [tab, setTab] = useState("dev");
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfoArray[]>([]);

@@ -14,9 +14,13 @@ class BasketController {
       });
 
       if (existingItem) {
-        existingItem.quantity += quantity; 
+        const newQuantity = existingItem.quantity + quantity;
         await existingItem.save();
-
+        if (newQuantity > 10) {
+          return next(
+            ApiError.badRequest("Maximum quantity is 10 items per product"),
+          );
+        }
         const updatedItem = await BasketDevice.findOne({
           where: { id: existingItem.id },
           include: [Device],
@@ -117,7 +121,6 @@ class BasketController {
     const userId = req.user?.id;
 
     try {
-
       const basket = await Basket.findOne({ where: { userId } });
       if (!basket) {
         return next(ApiError.badRequest("Basket not found"));

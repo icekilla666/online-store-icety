@@ -4,6 +4,7 @@ import { Fragment, useState } from "react";
 import TableTemplate from "./TableTemplate";
 import ModalType from "../ui/modals/ModalType";
 import { createType, deleteType, editType } from "@/http/deviceAPI";
+import { useAlert } from "@/utils/alertContext";
 
 const TableType = ({
   types,
@@ -15,6 +16,7 @@ const TableType = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editingType, setEditingType] = useState<ITypes | null>(null);
+  const { showAlert } = useAlert();
 
   const openEditModal = (typeId: number) => {
     const type = types.find((item) => item.id === typeId);
@@ -26,17 +28,14 @@ const TableType = ({
   const deleteItem = async (id: number) => {
     await deleteType(id.toString());
     onRefresh();
-    // ТОСТ
-    console.log("Deleted type with id:", id);
+    showAlert("error", "Deleted", "Type removed successfully");
   };
 
   const editItem = async (data: { name: string }) => {
     if (!editingType) return;
     await editType(editingType.id.toString(), data.name);
     onRefresh();
-
-    // ТОСТ
-    console.log("Edited type:", { id: editingType.id, name: data.name });
+    showAlert("info", "Updated", "Type updated successfully");
   };
 
   // функция для добавления типа
@@ -44,8 +43,7 @@ const TableType = ({
     await createType(data.name);
     onRefresh();
     setModalOpen(false);
-    // ТОСТ
-    console.log("Added new type:", data);
+    showAlert("success", "Added", "Type added successfully");
   };
 
   // рендер заголовков таблицы

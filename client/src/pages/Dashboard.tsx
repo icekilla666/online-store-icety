@@ -12,11 +12,15 @@ import { DASHBOARD_TABS } from "@/utils/constants";
 import { deleteWishlist, fetchWishlist } from "@/http/deviceAPI";
 import type { IDevice } from "@/types/types";
 import { editUser } from "@/http/userAPI";
+import { useAlert } from "@/utils/alertContext";
+import { useTitle } from "@/hooks/useTitle";
 
 const DashboardPage = observer(() => {
+  useTitle("My account");
   const navigate = useNavigate();
   const [tab, setTab] = useState("profile");
   const { device, user, basket } = useStore();
+  const { showAlert } = useAlert();
 
   const handleTabs = (value: string) => {
     setTab(value);
@@ -39,10 +43,9 @@ const DashboardPage = observer(() => {
         number: user.user.number || "",
       });
       user.setUser(updatedUser);
-      // ТОСТ
-      console.log("Данные обновлены", updatedUser);
-    } catch (error) {
-      console.error("🔴 Ошибка:", error);
+      showAlert("success", "Success!", "Profile updated");
+    } catch (error: any) {
+      showAlert("error", "Error!", error.message);
     }
   };
 
@@ -56,9 +59,7 @@ const DashboardPage = observer(() => {
   };
 
   const deleteItem = async (deivceId: string) => {
-    await deleteWishlist(deivceId).then((data) => {
-      // ТОСТ
-      console.log(data);
+    await deleteWishlist(deivceId).then(() => {
       loadWishlist();
     });
   };

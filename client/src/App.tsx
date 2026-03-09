@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { check, editUser } from "./http/userAPI";
 import { fetchBasket } from "./http/deviceAPI";
 import Header from "./components/header/Header";
+import { AlertProvider } from "./utils/alertContext";
 
 const App = observer(() => {
   const { user, basket } = useStore();
@@ -37,9 +38,11 @@ const App = observer(() => {
   }
 
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <AlertProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </AlertProvider>
   );
 });
 

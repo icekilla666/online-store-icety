@@ -1,6 +1,8 @@
-import MyButton from "@/components/ui/Button";
 import type { DeviceCardProps } from "@/types/types";
+import { badgeColors } from "@/utils/constants";
+import { useStore } from "@/utils/context";
 import { StarIcon } from "@heroicons/react/20/solid";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const DeviceCardGrid = ({
   id,
@@ -10,36 +12,70 @@ const DeviceCardGrid = ({
   rating,
   price,
   onClick,
+  brandId,
+  typeId,
 }: DeviceCardProps) => {
+  const { device } = useStore();
+  const badgeColor = badgeColors[id % badgeColors.length];
+  const brandName =
+    device.brands.find((b) => b.id === brandId)?.name || "Unknown Brand";
+  const typeName =
+    device.types.find((t) => t.id === typeId)?.name || "Unknown Type";
+
   return (
     <article
       onClick={onClick}
-      key={id}
-      className="flex cursor-pointer flex-col items-center gap-6 sm:gap-8 pt-5 pb-7 px-4 bg-wrapper rounded-[30px]"
+      className="relative group flex cursor-pointer flex-col bg-wrapper rounded-3xl overflow-hidden border border-[var(--color-border)] hover:border-[var(--color-custom)] hover:shadow-xl transition-all duration-300"
     >
-      <div className="h-[200px] sm:h-[250px] flex justify-center items-center w-full">
-        <img className="h-full object-contain" src={import.meta.env.VITE_API_URL + img} alt={name} />
+      <div className="absolute top-4 right-4 z-10 flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--color-wrapper)]/90 backdrop-blur-sm shadow-md">
+        <StarIcon className="w-4 h-4 text-yellow-500" />
+        <span className="text-sm font-semibold text-[var(--color-def)]">
+          {rating}
+        </span>
       </div>
 
-      <div className="flex w-full flex-col justify-between pt-4 border-t-2 border-border gap-8">
-        <div className="flex flex-col justify-between">
-          <div className="flex justify-between items-baseline min-h-[75px] mb-1">
-            <h2 className="text-[24px]">{name}</h2>
-            <div className="flex items-center gap-[2px]">
-              <StarIcon color="#D7AB4D" width={22} height={22} />
-              <span className="text-[18px]">{rating}</span>
-            </div>
-          </div>
-          <p className="font-extralight">{shortDesc}</p>
+      <div className="relative h-64 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-wrapper)] p-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+        <img
+          className="h-full object-contain"
+          src={import.meta.env.VITE_API_URL + img}
+          alt={name}
+        />
+      </div>
+
+      <div className="p-6 space-y-4">
+        <div className="flex items-center gap-2">
+          <span
+            className={`text-xs px-3 py-1 rounded-full font-medium ${badgeColor}`}
+          >
+            {brandName}
+          </span>
+          <span
+            className={`text-xs px-3 py-1 rounded-full font-medium ${badgeColor}`}
+          >
+            {typeName}
+          </span>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <span className="text-[30px]">
-            ${new Intl.NumberFormat("en-EN").format(price)}
-          </span>
-          <MyButton className="bg-transparent border-2 rounded-lg border-custom p-2 uppercase w-full hover:bg-custom">
-            buy
-          </MyButton>
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold text-[var(--color-def)] line-clamp-1 group-hover:text-[var(--color-custom)] transition-colors">
+            {name}
+          </h3>
+          <p className="text-sm text-[var(--color-secondary)] min-h-[45px] line-clamp-2 leading-relaxed">
+            {shortDesc}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between pt-4 border-t border-[var(--color-border)]">
+          <div className="space-y-1 flex">
+            <span className="text-2xl font-bold text-[var(--color-custom)]">
+              ${new Intl.NumberFormat("en-EN").format(price)}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1 text-[var(--color-custom)] font-medium text-sm group-hover:gap-2 transition-all">
+            <span>View details</span>
+            <ArrowRightIcon className="w-4 h-4" />
+          </div>
         </div>
       </div>
     </article>

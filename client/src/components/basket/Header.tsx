@@ -21,7 +21,13 @@ const Header = ({
         </div>
         <button
           onClick={clearBasket}
-          className="mt-4 sm:mt-0 w-full sm:w-auto px-5 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-primary)] text-sm font-medium text-[var(--color-def)] hover:border-[var(--color-custom)] transition-colors"
+          disabled={!totalQuantities}
+          className={`mt-4 sm:mt-0 w-full sm:w-auto px-5 py-2 rounded-lg border text-sm font-medium transition-colors
+          ${
+            !totalQuantities
+              ? "border-border bg-gray-300/30 text-gray-400 cursor-not-allowed opacity-50"
+              : "border-[var(--color-border)] bg-[var(--color-primary)] text-[var(--color-def)] hover:border-[var(--color-custom)]"
+          }`}
         >
           Clear all
         </button>

@@ -1,11 +1,19 @@
+import { useAlert } from "@/utils/alertContext";
 import { useState } from "react";
-import Alert from "../ui/Alert";
 
-const SideBar = ({ total }: { total: number }) => {
+const SideBar = ({
+  total,
+  totalQuantities,
+  clearBasket,
+}: {
+  total: number;
+  totalQuantities: number;
+  clearBasket: () => void;
+}) => {
   const [promocode, setPromocode] = useState(false);
   const [value, setValue] = useState("");
   const [hasError, setHasError] = useState<boolean | null>(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const { showAlert } = useAlert();
   const rebate = total / 2;
 
   const promo = () => {
@@ -15,6 +23,21 @@ const SideBar = ({ total }: { total: number }) => {
     } else {
       setHasError(true);
     }
+  };
+
+  const handleSave = () => {
+    !totalQuantities
+      ? showAlert(
+          "error",
+          "Empty Cart",
+          "Your cart is empty. Add some items before checkout.",
+        )
+      : showAlert(
+          "success",
+          "Success!",
+          "Order confirmed. Thank you for your purchase!",
+        );
+    clearBasket();
   };
 
   return (
@@ -79,7 +102,7 @@ const SideBar = ({ total }: { total: number }) => {
         </div>
 
         <button
-          onClick={() => setShowAlert(true)}
+          onClick={handleSave}
           className="mt-6 w-full rounded-xl bg-[var(--color-custom)] py-3.5 text-white font-semibold hover:opacity-90 transition-opacity"
         >
           Checkout
@@ -97,8 +120,6 @@ const SideBar = ({ total }: { total: number }) => {
           </div>
         </div>
       </aside>
-
-      {showAlert && <Alert title="Success!" text="Order confirmed. Thank you for your purchase!" mode="success" onClose={setShowAlert}/>}
     </>
   );
 };

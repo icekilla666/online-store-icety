@@ -6,7 +6,7 @@ const ApiError = require("../error/ApiError");
 class DeviceController {
   async create(req, res, next) {
     try {
-      let { name, shortDesc, price, brandId, typeId, info } = req.body;
+      let { name, shortDesc, price, brandId, typeId, info, rating } = req.body;
       const files = req.files;
 
       let mainImage = null;
@@ -41,6 +41,7 @@ class DeviceController {
         price,
         brandId,
         typeId,
+        rating: rating || 0,
         img: mainImage,
         images: additionalImages,
       });
@@ -75,7 +76,8 @@ class DeviceController {
   async edit(req, res, next) {
     try {
       const { id } = req.params;
-      const { name, shortDesc, price, brandId, typeId, rating, info } = req.body;
+      const { name, shortDesc, price, brandId, typeId, rating, info } =
+        req.body;
       const files = req.files;
 
       const device = await Device.findByPk(id);
@@ -102,9 +104,9 @@ class DeviceController {
       if (info) {
         try {
           const parsedInfo = JSON.parse(info);
-          
+
           await DeviceInfo.destroy({ where: { deviceId: id } });
-          
+
           for (const i of parsedInfo) {
             await DeviceInfo.create({
               title: i.title,
@@ -113,7 +115,7 @@ class DeviceController {
             });
           }
         } catch (e) {
-          console.log("Error parsing info:", e.message);
+          return next(ApiError.badRequest("Error editing"));
         }
       }
 
@@ -123,7 +125,6 @@ class DeviceController {
       });
 
       res.json(updatedDevice);
-      
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

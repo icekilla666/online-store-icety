@@ -3,6 +3,7 @@ import Specifications from "@/components/devices/Specifications";
 import SwiperSlider from "@/components/devices/SwiperSlider";
 import Recommend from "@/components/Recommend";
 import Tabs from "@/components/ui/Tabs";
+import { useTitle } from "@/hooks/useTitle";
 import {
   addBasket,
   addWishlist,
@@ -10,6 +11,7 @@ import {
   fetchOneDevice,
 } from "@/http/deviceAPI";
 import type { DeviceInfoArray, IDevice } from "@/types/types";
+import { useAlert } from "@/utils/alertContext";
 import { DEVICE_PAGE_TABS } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { observer } from "mobx-react-lite";
@@ -17,13 +19,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const DevicePage = observer(() => {
+  const [devices, setDevices] = useState<IDevice>();
+  useTitle(devices?.name);
   const [tab, setTab] = useState("buy");
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfoArray[]>([]);
-  const [devices, setDevices] = useState<IDevice>();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const { basket, device } = useStore();
+  const { showAlert } = useAlert();
   useEffect(() => {
     if (!id) return;
     fetchOneDevice(id)
@@ -47,23 +51,21 @@ const DevicePage = observer(() => {
   // добавить в корзину
   const addToBasket = async (id: string) => {
     try {
-      const data = await addBasket(id, selectedQuantity);
+      await addBasket(id, selectedQuantity);
       await basket.refreshBasket();
-      console.log("товар добавлен", data);
-      // ТОСТ
-    } catch (error) {
-      console.error("❌ Ошибка добавления в корзину:", error);
+      showAlert("success", "Added to Cart", "Item added successfully");
+    } catch (error: any) {
+      showAlert("error", "Error!", error.response?.data?.message);
     }
   };
 
   // добавть в избранное
   const addToWishlist = async (id: string) => {
     try {
-      const data = await addWishlist(id);
-      // ТОСТ
-      console.log("товар долавблен в избранное", data);
+      await addWishlist(id);
+      showAlert("success", "Saved", "Added to wishlist");
     } catch (error: any) {
-      console.log("error | ", error.response.data);
+      showAlert("error", "Error!", error.response?.data?.message);
     }
   };
 

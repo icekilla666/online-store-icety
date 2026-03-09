@@ -1,3 +1,5 @@
+import { useTitle } from "@/hooks/useTitle";
+
 const heroImages = [
   {
     src: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80",
@@ -66,6 +68,7 @@ const highlights = [
 ];
 
 const Home = () => {
+  useTitle("Home");
   return (
     <main className="bg-primary text-secondary">
       <section className="relative overflow-hidden">
