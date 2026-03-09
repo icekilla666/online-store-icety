@@ -7,6 +7,7 @@ import { check, editUser } from "./http/userAPI";
 import { fetchBasket } from "./http/deviceAPI";
 import Header from "./components/header/Header";
 import { AlertProvider } from "./utils/alertContext";
+import Footer from "./components/footer/Footer";
 
 const App = observer(() => {
   const { user, basket } = useStore();
@@ -53,7 +54,10 @@ const AppContent = () => {
   return (
     <>
       {shouldShowNavBar && <Header />}
-      <AppRouter />
+      <main>
+        <AppRouter />
+      </main>
+      {shouldShowNavBar && <Footer />}
     </>
   );
 };

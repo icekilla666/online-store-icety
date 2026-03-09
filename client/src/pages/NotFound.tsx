@@ -1,6 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { HOME_ROUTE } from "@/utils/constants";
-import { HomeIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import FuzzyText from "@/components/ui/FuzzyText";
 import { useTitle } from "@/hooks/useTitle";
 
@@ -24,25 +22,7 @@ const NotFound = () => {
           been moved or doesn't exist.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <NavLink
-            to={HOME_ROUTE}
-            className="group flex items-center gap-3 px-6 py-3 bg-custom text-white rounded-xl font-medium hover:opacity-90 transition-all"
-          >
-            <HomeIcon className="w-5 h-5" />
-            <span>Go to homepage</span>
-          </NavLink>
-
-          <button
-            onClick={() => window.history.back()}
-            className="group flex items-center gap-3 px-6 py-3 border border-border text-def rounded-xl font-medium hover:border-[var(--color-custom)] hover:text-[var(--color-custom)] transition-all"
-          >
-            <ArrowLeftIcon className="w-5 h-5" />
-            <span>Go back</span>
-          </button>
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-border">
+        <div className="pt-8 border-t border-border">
           <p className="text-sm text-[var(--color-secondary)] mb-4">
             You might be interested in:
           </p>

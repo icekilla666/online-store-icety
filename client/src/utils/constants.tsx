@@ -178,3 +178,41 @@ export const badgeColors = [
   "bg-orange-500/10 text-orange-500",
   "bg-pink-500/10 text-pink-500",
 ];
+
+export const highlights = [
+  {
+    title: "Premium Selection",
+    text: "Only trusted brands and flagship models",
+  },
+  {
+    title: "Fast Delivery",
+    text: "Same-day in the city, 2–4 days nationwide",
+  },
+  {
+    title: "Warranty & Support",
+    text: "Official warranty and 24/7 service",
+  },
+  {
+    title: "Trade-In",
+    text: "Upgrade with value and fewer steps",
+  },
+];
+
+export const faq = [
+  {
+    q: "How fast is delivery?",
+    a: "Same-day delivery in the city and 2–4 days nationwide, depending on your location.",
+  },
+  {
+    q: "Do you offer official warranty?",
+    a: "Yes. All devices come with official manufacturer warranty and Icety support.",
+  },
+  {
+    q: "Can I test devices before buying?",
+    a: "Yes, visit our showroom to try the latest models and compare side by side.",
+  },
+  {
+    q: "Is trade-in available?",
+    a: "Absolutely. Bring your device and get a valuation toward a new purchase.",
+  },
+];
