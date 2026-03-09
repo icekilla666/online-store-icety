@@ -182,18 +182,18 @@ export const badgeColors = [
 export const highlights = [
   {
     title: "Premium Selection",
-    text: "Only trusted brands and flagship models.",
+    text: "Only trusted brands and flagship models",
   },
   {
     title: "Fast Delivery",
-    text: "Same-day in the city, 2–4 days nationwide.",
+    text: "Same-day in the city, 2–4 days nationwide",
   },
   {
     title: "Warranty & Support",
-    text: "Official warranty and 24/7 service.",
+    text: "Official warranty and 24/7 service",
   },
   {
     title: "Trade-In",
-    text: "Upgrade with value and fewer steps.",
+    text: "Upgrade with value and fewer steps",
   },
 ];

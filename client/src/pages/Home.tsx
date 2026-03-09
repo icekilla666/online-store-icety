@@ -1,6 +1,5 @@
 import Advantages from "@/components/home/Advantages";
 import Banner from "@/components/home/Banner";
-import Categories from "@/components/home/Categories";
 import Collection from "@/components/home/Collection";
 import Curation from "@/components/home/Curation";
 import Faq from "@/components/home/Faq";
@@ -13,7 +12,6 @@ const Home = () => {
     <>
       <Banner />
       <Advantages />
-      <Categories />
       <Collection />
       <Service />
       <Curation />

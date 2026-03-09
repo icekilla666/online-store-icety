@@ -8,11 +8,11 @@ const Collection = () => {
               Collection
             </p>
             <h2 className="text-3xl font-semibold text-def lg:text-4xl">
-              Icety Mood — tech as part of your look.
+              Icety Mood — tech as part of your look
             </h2>
             <p className="text-sm text-secondary/70">
               A curation of gadgets with design focus: minimalism, clean lines,
-              and signature hues.
+              and signature hues
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
