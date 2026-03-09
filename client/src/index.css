@@ -33,6 +33,15 @@
   --color-def: #fff;
 }
 
+.light {
+  --color-primary: #f3f3f3;
+  --color-secondary: #393e46;
+  --color-custom: #8b5cf6;
+  --color-wrapper: #ffffff;
+  --color-border: rgb(0 0 0 / 0.1);
+  --color-def: #000;
+}
+
 body {
   background-color: var(--color-primary);
   color: var(--color-secondary);

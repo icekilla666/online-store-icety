@@ -10,6 +10,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NavLink } from "react-router-dom";
 import BasketIcon from "./BasketIcon";
 import UserIcon from "./UserIcon";
+import ThemeIcon from "./ThemeIcon";
 
 const NavBar = () => {
   return (
@@ -85,6 +86,7 @@ const NavBar = () => {
         </NavLink>
       </PopoverGroup>
       <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-8">
+        <ThemeIcon />
         <BasketIcon />
         <UserIcon />
       </div>

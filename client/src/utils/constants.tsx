@@ -168,5 +168,13 @@ export const ADMIN_TABS: TabArrayProps[] = [
     value: "brand",
     name: "Brands",
     img: <BoldIcon width={30} height={30} />,
-  }
+  },
+];
+
+export const badgeColors = [
+  "bg-blue-500/10 text-blue-500",
+  "bg-purple-500/10 text-purple-500",
+  "bg-green-500/10 text-green-500",
+  "bg-orange-500/10 text-orange-500",
+  "bg-pink-500/10 text-pink-500",
 ];

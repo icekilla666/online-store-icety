@@ -90,6 +90,8 @@ const DeviceList = observer(() => {
               shortDesc={device.shortDesc}
               rating={device.rating}
               price={device.price}
+              brandId={device.brandId}
+              typeId={device.typeId}
               onClick={() => navigate(DEVICE_ROUTE + "/" + device.id)}
             />
           ) : (
@@ -102,6 +104,8 @@ const DeviceList = observer(() => {
               shortDesc={device.shortDesc}
               rating={device.rating}
               price={device.price}
+              brandId={device.brandId}
+              typeId={device.typeId}
               onClick={() => navigate(DEVICE_ROUTE + "/" + device.id)}
             />
           ),
