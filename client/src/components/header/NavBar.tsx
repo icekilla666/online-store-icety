@@ -44,7 +44,7 @@ const NavBar = () => {
 
           <PopoverPanel
             transition
-            className="absolute left-1/2 z-10 mt-3 w-screen max-w-screen-lg -translate-x-1/2 overflow-hidden rounded-3xl bg-wrapper outline outline-1 -outline-offset-1 outline-border transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in h"
+            className="absolute left-1/2 z-20 mt-3 w-screen max-w-screen-lg -translate-x-1/2 overflow-hidden rounded-3xl bg-wrapper outline outline-1 -outline-offset-1 outline-border transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in h"
           >
             <div className="p-4 grid grid-cols-3">
               {products.map((item) => (
