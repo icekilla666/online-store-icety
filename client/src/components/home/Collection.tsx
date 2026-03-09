@@ -32,20 +32,20 @@ const Collection = () => {
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <img
-              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80"
+              src="src/assets/images/6.jpg"
               alt="Icety smartphone"
-              className="h-56 w-full rounded-[28px] object-cover"
+              className="h-72 w-full rounded-xl object-cover"
             />
             <img
-              src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80"
+              src="src/assets/images/5.jpg"
               alt="Icety laptop"
-              className="h-56 w-full rounded-[28px] object-cover"
+              className="h-72 w-full rounded-xl object-cover"
             />
-            <img
-              src="https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1200&q=80"
-              alt="Icety audio"
-              className="h-56 w-full rounded-[28px] object-cover sm:col-span-2"
-            />
+              <img
+                src="https://i.pinimg.com/736x/17/23/52/17235277c150cfcd615b1a1abb5f7850.jpg"
+                alt="Icety audio"
+                className="w-full h-96 rounded-xl object-cover sm:col-span-2 md:object-[0_-100px]"
+              />
           </div>
         </div>
       </div>

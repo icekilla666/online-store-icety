@@ -1,3 +1,5 @@
+import { faq } from "@/utils/constants";
+
 const Faq = () => {
   return (
     <section className="container py-16 lg:py-20">
@@ -8,32 +10,15 @@ const Faq = () => {
               FAQ
             </p>
             <h2 className="text-3xl font-semibold text-def lg:text-4xl">
-              Answers to the most common questions.
+              Answers to the most common questions
             </h2>
             <p className="text-sm text-secondary/70">
               Everything you need to know about delivery, warranty, and in-store
-              experience.
+              experience
             </p>
           </div>
           <div className="space-y-4">
-            {[
-              {
-                q: "How fast is delivery?",
-                a: "Same-day delivery in the city and 2–4 days nationwide, depending on your location.",
-              },
-              {
-                q: "Do you offer official warranty?",
-                a: "Yes. All devices come with official manufacturer warranty and Icety support.",
-              },
-              {
-                q: "Can I test devices before buying?",
-                a: "Yes, visit our showroom to try the latest models and compare side by side.",
-              },
-              {
-                q: "Is trade-in available?",
-                a: "Absolutely. Bring your device and get a valuation toward a new purchase.",
-              },
-            ].map((item) => (
+            {faq.map((item) => (
               <details
                 key={item.q}
                 className="group rounded-2xl border border-border bg-primary px-6 py-5"

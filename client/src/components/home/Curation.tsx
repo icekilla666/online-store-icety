@@ -8,11 +8,11 @@ const Curation = () => {
               Curation
             </p>
             <h2 className="text-3xl font-semibold text-def lg:text-4xl">
-              Designed drops with a clear point of view.
+              Designed drops with a clear point of view
             </h2>
             <p className="text-sm text-secondary/70">
               Each release is a story: materials, color, and performance aligned
-              with the feeling you want to live in.
+              with the feeling you want to live in
             </p>
             <div className="flex flex-wrap gap-3">
               {[
@@ -31,33 +31,33 @@ const Curation = () => {
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[28px] border border-border bg-primary p-4">
+            <div className="rounded-xl border border-border bg-primary p-4">
               <img
-                src="https://images.unsplash.com/photo-1512499617640-c2f999fe8886?auto=format&fit=crop&w=900&q=80"
+                src="src/assets/images/8.jpg"
                 alt="Curated smartphone"
-                className="h-48 w-full rounded-2xl object-cover"
+                className="h-48 w-full rounded-xl object-cover"
               />
               <div className="mt-4">
                 <p className="text-xs uppercase tracking-[0.3em] text-secondary/60">
-                  Drop 07
+                  Drop 01
                 </p>
                 <h3 className="mt-2 text-lg font-semibold text-def">
                   Midnight Glass
                 </h3>
                 <p className="text-sm text-secondary/70">
-                  Soft gradients, sharp performance.
+                  Soft gradients, sharp performance
                 </p>
               </div>
             </div>
-            <div className="rounded-[28px] border border-border bg-primary p-4">
+            <div className="rounded-xl border border-border bg-primary p-4">
               <img
-                src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80"
+                src="src/assets/images/7.jpg"
                 alt="Curated workspace setup"
-                className="h-48 w-full rounded-2xl object-cover"
+                className="h-48 w-full rounded-xl object-cover"
               />
               <div className="mt-4">
                 <p className="text-xs uppercase tracking-[0.3em] text-secondary/60">
-                  Drop 08
+                  Drop 02
                 </p>
                 <h3 className="mt-2 text-lg font-semibold text-def">
                   Studio Focus

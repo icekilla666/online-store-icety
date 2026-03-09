@@ -8,11 +8,11 @@ const Service = () => {
               Service
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-def">
-              Personal support from first click to setup.
+              Personal support from first click to setup
             </h2>
             <p className="mt-4 text-sm text-secondary/70">
               We advise, compare, deliver, and help set up your device. Icety is
-              more than a store — it is a team on your side.
+              more than a store — it is a team on your side
             </p>
           </div>
           <div className="grid gap-4">
