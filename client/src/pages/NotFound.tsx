@@ -2,8 +2,10 @@ import { NavLink } from "react-router-dom";
 import { HOME_ROUTE } from "@/utils/constants";
 import { HomeIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import FuzzyText from "@/components/ui/FuzzyText";
+import { useTitle } from "@/hooks/useTitle";
 
 const NotFound = () => {
+  useTitle("Page Not Found");
   return (
     <section className="container min-h-[calc(100vh-80px)] flex items-center justify-center py-12">
       <div className="text-center max-w-2xl mx-auto px-4">

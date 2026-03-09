@@ -6,14 +6,12 @@ import SideBar from "@/components/basket/SideBar";
 import Recommend from "@/components/Recommend";
 import { observer } from "mobx-react-lite";
 import { useAlert } from "@/utils/alertContext";
-import {
-  deleteBasket,
-  fetchBasket,
-  fetchDevice,
-} from "@/http/deviceAPI";
+import { deleteBasket, fetchBasket, fetchDevice } from "@/http/deviceAPI";
 import type { IDevice } from "@/types/types";
+import { useTitle } from "@/hooks/useTitle";
 
 const Basket = observer(() => {
+  useTitle("Basket");
   const { device, basket } = useStore();
   const { showAlert } = useAlert();
   const [quantities, setQuantities] = useState<Record<number, number>>({});

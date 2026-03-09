@@ -13,8 +13,10 @@ import { deleteWishlist, fetchWishlist } from "@/http/deviceAPI";
 import type { IDevice } from "@/types/types";
 import { editUser } from "@/http/userAPI";
 import { useAlert } from "@/utils/alertContext";
+import { useTitle } from "@/hooks/useTitle";
 
 const DashboardPage = observer(() => {
+  useTitle("My account");
   const navigate = useNavigate();
   const [tab, setTab] = useState("profile");
   const { device, user, basket } = useStore();
@@ -32,7 +34,7 @@ const DashboardPage = observer(() => {
   };
 
   const handleSave = async () => {
-    if (!user.user) return;    
+    if (!user.user) return;
     try {
       const updatedUser = await editUser({
         name: user.user.name || "",

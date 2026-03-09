@@ -1,6 +1,7 @@
 import DeviceList from "@/components/devices/DeviceList";
 import SideBar from "@/components/devices/SideBar";
 import Empty from "@/components/Empty";
+import { useTitle } from "@/hooks/useTitle";
 import { fetchBrand, fetchDevice, fetchType } from "@/http/deviceAPI";
 import { useStore } from "@/utils/context";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -8,6 +9,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
 const Shop = observer(() => {
+  useTitle("Shop");
   const { device } = useStore();
   useEffect(() => {
     fetchType().then((data) => device.setTypes(data));

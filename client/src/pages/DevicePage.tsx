@@ -3,6 +3,7 @@ import Specifications from "@/components/devices/Specifications";
 import SwiperSlider from "@/components/devices/SwiperSlider";
 import Recommend from "@/components/Recommend";
 import Tabs from "@/components/ui/Tabs";
+import { useTitle } from "@/hooks/useTitle";
 import {
   addBasket,
   addWishlist,
@@ -18,9 +19,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const DevicePage = observer(() => {
+  const [devices, setDevices] = useState<IDevice>();
+  useTitle(devices?.name);
   const [tab, setTab] = useState("buy");
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfoArray[]>([]);
-  const [devices, setDevices] = useState<IDevice>();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);

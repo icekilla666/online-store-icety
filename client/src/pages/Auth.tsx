@@ -3,14 +3,16 @@ import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/constants";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import { useAuthForm } from "@/hooks/useAuthForm";
 import AuthForm from "@/components/auth/AuthForm";
+import { useTitle } from "@/hooks/useTitle";
 
 const Auth = () => {
   const { isLogin } = useAuthForm();
-
+  const title = isLogin ? "Authorization" : "Registration";
+  useTitle(title);
   return (
     <AnimatedContent>
       <section className="container flex-center-col min-h-[calc(100svh-80px)] py-10">
-        <h1>{isLogin ? "Authorization" : "Registration"}</h1>
+        <h1>{title}</h1>
 
         {isLogin ? (
           <p className="mb-7">
