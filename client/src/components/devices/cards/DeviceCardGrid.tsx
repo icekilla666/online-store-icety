@@ -25,7 +25,7 @@ const DeviceCardGrid = ({
   return (
     <article
       onClick={onClick}
-      className="group relative flex cursor-pointer flex-col bg-wrapper rounded-3xl overflow-hidden border border-[var(--color-border)] hover:border-[var(--color-custom)] hover:shadow-xl transition-all duration-300"
+      className="relative group flex cursor-pointer flex-col bg-wrapper rounded-3xl overflow-hidden border border-[var(--color-border)] hover:border-[var(--color-custom)] hover:shadow-xl transition-all duration-300"
     >
       <div className="absolute top-4 right-4 z-10 flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--color-wrapper)]/90 backdrop-blur-sm shadow-md">
         <StarIcon className="w-4 h-4 text-yellow-500" />
@@ -36,7 +36,7 @@ const DeviceCardGrid = ({
 
       <div className="relative h-64 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-wrapper)] p-6 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
         <img
-          className="h-full object-contain drop-shadow-xl"
+          className="h-full object-contain"
           src={import.meta.env.VITE_API_URL + img}
           alt={name}
         />

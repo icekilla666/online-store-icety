@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import DropdownSelect from "../ui/DropdownSelect";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { StretchHorizontal, LayoutGrid } from "lucide-react";
 import { useStore } from "@/utils/context";
 import DeviceCardList from "./cards/DeviceCardList";
@@ -13,7 +13,15 @@ const DeviceList = observer(() => {
   const { device } = useStore();
   const navigate = useNavigate();
   const [selectedSort, setSelectedSort] = useState("no");
-  const [viewSwitcher, setViewSwitcher] = useState("list");
+  const [viewSwitcher, setViewSwitcher] = useState(() => {
+    const savedView = localStorage.getItem("deviceView");
+    return savedView || "list";
+  });
+  
+  useEffect(() => {
+    localStorage.setItem("deviceView", viewSwitcher);
+  }, [viewSwitcher]);
+
   const handleSortChange = (value: string) => {
     setSelectedSort(value);
   };
@@ -111,7 +119,7 @@ const DeviceList = observer(() => {
           ),
         )}
       </div>
-      <Pagitanion className="justify-center mt-8"/>
+      <Pagitanion className="justify-center mt-8" />
     </div>
   );
 });

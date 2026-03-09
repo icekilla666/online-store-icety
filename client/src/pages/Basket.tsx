@@ -6,7 +6,7 @@ import SideBar from "@/components/basket/SideBar";
 import Recommend from "@/components/Recommend";
 import { observer } from "mobx-react-lite";
 import { useAlert } from "@/utils/alertContext";
-import { deleteBasket, fetchBasket, fetchDevice } from "@/http/deviceAPI";
+import { clearBasket, deleteBasket, fetchBasket, fetchDevice } from "@/http/deviceAPI";
 import type { IDevice } from "@/types/types";
 import { useTitle } from "@/hooks/useTitle";
 
@@ -69,6 +69,7 @@ const Basket = observer(() => {
   // укдаление всей корзины
   const clearBasketHandler = async () => {
     try {
+      await clearBasket();
       await basket.refreshBasket();
       device.setDevices([]);
       setQuantities({});

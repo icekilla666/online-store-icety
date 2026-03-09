@@ -24,9 +24,9 @@ const DeviceCardList = ({
   return (
     <article
       onClick={onClick}
-      className="group relative flex flex-col sm:flex-row gap-6 p-6 bg-wrapper rounded-3xl border border-[var(--color-border)] hover:border-[var(--color-custom)] hover:shadow-xl transition-all duration-300 cursor-pointer"
+      className="group flex flex-col sm:flex-row gap-6 p-6 bg-wrapper rounded-3xl border border-[var(--color-border)] hover:border-[var(--color-custom)] hover:shadow-xl transition-all duration-300 cursor-pointer"
     >
-      <div className="relative sm:w-48 h-48 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-wrapper)] rounded-2xl p-4 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-500">
+      <div className="sm:w-48 h-48 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-wrapper)] rounded-2xl p-4 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-500">
         <img
           className="h-full object-contain"
           src={import.meta.env.VITE_API_URL + img}

@@ -26,7 +26,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({ value, onChange }) => {
       </div>
 
       <div
-        className={`w-max pr-8 absolute top-full left-0 right-0 bg-wrapper overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`w-max pr-8 absolute z-20 top-full left-0 right-0 bg-wrapper overflow-hidden transition-all duration-300 ease-in-out ${
           isOpen
             ? "max-h-96 opacity-100 translate-y-0 mt-2"
             : "max-h-0 opacity-0 -translate-y-2"
