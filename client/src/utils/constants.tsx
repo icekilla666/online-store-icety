@@ -171,14 +171,6 @@ export const ADMIN_TABS: TabArrayProps[] = [
   },
 ];
 
-export const badgeColors = [
-  "bg-blue-500/10 text-blue-500",
-  "bg-purple-500/10 text-purple-500",
-  "bg-green-500/10 text-green-500",
-  "bg-orange-500/10 text-orange-500",
-  "bg-pink-500/10 text-pink-500",
-];
-
 export const highlights = [
   {
     title: "Premium Selection",

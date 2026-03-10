@@ -32,6 +32,7 @@ class UserController {
       number,
       password: hashPassword,
     });
+    await Basket.create({ userId: user.id });
     const jwtToken = generateJwt(
       user.id,
       user.email,

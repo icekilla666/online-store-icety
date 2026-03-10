@@ -1,9 +1,28 @@
+import LightRays from "../ui/LightRays";
+
 const Banner = () => {
   return (
     <section className="overflow-hidden relative">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#8b5cf6]/5 via-transparent to-[var(--color-primary)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#8b5cf6]/50 via-transparent to-[var(--color-primary)]" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#8b5cf6]/5 via-transparent to-transparent opacity-50" />
+        <div style={{ width: "100%", position: "relative" }}>
+          <LightRays
+            raysOrigin="left"
+            raysColor="#ffffff"
+            raysSpeed={0.5}
+            lightSpread={0.3}
+            rayLength={4}
+            followMouse={true}
+            mouseInfluence={0.1}
+            noiseAmount={0}
+            distortion={0}
+            className="custom-rays"
+            pulsating={false}
+            fadeDistance={2}
+            saturation={1}
+          />
+        </div>
       </div>
       <div className="container pt-12 pb-16 lg:pt-20 lg:pb-24">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">

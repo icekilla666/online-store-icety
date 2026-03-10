@@ -22,9 +22,9 @@ const ThemeIcon = () => {
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
-        <MoonIcon width={25} height={25} />
+        <MoonIcon width={25} height={25} className="hover:text-custom transition-colors"/>
       ) : (
-        <SunIcon width={25} height={25} />
+        <SunIcon width={25} height={25} className="hover:text-custom transition-colors" />
       )}
     </button>
   );

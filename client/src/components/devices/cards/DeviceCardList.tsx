@@ -1,5 +1,4 @@
 import type { DeviceCardProps } from "@/types/types";
-import { badgeColors } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -16,7 +15,6 @@ const DeviceCardList = ({
   typeId,
 }: DeviceCardProps) => {
   const { device } = useStore();
-  const badgeColor = badgeColors[id % badgeColors.length];
   const brandName =
     device.brands.find((b) => b.id === brandId)?.name || "Unknown Brand";
   const typeName =
@@ -58,10 +56,10 @@ const DeviceCardList = ({
           </p>
 
           <div className="flex flex-wrap gap-2 pt-2">
-            <span className={`text-xs px-3 py-1 rounded-full ${badgeColor}`}>
+            <span className={`text-xs px-3 py-1 rounded-full bg-primary`}>
               {brandName}
             </span>
-            <span className={`text-xs px-3 py-1 rounded-full ${badgeColor}`}>
+            <span className={`text-xs px-3 py-1 rounded-full bg-primary`}>
               {typeName}
             </span>
           </div>

@@ -27,14 +27,14 @@ const NavBar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-sm/6 font-semibold text-custom"
-              : "text-sm/6 font-semibold"
+              : "text-sm/6 font-semibold hover:text-custom transition-colors"
           }
         >
           Catalog
         </NavLink>
 
         <Popover className="relative">
-          <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold ">
+          <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold hover:text-custom transition-colors">
             Product
             <ChevronDownIcon
               aria-hidden="true"
@@ -64,7 +64,7 @@ const NavBar = () => {
                       className={({ isActive }) =>
                         isActive
                           ? "text-sm/6 font-semibold text-custom"
-                          : "text-sm/6 font-semibold"
+                          : "text-sm/6 font-semibold hover:text-custom transition-colors"
                       }
                     >
                       {item.name}
@@ -78,10 +78,10 @@ const NavBar = () => {
           </PopoverPanel>
         </Popover>
 
-        <NavLink to="#" className="text-sm/6 font-semibold ">
+        <NavLink to="#" className="text-sm/6 font-semibold hover:text-custom transition-colors">
           Marketplace
         </NavLink>
-        <NavLink to="#" className="text-sm/6 font-semibold ">
+        <NavLink to="#" className="text-sm/6 font-semibold hover:text-custom transition-colors">
           Company
         </NavLink>
       </PopoverGroup>

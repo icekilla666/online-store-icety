@@ -1,4 +1,14 @@
+import { NavLink } from "react-router-dom";
+import { HOME_ROUTE } from "@/utils/constants";
+
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <footer className="border-t border-border bg-primary">
       <div className="container py-12">
@@ -21,40 +31,88 @@ const Footer = () => {
               </span>
             </div>
           </div>
+          
           <div className="space-y-3 text-sm">
-            <p className="text-xs uppercase tracking-[0.3em] text-secondary/60">
+            <p className="text-xs uppercase tracking-[0.3em] text-secondary">
               Explore
             </p>
             {["Catalog", "New arrivals", "Gift cards", "Trade-in"].map(
               (item) => (
-                <p key={item} className="text-secondary/80">
+                <NavLink 
+                  to={HOME_ROUTE} 
+                  key={item} 
+                  onClick={scrollToTop}
+                  className="text-secondary block hover:text-custom transition-colors"
+                >
                   {item}
-                </p>
+                </NavLink>
               ),
             )}
           </div>
+          
           <div className="space-y-3 text-sm">
-            <p className="text-xs uppercase tracking-[0.3em] text-secondary/60">
+            <p className="text-xs uppercase tracking-[0.3em] text-secondary">
               Support
             </p>
             {["Delivery", "Warranty", "Returns", "FAQ"].map((item) => (
-              <p key={item} className="text-secondary/80">
+              <NavLink 
+                to={HOME_ROUTE} 
+                key={item} 
+                onClick={scrollToTop}
+                className="text-secondary block hover:text-custom transition-colors"
+              >
                 {item}
-              </p>
+              </NavLink>
             ))}
           </div>
+          
           <div className="space-y-3 text-sm">
             <p className="text-xs uppercase tracking-[0.3em] text-secondary/60">
               Contact
             </p>
-            <p className="text-secondary/80">hello@icety.store</p>
-            <p className="text-secondary/80">+1 (415) 555-0132</p>
+            <a 
+              href="mailto:hello@icety.store" 
+              className="text-secondary/80 block hover:text-custom transition-colors"
+            >
+              hello@icety.store
+            </a>
+            <a 
+              href="tel:+14155550132" 
+              className="text-secondary/80 block hover:text-custom transition-colors"
+            >
+              +1 (415) 555-0132
+            </a>
             <p className="text-secondary/80">Mon–Sat · 10:00–20:00</p>
           </div>
         </div>
+        
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6 text-xs uppercase tracking-[0.25em] text-secondary/60">
           <span>© 2026 Icety Electronics</span>
-          <span>Privacy · Terms · Accessibility</span>
+          <div className="flex gap-4">
+            <NavLink 
+              to={HOME_ROUTE} 
+              onClick={scrollToTop}
+              className="hover:text-custom transition-colors"
+            >
+              Privacy
+            </NavLink>
+            <span>·</span>
+            <NavLink 
+              to={HOME_ROUTE} 
+              onClick={scrollToTop}
+              className="hover:text-custom transition-colors"
+            >
+              Terms
+            </NavLink>
+            <span>·</span>
+            <NavLink 
+              to={HOME_ROUTE} 
+              onClick={scrollToTop}
+              className="hover:text-custom transition-colors"
+            >
+              Accessibility
+            </NavLink>
+          </div>
         </div>
       </div>
     </footer>
