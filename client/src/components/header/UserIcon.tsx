@@ -9,12 +9,12 @@ const UserIcon = observer(() => {
   return (
     <>
       {!user.isAuth ? (
-        <NavLink to={DASHBOARD_ROUTE} className="text-sm/6 font-semibold ">
+        <NavLink to={DASHBOARD_ROUTE} className="text-sm/6 font-semibold hover:text-custom transition-colors">
           Log in <span aria-hidden="true">&rarr;</span>
         </NavLink>
       ) : (
-        <NavLink to={DASHBOARD_ROUTE} className="text-sm/6 font-semibold ">
-          <UserCircleIcon width={25} height={25} />
+        <NavLink to={DASHBOARD_ROUTE} className="text-sm/6 font-semibold">
+          <UserCircleIcon width={25} height={25} className="hover:text-custom transition-colors"/>
         </NavLink>
       )}
     </>

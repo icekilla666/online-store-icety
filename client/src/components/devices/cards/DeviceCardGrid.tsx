@@ -1,11 +1,9 @@
 import type { DeviceCardProps } from "@/types/types";
-import { badgeColors } from "@/utils/constants";
 import { useStore } from "@/utils/context";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const DeviceCardGrid = ({
-  id,
   img,
   name,
   shortDesc,
@@ -16,7 +14,6 @@ const DeviceCardGrid = ({
   typeId,
 }: DeviceCardProps) => {
   const { device } = useStore();
-  const badgeColor = badgeColors[id % badgeColors.length];
   const brandName =
     device.brands.find((b) => b.id === brandId)?.name || "Unknown Brand";
   const typeName =
@@ -45,12 +42,12 @@ const DeviceCardGrid = ({
       <div className="p-6 space-y-4">
         <div className="flex items-center gap-2">
           <span
-            className={`text-xs px-3 py-1 rounded-full font-medium ${badgeColor}`}
+            className={`text-xs px-3 py-1 rounded-full font-medium bg-primary`}
           >
             {brandName}
           </span>
           <span
-            className={`text-xs px-3 py-1 rounded-full font-medium ${badgeColor}`}
+            className={`text-xs px-3 py-1 rounded-full font-medium bg-primary`}
           >
             {typeName}
           </span>
