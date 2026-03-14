@@ -1,7 +1,6 @@
 networks:
   dev:
 
-
 services:
   nginx: 
     image: nginx:stable-alpine
@@ -21,9 +20,8 @@ services:
     networks:
       - dev
 
-
   frontend:
     build:
       context: ./client
-  networks:
-    - dev
+    networks:
+      - dev
