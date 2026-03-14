@@ -1,4 +1,4 @@
-const uuid = require("uuid");
+const { v4: uuidv4 } = require('uuid');
 const path = require("path");
 const { Device, DeviceInfo } = require("../models/models");
 const ApiError = require("../error/ApiError");
@@ -13,7 +13,7 @@ class DeviceController {
       let additionalImages = [];
 
       if (files && files.img) {
-        const fileName = uuid.v4() + path.extname(files.img.name);
+        const fileName = uuidv4() + path.extname(files.img.name);
         const filePath = path.resolve(__dirname, "..", "static", fileName);
         await files.img.mv(filePath);
         mainImage = fileName;
@@ -22,13 +22,13 @@ class DeviceController {
       if (files && files.images) {
         if (Array.isArray(files.images)) {
           for (const file of files.images) {
-            const fileName = uuid.v4() + path.extname(file.name);
+            const fileName = uuidv4() + path.extname(file.name);
             const filePath = path.resolve(__dirname, "..", "static", fileName);
             await file.mv(filePath);
             additionalImages.push(fileName);
           }
         } else {
-          const fileName = uuid.v4() + path.extname(files.images.name);
+          const fileName = uuidv4() + path.extname(files.images.name);
           const filePath = path.resolve(__dirname, "..", "static", fileName);
           await files.images.mv(filePath);
           additionalImages.push(fileName);
@@ -93,7 +93,7 @@ class DeviceController {
       if (rating !== undefined) device.rating = rating;
 
       if (files && files.img) {
-        const fileName = uuid.v4() + path.extname(files.img.name);
+        const fileName = uuidv4() + path.extname(files.img.name);
         const filePath = path.resolve(__dirname, "..", "static", fileName);
         await files.img.mv(filePath);
         device.img = fileName;
